@@ -1,0 +1,41 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31611.283
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domains", "Domains", "{EFF235E9-6BA9-43C0-9D75-839CB2B1B03F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{DCFB2C5F-D5DC-4429-A288-1DD2B9561A44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{6FA3A0AD-A687-45EE-A50D-12D847CC9348}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Server", "Tasko.Server\Tasko.Server.csproj", "{224A723E-51A1-4C52-8C3C-21397BCD050F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Domains", "Tasko.Domains\Tasko.Domains.csproj", "{AC668DBA-B415-4CC6-8527-87ABEDEE188A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{224A723E-51A1-4C52-8C3C-21397BCD050F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{224A723E-51A1-4C52-8C3C-21397BCD050F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{224A723E-51A1-4C52-8C3C-21397BCD050F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{224A723E-51A1-4C52-8C3C-21397BCD050F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC668DBA-B415-4CC6-8527-87ABEDEE188A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC668DBA-B415-4CC6-8527-87ABEDEE188A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC668DBA-B415-4CC6-8527-87ABEDEE188A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC668DBA-B415-4CC6-8527-87ABEDEE188A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{224A723E-51A1-4C52-8C3C-21397BCD050F} = {6FA3A0AD-A687-45EE-A50D-12D847CC9348}
+		{AC668DBA-B415-4CC6-8527-87ABEDEE188A} = {EFF235E9-6BA9-43C0-9D75-839CB2B1B03F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+		SolutionGuid = {E779261A-E569-475A-8B95-1C0C706BE4DE}
+	EndGlobalSection
+EndGlobal
