@@ -15,18 +15,23 @@ namespace Tasko.Server.Context.Data.Context.Configurations
         public void Configure(EntityTypeBuilder<User> entity)
         {
             entity.Property(e => e.GlobalGuid)
-            .ValueGeneratedNever()
-            .HasColumnOrder(0);
-            entity.Property(e => e.About).HasColumnOrder(8);
+            .HasColumnOrder(0)
+            .HasDefaultValueSql("(newid())");
+            entity.Property(e => e.About).HasColumnOrder(9);
             entity.Property(e => e.EmailGuid).HasColumnOrder(2);
-            entity.Property(e => e.FirstName).HasColumnOrder(3);
-            entity.Property(e => e.IsDeleted).HasColumnOrder(10);
-            entity.Property(e => e.LastName).HasColumnOrder(5);
-            entity.Property(e => e.LastOnline).HasColumnOrder(9);
-            entity.Property(e => e.PasswordHash).HasColumnOrder(4);
-            entity.Property(e => e.Patronymic).HasColumnOrder(6);
+            entity.Property(e => e.FirstName).HasColumnOrder(4);
+            entity.Property(e => e.IsDeleted).HasColumnOrder(11);
+            entity.Property(e => e.LastName).HasColumnOrder(6);
+            entity.Property(e => e.LastOnline).HasColumnOrder(10);
+            entity.Property(e => e.PasswordHash).HasColumnOrder(5);
+            entity.Property(e => e.Patronymic).HasColumnOrder(7);
             entity.Property(e => e.PhoneGuid).HasColumnOrder(1);
-            entity.Property(e => e.Photo).HasColumnOrder(7);
+            entity.Property(e => e.Photo).HasColumnOrder(8);
+            entity.Property(e => e.Role).HasColumnOrder(3);
+
+            entity.HasOne(d => d.RoleNavigation).WithMany(p => p.Users)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_Users_Roles");
 
             OnConfigurePartial(entity);
         }

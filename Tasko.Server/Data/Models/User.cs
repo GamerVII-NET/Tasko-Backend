@@ -17,6 +17,8 @@ public partial class User
 
     public Guid EmailGuid { get; set; }
 
+    public Guid Role { get; set; }
+
     [StringLength(255)]
     public string FirstName { get; set; } = null!;
 
@@ -30,7 +32,7 @@ public partial class User
     public string Patronymic { get; set; } = null!;
 
     [StringLength(4000)]
-    public string Photo { get; set; } = null!;
+    public string? Photo { get; set; }
 
     [StringLength(2000)]
     public string? About { get; set; }
@@ -39,4 +41,8 @@ public partial class User
     public DateTime LastOnline { get; set; }
 
     public bool IsDeleted { get; set; }
+
+    [ForeignKey("Role")]
+    [InverseProperty("Users")]
+    public virtual Role RoleNavigation { get; set; } = null!;
 }

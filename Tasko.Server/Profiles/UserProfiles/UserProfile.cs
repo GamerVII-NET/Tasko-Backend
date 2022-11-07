@@ -9,6 +9,7 @@ namespace Tasko.Server.Profiles.UserProfiles
         public UserProfile()
         {
             CreateMap<User, UserReadDto>();
+            CreateMap<UserCreateDto, User>();
         }
     }
 }
