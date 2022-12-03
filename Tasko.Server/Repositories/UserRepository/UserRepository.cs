@@ -8,6 +8,7 @@ using Tasko.Server.Context.Data.Models;
 namespace Tasko.Server.Repositories.UserRepository
 {
     
+    
 
     public class UserRepository : IUserRepository
     {

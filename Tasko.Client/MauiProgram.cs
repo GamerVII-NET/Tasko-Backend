@@ -17,13 +17,15 @@ namespace Tasko.Client
                 });
 
             builder.Services.AddMauiBlazorWebView();
-            builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
-            builder.Services.AddAuthorizationCore();
 
 #if DEBUG
 		builder.Services.AddBlazorWebViewDeveloperTools();
 		builder.Logging.AddDebug();
 #endif
+
+            builder.Services.AddAuthorizationCore();
+            builder.Services.AddScoped<AuthStateProvider>();
+            builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<AuthStateProvider>());
 
             builder.Services.AddSingleton<WeatherForecastService>();
 
