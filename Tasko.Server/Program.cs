@@ -1,29 +1,10 @@
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Tasko.Server.Context.Data.Context;
-using Tasko.Server.Repositories.UserRepository;
-using Tasko.Server.Services;
+using Tasko.Server.Infrastructure.API.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-var deployConnectionString = builder.Configuration.GetConnectionString("DeployConnection");
-
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddSwaggerGen();
-builder.Services.AddAuthorization();
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options => AddJwtBearer
-    .GenerateConfig(options, builder));
-
-builder.Services.AddDbContext<DataBaseContext>(options =>options.UseNpgsql(deployConnectionString));
+var databaseContext = ApplicationService.GetMongoDataConext(builder.Configuration["ConnectionStrings:Mongo:Connection"], 
+                                                            builder.Configuration["ConnectionStrings:Mongo:Database"]);
+builder.RegisterBuilder(databaseContext);
 var application = builder.Build();
-
 application.RegisterApplication(builder);
-
+application.Services.GetServices<IApi>().ToList().ForEach(api => api.Register(application));
 application.Run();
