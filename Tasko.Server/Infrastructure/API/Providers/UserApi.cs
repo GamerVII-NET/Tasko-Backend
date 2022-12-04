@@ -23,8 +23,9 @@ namespace Tasko.Server.Infrastructure.API.Providers
         {
             string key = webApplication.Configuration["Jwt:Key"];
             string issuer = webApplication.Configuration["Jwt:Issuer"];
-            webApplication.MapPost("api/users", UserService.CreateUser(key, issuer))
-                          .Produces<IUser>(StatusCodes.Status200OK)
+            string audience = webApplication.Configuration["Jwt:Audience"];
+            webApplication.MapPost("api/users", UserService.CreateUser(key, issuer, audience))
+                          .Produces(StatusCodes.Status200OK)
                           .WithName("Create user")
                           .WithTags("Creators");
         }
