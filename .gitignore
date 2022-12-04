@@ -14,3 +14,4 @@ x64/
 # Other
 appsettings.json
 efpt.config.json
+/Tasko.Server/Properties/PublishProfiles/FTPProfile.pubxml
