@@ -13,6 +13,9 @@ internal static class ApplicationService
             application.UseSwaggerUI();
         }
 
+        //application.Urls.Add("http://87.249.49.56:7177");
+        //application.Urls.Add("http://localhost:7177");
+
         application.UseHttpsRedirection();
         application.UseAuthentication();
         application.UseAuthorization();

@@ -9,12 +9,13 @@
     </Authorized>
     <NotAuthorized Context="Login">
 
-        <div class="login-page">
+        <div class="login-content">
+            <div class="login-panel login-panel-left">
 
-            <div class="login-leftpanel">
-                <div class="login-leftpanel-content">
-                    <h2>Добро пожаловать в Tasko!</h2>
-                    <p>Для продолжения, войдите в свою учетную запись Tasko</p>
+                <div class="login-form">
+                    <img class="logo" src="/assets/images/logo.svg">
+                    <h1>Welcome to Task`o!</h1>
+                    <p>For continue, please, sing in/up in your Task`o account</p>
 
                     <EditForm Model="@loginModel" OnValidSubmit="@HandleValidSubmit">
                         <DataAnnotationsValidator />
@@ -22,33 +23,36 @@
                         <div class="alert alert-danger" hidden="@loginModel.LoginFailureHidden">
                             Invalid login attempt, please correct and try again.
                         </div>
-                        <div class="form-group">
-                            <label>Email или Телефон</label>
-                            <InputText id="email" @bind-Value="loginModel.Username" class="form-control" />
+                        <div class="form-control">
+                            <label>Email or phone</label>
+                            <InputText id="email" @bind-Value="loginModel.Username" class="form-input" />
                         </div>
-                        <div class="form-group">
-                            <label>Пароль</label>
-                            <InputText id="password" type="password" @bind-Value="loginModel.Password" class="form-control" />
+
+                        <div class="form-control">
+                            <label class="form-label">Password</label>
+                            <InputText id="password" type="password" @bind-Value="loginModel.Password" class="form-input" />
                         </div>
-                        <div class="d-flex mt-3">
-                            <button type="submit" class="btn btn-primary">Войти</button>
-                            <button type="submit" class="btn btn-secondary ml-3">Создать аккаунт</button>
+
+                        <div class="login-form-buttons mt-3">
+                            <div class="login-form-buttons-left">
+                                <button type="submit" class="btn btn-primary">Sign in</button>
+                                <input class="btn btn-secondary ml-3" type="button" value="Sing up">
+                            </div>
+                            <a class="btn btn-link" href="#">Forget password?</a>
                         </div>
                     </EditForm>
                 </div>
             </div>
-
-            <div class="login-rightpanel">
-                <img src="/assets/images/login_background.svg" />
-                <div class="login-rightpanel-content">
-                    <h4>Что такое Task’o?</h4>
-                    <p>Task’o - это локальная программа для управления проектами как небольших организационных групп, так и огромных предприятий.</p>
+            <div class="login-panel login-panel-right">
+                <div class="login-panel-right-content">
+                    <h2 class="login-form-header-description">What is Task`o?</h2>
+                    <p class="login-form-description">
+                        Task`o - this is a local program for managment projects different
+                        sizes.
+                    </p>
                 </div>
             </div>
-
         </div>
-
-
     </NotAuthorized>
 </AuthorizeView>
 

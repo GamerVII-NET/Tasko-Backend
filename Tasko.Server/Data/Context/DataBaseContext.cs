@@ -13,6 +13,7 @@ public partial class DataBaseContext : DbContext
     public DataBaseContext(DbContextOptions<DataBaseContext> options)
         : base(options)
     {
+        Database.EnsureCreated();
     }
 
     public virtual DbSet<Role> Roles { get; set; }
