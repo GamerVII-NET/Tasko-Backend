@@ -24,7 +24,7 @@ public class UserService
         {
             var user = mapper.Map<User>(userCreate);
             var foundedUser = await repository.FindUserAsync(user.Email);
-            if (foundedUser != null) return null;
+            if (foundedUser != null) return Results.Text("User already exsist!");
             await repository.CreateUserAsync(user);
             var token = repository.CreateToken(key, issuer, audience, user);
             return Results.Created($"/api/users/{user.Id}",
