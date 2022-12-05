@@ -13,8 +13,7 @@ namespace Tasko.Server.Infrastructure.Services
             {
                 var user = await userRepository.FindUserAsync(userAuth.Login);
                 if (user == null) return Results.NotFound();
-                var enhancedHashPassword = BCrypt.Net.BCrypt.EnhancedHashPassword(userAuth.Password);
-                var validatePassword = BCrypt.Net.BCrypt.EnhancedVerify(user.Password, enhancedHashPassword);
+                var validatePassword = BCrypt.Net.BCrypt.Verify(userAuth.Password, user.Password);
                 if (!validatePassword) return Results.Unauthorized();
                 string token = userRepository.CreateToken(key, issuer, audience, user);
                 return Results.Ok(token);
