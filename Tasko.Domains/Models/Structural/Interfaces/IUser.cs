@@ -1,4 +1,6 @@
-﻿namespace Tasko.Domains.Models.Structural.Interfaces
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace Tasko.Domains.Models.Structural.Interfaces
 {
     public interface IUser
     {

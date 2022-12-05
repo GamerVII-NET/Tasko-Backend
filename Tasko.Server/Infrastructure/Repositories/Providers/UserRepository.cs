@@ -1,7 +1,10 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.Extensions.Hosting;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Tasko.Domains.Models.Structural.Interfaces;
+using Tasko.Domains.Models.Structural.Providers;
 using Tasko.Server.Repositories.Abstracts;
 using Tasko.Server.Repositories.Interfaces;
 
@@ -19,21 +22,28 @@ namespace Tasko.Server.Repositories.Providers
         #region Find
         public async Task<IUser> FindUserAsync(Guid id) => await UserCollection.Find(u => u.Id == id).SingleOrDefaultAsync();
 
-        public async Task<IUser> FindUserAsync(string email)
+        public async Task<IUser> FindUserAsync(string login)
         {
-            var filter = Builders<IUser>.Filter.Eq("Email", email);
-            return await UserCollection.Find(filter).SingleOrDefaultAsync();
+            var filter = Builders<User>.Filter.Eq("Login", login);
+            var sd = await UserCollection.Find(filter).ToListAsync();
+            return sd.FirstOrDefault();
         }
 
-        public async Task<IUser> FindUserAsync(string login, string password) =>
-               await UserCollection.Find(u => u.Login == login && u.Password == password).SingleOrDefaultAsync();
+        public async Task<IUser> FindUserAsync(string login, string password)
+        {
+            var loginFilter = Builders<User>.Filter.Eq(x => x.Login, login);
+            var passwordFilter = Builders<User>.Filter.Eq(x => x.Password, password);
+            var combineFilters = Builders<User>.Filter.And(loginFilter, passwordFilter);
+            var sd = await UserCollection.Find(combineFilters).FirstOrDefaultAsync();
+            return sd;
+        }
         #endregion
 
         public async Task<IEnumerable<IUser>> GetUsersAsync() => await UserCollection.Find(_ => true).ToListAsync();
 
-        public async Task CreateUserAsync(IUser user) => await UserCollection.InsertOneAsync(user);
+        public async Task CreateUserAsync(User user) => await UserCollection.InsertOneAsync(user);
 
-        public Task UpdateUserAsync(IUser user)
+        public Task UpdateUserAsync(User user)
         {
             throw new NotImplementedException();
         }
