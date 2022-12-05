@@ -17,6 +17,12 @@ namespace Tasko.Server.Infrastructure.API.Providers
                           .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
                           .WithName("Get users")
                           .WithTags("Getters");
+
+            webApplication.MapGet("api/users/{id}", UserService.FindUser())
+                          .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
+                          .WithName("Get user by id")
+                          .WithTags("Getters");
+
         }
 
         private void Creators(WebApplication webApplication)

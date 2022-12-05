@@ -30,6 +30,7 @@ internal static class ApplicationService
         builder.Services.AddSingleton(dataContext);
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddTransient<IApi, UserApi>();
+        builder.Services.AddTransient<IApi, AuthApi>();
 
         builder.Services.AddSwaggerGen(s =>
         {

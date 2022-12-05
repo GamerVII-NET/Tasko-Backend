@@ -20,7 +20,7 @@ public class UserService
 
     internal static Func<IUserRepository, IMapper, UserCreate, Task<IResult>> CreateUser(string key, string issuer, string audience)
     {
-        return async (IUserRepository repository, IMapper mapper, UserCreate userCreate) =>
+        return [Authorize] async (IUserRepository repository, IMapper mapper, UserCreate userCreate) =>
         {
             var user = mapper.Map<User>(userCreate);
             var foundedUser = await repository.FindUserAsync(user.Email);
@@ -35,4 +35,14 @@ public class UserService
             });
         };
     }
+
+    internal static Func<IUserRepository, IMapper, Guid, Task<IResult>> FindUser()
+    {
+        return [Authorize] async (IUserRepository userRepository, IMapper mapper, Guid id) =>
+        {
+            var user = userRepository.FindUserAsync(id);
+            return user == null ? Results.NotFound(id) : Results.Ok(user);
+        };
+    }
+
 }

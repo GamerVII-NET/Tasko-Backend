@@ -10,5 +10,6 @@ namespace Tasko.Server.Repositories.Interfaces
         Task DeleteUserAsync(Guid id);
         Task <IUser> FindUserAsync(Guid id);
         Task <IUser> FindUserAsync(string email);
+        Task <IUser> FindUserAsync(string login, string password);
     }
 }
