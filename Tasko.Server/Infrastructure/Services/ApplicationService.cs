@@ -1,6 +1,8 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
 using Tasko.Server.Infrastructure.API.Interfaces;
 using Tasko.Server.Infrastructure.API.Providers;
+using Tasko.Server.Infrastructure.Helpers;
 using Tasko.Server.Repositories.Interfaces;
 using Tasko.Server.Repositories.Providers;
 
@@ -11,7 +13,9 @@ internal static class ApplicationService
     internal static IMongoDatabase GetMongoDataConext(string connection, string databaseName)
     {
         var mongoClient = new MongoClient(connection);
-        return mongoClient.GetDatabase(databaseName);
+
+        var databaseContext = mongoClient.GetDatabase(databaseName);
+        return databaseContext;
     }
 
     internal static void RegisterBuilder(this WebApplicationBuilder builder, IMongoDatabase dataContext)
@@ -19,16 +23,42 @@ internal static class ApplicationService
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpContextAccessor();
-        builder.Services.AddSwaggerGen();
         builder.Services.AddAuthorization();
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                        .AddJwtBearer(options => AddJwtBearer
-                        .GenerateConfig(options, builder));
+                        .AddJwtBearer(options => AddJwtBearer.GenerateConfig(options, builder));
 
         builder.Services.AddSingleton(dataContext);
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddTransient<IApi, UserApi>();
-    }
+
+        builder.Services.AddSwaggerGen(s =>
+        {
+            s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Description = "Insert JWT token",
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                BearerFormat = "JWT",
+                Scheme = "bearer",
+            });
+            s.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[]{}
+                }
+            });
+        });
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+    }   
     internal static void RegisterApplication(this WebApplication application, WebApplicationBuilder builder)
     {
         if (application.Environment.IsDevelopment())

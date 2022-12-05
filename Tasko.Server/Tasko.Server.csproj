@@ -26,4 +26,9 @@
     <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructure\Services\Interaces\" />
+    <Folder Include="Infrastructure\Services\Providers\" />
+  </ItemGroup>
+
 </Project>

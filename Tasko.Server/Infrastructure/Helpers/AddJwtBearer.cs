@@ -1,4 +1,6 @@
-﻿public static class AddJwtBearer
+﻿namespace Tasko.Server.Infrastructure.Helpers;
+
+public static class AddJwtBearer
 {
     public static void GenerateConfig(JwtBearerOptions options, WebApplicationBuilder builder)
     {
