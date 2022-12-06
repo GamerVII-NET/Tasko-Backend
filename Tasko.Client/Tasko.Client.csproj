@@ -65,4 +65,8 @@
       <None Include="wwwroot\assets\Images\login_background.svg" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
+    </ItemGroup>
+
 </Project>

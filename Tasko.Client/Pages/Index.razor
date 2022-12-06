@@ -23,6 +23,7 @@
                         <div class="alert alert-danger" hidden="@loginModel.LoginFailureHidden">
                             Invalid login attempt, please correct and try again.
                         </div>
+
                         <div class="form-control">
                             <label>Email or phone</label>
                             <InputText id="email" @bind-Value="loginModel.Username" class="form-input" />
@@ -36,11 +37,22 @@
                         <div class="login-form-buttons mt-3">
                             <div class="login-form-buttons-left">
                                 <button type="submit" class="btn btn-primary">Sign in</button>
-                                <input class="btn btn-secondary ml-3" type="button" value="Sing up">
+
+
+                                <NavLink class="btn btn-secondary ml-3" href="/registration" Match="NavLinkMatch.All">
+                                    Sign Up
+                                </NavLink>
                             </div>
-                            <a class="btn btn-link" href="#">Forget password?</a>
+
+                            <NavLink class="btn btn-link" href="/registration" Match="NavLinkMatch.All">
+                                Забыли пароль?
+                            </NavLink>
+
                         </div>
                     </EditForm>
+                
+                
+                
                 </div>
             </div>
             <div class="login-panel login-panel-right">
@@ -63,10 +75,10 @@
     private async Task HandleValidSubmit()
     {
 
-        var successful = loginModel.ValidateLoginAsync(out string jwtToken);
+        var jwtToken = await loginModel.ValidateLoginAsync();
 
         //Not successful, don't need to do anything
-        if (!successful)
+        if (string.IsNullOrEmpty(jwtToken))
             return;
 
         //Call login and recirect

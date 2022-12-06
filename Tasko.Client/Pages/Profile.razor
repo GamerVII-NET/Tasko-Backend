@@ -1,16 +1,15 @@
-﻿@page "/counter"
+﻿@page "/profile"
 @inject Tasko.Client.Helpers.AuthStateProvider AuthStateProvider
 @attribute [Authorize]
 
-<h1>Counter</h1>
+<h1>Profile</h1>
 
-<p role="status">Current count: @currentCount</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 <AuthorizeView>
     <Authorized>
         <span>Ты авторизован @context.User.Identity.Name</span>
+        <span>Ваша роль: @context.User.Identity</span>
+        <span>Ваша почта: @context.User.FindFirst("Email")?.Value</span>
     </Authorized>
     <NotAuthorized>
         <span>Ты не авторизован</span>
@@ -19,10 +18,11 @@
 
 
 @code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
+    protected override void OnInitialized()
     {
-        currentCount++;
+        base.OnInitialized();
+
+        var test = AuthStateProvider.GetAuthenticationStateAsync();
     }
+
 }

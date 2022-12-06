@@ -1,0 +1,90 @@
+﻿@page "/registration"
+
+@using Tasko.Client.Helpers;
+@inject NavigationManager Navigation
+@inject AuthStateProvider AuthStateProvider
+
+
+<div class="login-content">
+    <div class="login-panel login-panel-left">
+
+        <div class="login-form">
+            <img class="logo" src="/assets/images/logo.svg">
+            <h1>Welcome to Task`o!</h1>
+            <p>For continue, please, sing in/up in your Task`o account</p>
+
+            <EditForm Model="@viewModel" OnValidSubmit="@HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="alert alert-danger" hidden="@viewModel.LoginFailureHidden">
+                    Invalid login attempt, please correct and try again.
+                </div>
+
+                <div class="form-control">
+                    <label>Фамилия</label>
+                    <InputText id="email" @bind-Value="viewModel.LastName" class="form-input" />
+                </div>                
+
+                <div class="form-control">
+                    <label>Имя</label>
+                    <InputText id="email" @bind-Value="viewModel.FirstName" class="form-input" />
+                </div>
+
+                <div class="form-control">
+                    <label>Отчество</label>
+                    <InputText id="email" @bind-Value="viewModel.Patronymic" class="form-input" />
+                </div>
+
+                <div class="form-control">
+                    <label>Логин</label>
+                    <InputText id="email" @bind-Value="viewModel.Username" class="form-input" />
+                </div>
+
+                <div class="form-control">
+                    <label>Email</label>
+                    <InputText id="email" @bind-Value="viewModel.Email" class="form-input" />
+                </div>
+
+                <div class="form-control">
+                    <label class="form-label">Password</label>
+                    <InputText id="password" type="password" @bind-Value="viewModel.Password" class="form-input" />
+                </div>
+
+                <div class="login-form-buttons mt-3">
+                    <div class="login-form-buttons-left">
+                        <button type="submit" class="btn btn-primary">Sign in</button>
+                        <input class="btn btn-secondary ml-3" type="button" value="Sing up">
+                    </div>
+                    <a class="btn btn-link" href="#">Forget password?</a>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+    <div class="login-panel login-panel-right">
+        <div class="login-panel-right-content">
+            <h2 class="login-form-header-description">What is Task`o?</h2>
+            <p class="login-form-description">
+                Task`o - this is a local program for managment projects different
+                sizes.
+            </p>
+        </div>
+    </div>
+</div>
+
+@code {
+    private RegistrationViewModel viewModel = new();
+
+    private async Task HandleValidSubmit()
+    {
+
+        var jwtToken = await viewModel.RegistrationAsync();
+
+        //Not successful, don't need to do anything
+        if (string.IsNullOrEmpty(jwtToken))
+            return;
+
+        //Call login and recirect
+        await AuthStateProvider.Login(jwtToken);
+        Navigation.NavigateTo("/counter"); //Root URL
+    }
+}
