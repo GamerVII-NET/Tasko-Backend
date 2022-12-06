@@ -1,4 +1,5 @@
-﻿using Tasko.Domains.Models.Structural.Interfaces;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Tasko.Domains.Models.Structural.Interfaces;
 using Tasko.Server.Infrastructure.API.Interfaces;
 
 namespace Tasko.Server.Infrastructure.API.Providers
@@ -9,6 +10,7 @@ namespace Tasko.Server.Infrastructure.API.Providers
         {
             Getters(webApplication);
             Creators(webApplication);
+            Updaters(webApplication);
         }
 
         private void Getters(WebApplication webApplication)
@@ -23,6 +25,14 @@ namespace Tasko.Server.Infrastructure.API.Providers
                           .WithName("Get user by id")
                           .WithTags("Getters");
 
+        }
+
+        private void Updaters(WebApplication webApplication)
+        {
+            webApplication.MapPut("api/users", UserService.UpdateUser())
+                          .Produces(StatusCodes.Status200OK)
+                          .WithName("Update user")
+                          .WithTags("Updaters");
         }
 
         private void Creators(WebApplication webApplication)

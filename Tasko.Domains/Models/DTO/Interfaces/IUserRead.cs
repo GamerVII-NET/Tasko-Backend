@@ -9,6 +9,5 @@
         string Photo { get; set; }
         string? About { get; set; }
         DateTime LastOnline { get; set; }
-        bool? IsDeleted { get; set; }
     }
 }

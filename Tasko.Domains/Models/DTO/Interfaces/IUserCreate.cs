@@ -9,7 +9,6 @@
         string Email { get; set; }
         string Login { get; set; }
         string Password { get; set; }
-        bool IsDeleted { get; set; }
         #endregion
     }
 }

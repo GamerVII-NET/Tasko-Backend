@@ -12,7 +12,6 @@ namespace Tasko.Domains.Models.DTO.Providers
         public string Photo { get; set; }
         public string? About { get; set; }
         public DateTime LastOnline { get; set; }
-        public bool? IsDeleted { get; set; }
         #endregion
     }
 }

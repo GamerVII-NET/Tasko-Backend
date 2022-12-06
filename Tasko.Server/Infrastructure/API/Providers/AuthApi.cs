@@ -1,4 +1,5 @@
-﻿using Tasko.Server.Infrastructure.API.Interfaces;
+﻿using Tasko.Domains.Models.Structural.Interfaces;
+using Tasko.Server.Infrastructure.API.Interfaces;
 using Tasko.Server.Infrastructure.Services;
 
 namespace Tasko.Server.Infrastructure.API.Providers
@@ -16,7 +17,10 @@ namespace Tasko.Server.Infrastructure.API.Providers
                    issuer = webApplication.Configuration["Jwt:Issuer"],
                    audience = webApplication.Configuration["Jwt:Audience"];
 
-            webApplication.MapPost("api/login", AuthService.BearerAuthorization(key, issuer, audience));
+            webApplication.MapPost("api/authorization", AuthService.BearerAuthorization(key, issuer, audience))
+                          .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
+                          .WithName("Authorization")
+                          .WithTags("Auth");
         }
     }
 }
