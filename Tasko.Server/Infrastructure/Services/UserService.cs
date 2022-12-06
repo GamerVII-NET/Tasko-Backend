@@ -9,6 +9,15 @@ namespace Tasko.Server.Services;
 
 public class UserService
 {
+    internal static Func<IUserRepository, IMapper, Guid, Task<IResult>> FindUser()
+    {
+        return [Authorize] async (IUserRepository userRepository, IMapper mapper, Guid id) =>
+        {
+            var user = userRepository.FindUserAsync(id);
+            return user == null ? Results.NotFound(id) : Results.Ok(user);
+        };
+    }
+
     internal static Func<IUserRepository, IMapper, Task<IResult>> GetUsers()
     {
         return [Authorize] async (IUserRepository repository, IMapper mapper) =>
@@ -24,8 +33,9 @@ public class UserService
         {
             var user = mapper.Map<User>(userCreate);
             var foundedUser = await repository.FindUserAsync(user.Login);
-            if (foundedUser != null) return Results.Text("User already exsist!");
+            if (foundedUser != null) return Results.Conflict("User already exsist!");
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            user.IsDeleted = false;
             await repository.CreateUserAsync(user);
             var token = repository.CreateToken(key, issuer, audience, user);
             return Results.Created($"/api/users/{user.Id}",
@@ -37,13 +47,17 @@ public class UserService
         };
     }
 
-    internal static Func<IUserRepository, IMapper, Guid, Task<IResult>> FindUser()
+    internal static Func<IUserRepository, IMapper, UserCreate, Task<IResult>> UpdateUser()
     {
-        return [Authorize] async (IUserRepository userRepository, IMapper mapper, Guid id) =>
+        return [Authorize] async (IUserRepository repository, IMapper mapper, UserCreate userCreate) =>
         {
-            var user = userRepository.FindUserAsync(id);
-            return user == null ? Results.NotFound(id) : Results.Ok(user);
+            var user = mapper.Map<User>(userCreate);
+            var foundedUser = await repository.FindUserAsync(user.Login);
+            if (foundedUser != null) return Results.NotFound();
+            await repository.UpdateUserAsync(user);
+            return Results.Ok();
         };
     }
+
 
 }

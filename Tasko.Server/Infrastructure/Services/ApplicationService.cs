@@ -10,6 +10,7 @@ namespace Tasko.Server.Services;
 
 internal static class ApplicationService
 {
+
     internal static IMongoDatabase GetMongoDataConext(string connection, string databaseName)
     {
         var mongoClient = new MongoClient(connection);
@@ -17,7 +18,6 @@ internal static class ApplicationService
         var databaseContext = mongoClient.GetDatabase(databaseName);
         return databaseContext;
     }
-
     internal static void RegisterBuilder(this WebApplicationBuilder builder, IMongoDatabase dataContext)
     {
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -59,7 +59,7 @@ internal static class ApplicationService
             });
         });
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
-    }   
+    }
     internal static void RegisterApplication(this WebApplication application, WebApplicationBuilder builder)
     {
         //if (application.Environment.IsDevelopment())

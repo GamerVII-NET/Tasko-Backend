@@ -24,18 +24,16 @@ namespace Tasko.Server.Repositories.Providers
 
         public async Task<IUser> FindUserAsync(string login)
         {
-            var filter = Builders<User>.Filter.Eq("Login", login);
-            var sd = await UserCollection.Find(filter).ToListAsync();
-            return sd.FirstOrDefault();
+            var filter = Filter.Eq("Login", login);
+            return await UserCollection.Find(filter).FirstOrDefaultAsync();
         }
 
         public async Task<IUser> FindUserAsync(string login, string password)
         {
-            var loginFilter = Builders<User>.Filter.Eq(x => x.Login, login);
-            var passwordFilter = Builders<User>.Filter.Eq(x => x.Password, password);
-            var combineFilters = Builders<User>.Filter.And(loginFilter, passwordFilter);
-            var sd = await UserCollection.Find(combineFilters).FirstOrDefaultAsync();
-            return sd;
+            var loginFilter = Filter.Eq(x => x.Login, login);
+            var passwordFilter = Filter.Eq(x => x.Password, password);
+            var combineFilters = Filter.And(loginFilter, passwordFilter);
+            return await UserCollection.Find(combineFilters).FirstOrDefaultAsync();
         }
         #endregion
 
@@ -43,9 +41,10 @@ namespace Tasko.Server.Repositories.Providers
 
         public async Task CreateUserAsync(User user) => await UserCollection.InsertOneAsync(user);
 
-        public Task UpdateUserAsync(User user)
+        public async Task UpdateUserAsync(User user)
         {
-            throw new NotImplementedException();
+            var filter = Filter.Eq("Id", user.Id);
+            await UserCollection.ReplaceOneAsync(filter, user);
         }
 
         public async Task DeleteUserAsync(Guid id)
