@@ -62,13 +62,14 @@ internal static class ApplicationService
     }   
     internal static void RegisterApplication(this WebApplication application, WebApplicationBuilder builder)
     {
-        if (application.Environment.IsDevelopment())
+        //if (application.Environment.IsDevelopment())
         {
             application.UseSwagger();
             application.UseSwaggerUI();
         }
 
-        application.UseHttpsRedirection();
+        application.Urls.Add("http://87.249.49.56:7177");
+        //application.UseHttpsRedirection();
         application.UseAuthentication();
         application.UseAuthorization();
     }
