@@ -68,7 +68,8 @@ internal static class ApplicationService
             application.UseSwaggerUI();
         }
 
-        application.Urls.Add("http://87.249.49.56:7177");
+        //application.Urls.Add("http://87.249.49.56:7177");
+        //application.Urls.Add("http://127.0.0.1:7177");
         //application.UseHttpsRedirection();
         application.UseAuthentication();
         application.UseAuthorization();

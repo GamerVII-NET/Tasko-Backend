@@ -12,5 +12,6 @@ namespace Tasko.Server.Repositories.Interfaces
         Task <IUser> FindUserAsync(Guid id);
         Task <IUser> FindUserAsync(string login);
         Task <IUser> FindUserAsync(string login, string password);
+        bool VerifyUser(IConfiguration configuration, HttpContext context, IUser user);
     }
 }

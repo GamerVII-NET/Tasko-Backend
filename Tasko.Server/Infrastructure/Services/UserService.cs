@@ -29,15 +29,15 @@ public class UserService
 
     internal static Func<IUserRepository, IMapper, UserCreate, Task<IResult>> CreateUser(string key, string issuer, string audience)
     {
-        return /*[Authorize]*/ async (IUserRepository repository, IMapper mapper, UserCreate userCreate) =>
+        return /*[Authorize]*/ async (IUserRepository userRepository, IMapper mapper, UserCreate userCreate) =>
         {
             var user = mapper.Map<User>(userCreate);
-            var foundedUser = await repository.FindUserAsync(user.Login);
+            var foundedUser = await userRepository.FindUserAsync(user.Login);
             if (foundedUser != null) return Results.Conflict("User already exsist!");
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             user.IsDeleted = false;
-            await repository.CreateUserAsync(user);
-            var token = repository.CreateToken(key, issuer, audience, user);
+            await userRepository.CreateUserAsync(user);
+            var token = userRepository.CreateToken(key, issuer, audience, user);
             return Results.Created($"/api/users/{user.Id}",
             new
             {
@@ -49,12 +49,34 @@ public class UserService
 
     internal static Func<IUserRepository, IMapper, UserCreate, Task<IResult>> UpdateUser()
     {
-        return [Authorize] async (IUserRepository repository, IMapper mapper, UserCreate userCreate) =>
+        return [Authorize] async (IUserRepository userRepository, IMapper mapper, UserCreate userCreate) =>
         {
             var user = mapper.Map<User>(userCreate);
-            var foundedUser = await repository.FindUserAsync(user.Login);
+            var foundedUser = await userRepository.FindUserAsync(user.Login);
             if (foundedUser != null) return Results.NotFound();
-            await repository.UpdateUserAsync(user);
+            await userRepository.UpdateUserAsync(user);
+            return Results.Ok();
+        };
+    }
+
+    internal static Func<HttpContext, IUserRepository, IMapper, Guid, Task<IResult>> DeleteUser(IConfiguration configuration)
+    {
+        return [Authorize] async (HttpContext context, IUserRepository userRepository, IMapper mapper, Guid id) =>
+        {
+            var user = await userRepository.FindUserAsync(id);
+
+            if (user is null)
+            {
+                Results.NotFound(id);
+            }
+
+            var isCurrentUser = userRepository.VerifyUser(configuration, context, user);
+
+            if (isCurrentUser == false) { return Results.Unauthorized(); }
+
+            await userRepository.DeleteUserAsync(user.Id);
+
+
             return Results.Ok();
         };
     }

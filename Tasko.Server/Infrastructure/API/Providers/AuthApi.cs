@@ -1,5 +1,6 @@
 ﻿using Tasko.Domains.Models.Structural.Interfaces;
 using Tasko.Server.Infrastructure.API.Interfaces;
+using Tasko.Server.Infrastructure.Extensions.AES;
 using Tasko.Server.Infrastructure.Services;
 
 namespace Tasko.Server.Infrastructure.API.Providers
@@ -13,9 +14,9 @@ namespace Tasko.Server.Infrastructure.API.Providers
 
         private void Auth(WebApplication webApplication)
         {
-            string key = webApplication.Configuration["Jwt:Key"],
-                   issuer = webApplication.Configuration["Jwt:Issuer"],
-                   audience = webApplication.Configuration["Jwt:Audience"];
+            string key = webApplication.Configuration["Jwt:Key"].Decrypt(AesService.AesKey, AesService.IV),
+                   issuer = webApplication.Configuration["Jwt:Issuer"].Decrypt(AesService.AesKey, AesService.IV),
+                   audience = webApplication.Configuration["Jwt:Audience"].Decrypt(AesService.AesKey, AesService.IV);
 
             webApplication.MapPost("api/authorization", AuthService.BearerAuthorization(key, issuer, audience))
                           .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
