@@ -58,7 +58,7 @@ namespace Tasko.Server.Repositories.Providers
             {
                 new Claim(ClaimTypes.NameIdentifier, $"{user.Id}"),
                 new Claim(ClaimTypes.Name, user.FirstName),
-                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Email, user.Email)
             };
             var expiryDuration = new TimeSpan(0, 30, 0, 0);
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));

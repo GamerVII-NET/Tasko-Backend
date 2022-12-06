@@ -29,6 +29,8 @@
             }
             return Convert.ToBase64String(encrypted);
         }
+
+
         public static string Decrypt(this string cipherText, byte[] key, byte[] IV)
         {
             if (cipherText == null || cipherText.Length <= 0) throw new ArgumentNullException(nameof(cipherText));

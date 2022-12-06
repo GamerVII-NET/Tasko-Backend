@@ -6,9 +6,9 @@
 <AuthorizeView>
     <Authorized Context="Auth">
         <span>Авторизован</span>
+
     </Authorized>
     <NotAuthorized Context="Login">
-
         <div class="login-content">
             <div class="login-panel login-panel-left">
 
@@ -83,6 +83,6 @@
 
         //Call login and recirect
         await AuthStateProvider.Login(jwtToken);
-        Navigation.NavigateTo("/counter"); //Root URL
+        Navigation.NavigateTo("/profile"); //Root URL
     }
 }

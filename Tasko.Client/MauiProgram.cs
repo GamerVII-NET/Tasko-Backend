@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Tasko.Client.Data;
 using Tasko.Client.Helpers;
 
 namespace Tasko.Client
@@ -25,9 +24,8 @@ namespace Tasko.Client
 
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<AuthStateProvider>();
-            builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<AuthStateProvider>());
-
-            builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<AuthStateProvider>());           
+            
 
             return builder.Build();
         }

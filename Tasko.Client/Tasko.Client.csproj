@@ -69,4 +69,8 @@
       <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Data\" />
+    </ItemGroup>
+
 </Project>
