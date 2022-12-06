@@ -14,17 +14,18 @@ public class UserService
         return [Authorize] async (IUserRepository repository, IMapper mapper) =>
         {
             var users = await repository.GetUsersAsync();
-            return Results.Ok(mapper.Map<IEnumerable<IUserRead>>(users));
+            return Results.Ok(mapper.Map<IEnumerable<UserRead>>(users));
         };
     }
 
     internal static Func<IUserRepository, IMapper, UserCreate, Task<IResult>> CreateUser(string key, string issuer, string audience)
     {
-        return async (IUserRepository repository, IMapper mapper, UserCreate userCreate) =>
+        return /*[Authorize]*/ async (IUserRepository repository, IMapper mapper, UserCreate userCreate) =>
         {
             var user = mapper.Map<User>(userCreate);
-            var foundedUser = await repository.FindUserAsync(user.Email);
+            var foundedUser = await repository.FindUserAsync(user.Login);
             if (foundedUser != null) return Results.Text("User already exsist!");
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             await repository.CreateUserAsync(user);
             var token = repository.CreateToken(key, issuer, audience, user);
             return Results.Created($"/api/users/{user.Id}",
