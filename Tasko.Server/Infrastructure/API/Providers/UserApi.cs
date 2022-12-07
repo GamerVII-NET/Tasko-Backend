@@ -40,7 +40,7 @@ namespace Tasko.Server.Infrastructure.API.Providers
 
         private void Updaters(WebApplication webApplication)
         {
-            webApplication.MapPut("api/users", UserService.UpdateUser())
+            webApplication.MapPut("api/users", UserService.UpdateUser(webApplication.Configuration))
                           .Produces(StatusCodes.Status200OK)
                           .WithName("Update user")
                           .WithTags("Updaters");

@@ -116,9 +116,7 @@ namespace Tasko.Server.Repositories.Providers
                 var claimEmail = securityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
                 var claimGuid = securityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
-                if (claimUser!.Value == user.Login &&
-                    claimEmail!.Value == user.Email &&
-                    claimGuid!.Value == user.Id.ToString())
+                if (claimGuid!.Value == user.Id.ToString())
                 {
                     return true;
                 }

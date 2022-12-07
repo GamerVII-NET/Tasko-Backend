@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 using Tasko.Domains.Models.DTO.Interfaces;
 using Tasko.Domains.Models.DTO.Providers;
 using Tasko.Domains.Models.Structural.Providers;
@@ -47,14 +48,22 @@ public class UserService
         };
     }
 
-    internal static Func<IUserRepository, IMapper, UserCreate, Task<IResult>> UpdateUser()
+    internal static Func<HttpContext, IUserRepository, IMapper, UserCreate, Task<IResult>> UpdateUser(IConfiguration configuration)
     {
-        return [Authorize] async (IUserRepository userRepository, IMapper mapper, UserCreate userCreate) =>
+        return [Authorize] async (HttpContext context, IUserRepository userRepository, IMapper mapper, UserCreate userCreate) =>
         {
             var user = mapper.Map<User>(userCreate);
+
             var foundedUser = await userRepository.FindUserAsync(user.Login);
-            if (foundedUser != null) return Results.NotFound();
+
+            if (foundedUser == null) return Results.NotFound();
+            
+            var isCurrentUser = userRepository.VerifyUser(configuration, context, foundedUser);
+
+            if (isCurrentUser == false) { return Results.Unauthorized(); }
+
             await userRepository.UpdateUserAsync(user);
+
             return Results.Ok();
         };
     }
