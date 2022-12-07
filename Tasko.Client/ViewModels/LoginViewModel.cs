@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
-using Tasko.Domains.Models.DTO.Providers;
+using Tasko.Domains.Models.DTO.User;
 
 namespace Tasko.Client.ViewModels
 {
@@ -32,7 +32,7 @@ namespace Tasko.Client.ViewModels
 
                 var response = await client.PostAsync("http://87.249.49.56:7177/api/authorization", content);
 
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)    
                 {
                     var jwtToken = await response.Content.ReadAsStringAsync();
 

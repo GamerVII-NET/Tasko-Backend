@@ -4,7 +4,6 @@ using Tasko.Server.Infrastructure.API.Interfaces;
 using Tasko.Server.Infrastructure.API.Providers;
 using Tasko.Server.Infrastructure.Helpers;
 using Tasko.Server.Repositories.Interfaces;
-using Tasko.Server.Repositories.Providers;
 
 namespace Tasko.Server.Services;
 

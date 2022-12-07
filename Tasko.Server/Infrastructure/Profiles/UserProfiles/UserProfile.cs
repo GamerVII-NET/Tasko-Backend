@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Tasko.Domains.Models.DTO.Providers;
+using Tasko.Domains.Models.DTO.User;
 using Tasko.Domains.Models.Structural.Providers;
 
 namespace Tasko.Server.Profiles.UserProfiles
@@ -10,6 +10,7 @@ namespace Tasko.Server.Profiles.UserProfiles
         {
             CreateMap<User, UserRead>();
             CreateMap<UserCreate, User>();
+            CreateMap<UserUpdate, User>();
         }
     }
 }

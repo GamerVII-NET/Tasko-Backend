@@ -1,18 +1,50 @@
-﻿using Microsoft.Extensions.Hosting;
+using Tasko.Domains.Models.Structural.Interfaces;
+using Tasko.Domains.Models.Structural.Providers;
 using Microsoft.Net.Http.Headers;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Tasko.Domains.Models.Structural.Interfaces;
-using Tasko.Domains.Models.Structural.Providers;
 using Tasko.Server.Infrastructure.Extensions.AES;
 using Tasko.Server.Infrastructure.Services;
-using Tasko.Server.Repositories.Abstracts;
-using Tasko.Server.Repositories.Interfaces;
 
-namespace Tasko.Server.Repositories.Providers
+namespace Tasko.Server.Repositories.Interfaces
 {
+    #region Interfaces
+    public interface ITokenService
+    {
+        string CreateToken(string key, string issuer, string audience, IUser user);
+    }
+
+    public interface IUserRepository : ITokenService
+    {
+        Task<IEnumerable<IUser>> GetUsersAsync();
+        Task CreateUserAsync(User user);
+        Task UpdateUserAsync(User user);
+        Task DeleteUserAsync(Guid id);
+        Task<IUser> FindUserAsync(Guid id);
+        Task<IUser> FindUserAsync(string login);
+        Task<IUser> FindUserAsync(string login, string password);
+        bool VerifyUser(IConfiguration configuration, HttpContext context, IUser user);
+    }
+    #endregion
+
+    #region DataBase context
+    public class UserRepositoryBase
+    {
+        public UserRepositoryBase(IMongoDatabase databaseContext)
+        {
+            Filter = Builders<User>.Filter;
+            UserCollection = databaseContext.GetCollection<User>("Users");
+        }
+
+        internal IMongoCollection<User> UserCollection { get; set; }
+
+        internal FilterDefinitionBuilder<User> Filter { get; }
+    }
+
+    #endregion
+
+    #region Repository
     public class UserRepository : UserRepositoryBase, IUserRepository
     {
         #region Constructors
@@ -126,5 +158,6 @@ namespace Tasko.Server.Repositories.Providers
             return false;
         }
         #endregion
-    }
+    } 
+    #endregion
 }

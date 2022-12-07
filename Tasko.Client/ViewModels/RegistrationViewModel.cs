@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
-using Tasko.Domains.Models.DTO.Providers;
+using Tasko.Domains.Models.DTO.User;
 
 namespace Tasko.Client.ViewModels
 {
