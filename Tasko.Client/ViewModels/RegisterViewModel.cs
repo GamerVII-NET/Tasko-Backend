@@ -117,7 +117,7 @@ namespace Tasko.Client.ViewModels
             };
 
             JsonContent content = JsonContent.Create(user);
-            var response = await HttpClient.PostAsync("/api//users", content);
+            var response = await HttpClient.PostAsync("/api/users", content);
             if (response.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 Dispose(true);
