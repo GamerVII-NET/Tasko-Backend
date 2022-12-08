@@ -39,8 +39,7 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Extensions\Cryptography\AES\" />
-    <Folder Include="Infrastructure\Services\Interaces\" />
-    <Folder Include="Infrastructure\Services\Providers\" />
+    <Folder Include="Infrastructure\Repositories\UserRepository\" />
   </ItemGroup>
 
 </Project>

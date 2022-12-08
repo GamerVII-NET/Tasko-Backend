@@ -6,7 +6,7 @@ namespace Tasko.Domains.Models.Structural.Providers
     public class User : IUser
     {
         [BsonId]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         public string Email { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }

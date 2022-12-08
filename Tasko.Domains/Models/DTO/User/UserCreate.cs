@@ -1,7 +1,17 @@
-﻿using Tasko.Domains.Models.DTO.Interfaces;
-
-namespace Tasko.Domains.Models.DTO.Providers
+namespace Tasko.Domains.Models.DTO.User
 {
+    public interface IUserCreate
+    {
+        #region Properties
+        string FirstName { get; set; }
+        string LastName { get; set; }
+        string Patronymic { get; set; }
+        string Email { get; set; }
+        string Login { get; set; }
+        string Password { get; set; }
+        #endregion
+    }
+
     public class UserCreate : IUserCreate
     {
         #region Properties

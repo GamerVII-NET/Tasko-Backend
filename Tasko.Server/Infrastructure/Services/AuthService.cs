@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Tasko.Domains.Models.DTO.Providers;
+using Tasko.Domains.Models.DTO.User;
 using Tasko.Server.Repositories.Interfaces;
 
 namespace Tasko.Server.Infrastructure.Services

@@ -1,4 +1,7 @@
-﻿namespace Tasko.Server.Infrastructure.Helpers;
+﻿using Tasko.Server.Infrastructure.Extensions.AES;
+using Tasko.Server.Infrastructure.Services;
+
+namespace Tasko.Server.Infrastructure.Helpers;
 
 public static class AddJwtBearer
 {
@@ -10,9 +13,9 @@ public static class AddJwtBearer
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            ValidIssuer = builder.Configuration["Jwt:Issuer"].Decrypt(AesService.AesKey, AesService.IV),
+            ValidAudience = builder.Configuration["Jwt:Audience"].Decrypt(AesService.AesKey, AesService.IV),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"].Decrypt(AesService.AesKey, AesService.IV)))
         };
     }
 }

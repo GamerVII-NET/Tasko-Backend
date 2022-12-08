@@ -4,7 +4,6 @@ using Tasko.Server.Infrastructure.API.Interfaces;
 using Tasko.Server.Infrastructure.API.Providers;
 using Tasko.Server.Infrastructure.Helpers;
 using Tasko.Server.Repositories.Interfaces;
-using Tasko.Server.Repositories.Providers;
 
 namespace Tasko.Server.Services;
 
@@ -68,7 +67,8 @@ internal static class ApplicationService
             application.UseSwaggerUI();
         }
 
-        application.Urls.Add("http://87.249.49.56:7177");
+        //application.Urls.Add("http://87.249.49.56:7177");
+        //application.Urls.Add("http://127.0.0.1:7177");
         //application.UseHttpsRedirection();
         application.UseAuthentication();
         application.UseAuthorization();
