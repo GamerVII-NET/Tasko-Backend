@@ -4,46 +4,94 @@ using Tasko.Domains.Models.DTO.Providers;
 
 namespace Tasko.Client.ViewModels
 {
-    public class LoginViewModel
+    #region Interfaces
+    public interface ILoginViewModel
     {
+        #region Properties
+        string Username { get; set; }
+        string Password { get; set; }
+        bool LoginFailureHidden { get; set; }
+        #endregion
+
+        #region Methods
+        Task<string> ValidateLoginAsync();
+        #endregion
+    }
+    #endregion
+
+    #region Abstracts
+    public abstract class LoginViewModelBase : ILoginViewModel, IDisposable
+    {
+        #region Consturctors
+        public LoginViewModelBase(IHttpClientFactory clientFactory) => HttpClient = clientFactory.CreateClient();
+
+        #endregion
+
+        #region Fields
+        internal readonly HttpClient HttpClient;
+        private bool _disposed;
+        #endregion
+
+        #region Properties
+        public virtual string Username { get; set; }
+        public virtual string Password { get; set; }
+        public virtual bool LoginFailureHidden { get; set; }
+        #endregion
+
+        #region Methods
+        public abstract Task<string> ValidateLoginAsync();
+        protected virtual void Dispose(bool dispoing)
+        {
+            if(!_disposed)
+            {
+                if(dispoing)
+                {
+                    HttpClient.Dispose();
+                }
+            }
+            _disposed = true;
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
+    }
+    #endregion
+
+    #region Providers
+    public class LoginViewModel : LoginViewModelBase
+    {
+        public LoginViewModel(IHttpClientFactory clientFactory) : base(clientFactory) { }
+
         [Display(Name = "Логин")]
         [Required(ErrorMessage = "Логин обязателен для заполнения")]
-        public string Username { get; set; }
+        public override string Username { get; set; }
 
         [Display(Name = "Пароль")]
         [Required(ErrorMessage = "Пароль обязателен для заполнения")]
-        public string Password { get; set; }
+        public override string Password { get; set; }
 
-        public bool LoginFailureHidden { get; set; } = true;
+        public override bool LoginFailureHidden { get; set; } = true;
 
-        public async Task<string> ValidateLoginAsync()
+        public async override Task<string> ValidateLoginAsync()
         {
-
             var user = new UserAuth
             {
                 Login = Username,
                 Password = Password
             };
-
-            JsonContent content = JsonContent.Create(user);
-
-            using (var client = new HttpClient())
+            var content = JsonContent.Create(user);
+            var response = await HttpClient.PostAsync("/authorization", content);
+            if (response.EnsureSuccessStatusCode().IsSuccessStatusCode)
             {
-
-                var response = await client.PostAsync("http://87.249.49.56:7177/api/authorization", content);
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    var jwtToken = await response.Content.ReadAsStringAsync();
-
-                    return jwtToken;
-                }
-
-
+                Dispose(true);
+                return await response.Content.ReadAsStringAsync();
             }
-
             LoginFailureHidden = false;
             return string.Empty;
         }
     }
+    #endregion
 }

@@ -13,41 +13,41 @@
             <h1>Welcome to Task`o!</h1>
             <p>For continue, please, sing in/up in your Task`o account</p>
 
-            <EditForm Model="@viewModel" OnValidSubmit="@HandleValidSubmit">
+            <EditForm Model="@RegisterViewModel" OnValidSubmit="@HandleValidSubmit">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
-                <div class="alert alert-danger" hidden="@viewModel.LoginFailureHidden">
+                <div class="alert alert-danger" hidden="@RegisterViewModel.LoginFailureHidden">
                     Invalid login attempt, please correct and try again.
                 </div>
 
                 <div class="form-control">
                     <label>Фамилия</label>
-                    <InputText id="email" @bind-Value="viewModel.LastName" class="form-input" />
+                    <InputText id="email" @bind-Value="RegisterViewModel.LastName" class="form-input" />
                 </div>                
 
                 <div class="form-control">
                     <label>Имя</label>
-                    <InputText id="email" @bind-Value="viewModel.FirstName" class="form-input" />
+                    <InputText id="email" @bind-Value="RegisterViewModel.FirstName" class="form-input" />
                 </div>
 
                 <div class="form-control">
                     <label>Отчество</label>
-                    <InputText id="email" @bind-Value="viewModel.Patronymic" class="form-input" />
+                    <InputText id="email" @bind-Value="RegisterViewModel.Patronymic" class="form-input" />
                 </div>
 
                 <div class="form-control">
                     <label>Логин</label>
-                    <InputText id="email" @bind-Value="viewModel.Username" class="form-input" />
+                    <InputText id="email" @bind-Value="RegisterViewModel.Username" class="form-input" />
                 </div>
 
                 <div class="form-control">
                     <label>Email</label>
-                    <InputText id="email" @bind-Value="viewModel.Email" class="form-input" />
+                    <InputText id="email" @bind-Value="RegisterViewModel.Email" class="form-input" />
                 </div>
 
                 <div class="form-control">
                     <label class="form-label">Password</label>
-                    <InputText id="password" type="password" @bind-Value="viewModel.Password" class="form-input" />
+                    <InputText id="password" type="password" @bind-Value="RegisterViewModel.Password" class="form-input" />
                 </div>
 
                 <div class="login-form-buttons mt-3">
@@ -72,12 +72,14 @@
 </div>
 
 @code {
-    private RegistrationViewModel viewModel = new();
+
+    [Inject]
+    protected RegisterViewModel RegisterViewModel { get; set; }
 
     private async Task HandleValidSubmit()
     {
 
-        var jwtToken = await viewModel.RegistrationAsync();
+        var jwtToken = await RegisterViewModel.RegistrationAsync();
 
         //Not successful, don't need to do anything
         if (string.IsNullOrEmpty(jwtToken))

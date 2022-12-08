@@ -1,44 +1,39 @@
 ﻿@page "/"
+
 @using Tasko.Client.Helpers;
+
 @inject NavigationManager Navigation
 @inject AuthStateProvider AuthStateProvider
-
+    
 <AuthorizeView>
     <Authorized Context="Auth">
         <span>Авторизован</span>
-
     </Authorized>
     <NotAuthorized Context="Login">
         <div class="login-content">
             <div class="login-panel login-panel-left">
-
                 <div class="login-form">
                     <img class="logo" src="/assets/images/logo.svg">
                     <h1>Welcome to Task`o!</h1>
                     <p>For continue, please, sing in/up in your Task`o account</p>
 
-                    <EditForm Model="@loginModel" OnValidSubmit="@HandleValidSubmit">
+                    <EditForm Model="@LoginViewModel" OnValidSubmit="@HandleValidSubmit">
                         <DataAnnotationsValidator />
                         <ValidationSummary />
-                        <div class="alert alert-danger" hidden="@loginModel.LoginFailureHidden">
+                        <div class="alert alert-danger" hidden="@LoginViewModel.LoginFailureHidden">
                             Invalid login attempt, please correct and try again.
                         </div>
-
                         <div class="form-control">
                             <label>Email or phone</label>
-                            <InputText id="email" @bind-Value="loginModel.Username" class="form-input" />
+                            <InputText id="email" @bind-Value="LoginViewModel.Username" class="form-input" />
                         </div>
-
                         <div class="form-control">
                             <label class="form-label">Password</label>
-                            <InputText id="password" type="password" @bind-Value="loginModel.Password" class="form-input" />
+                            <InputText id="password" type="password" @bind-Value="LoginViewModel.Password" class="form-input" />
                         </div>
-
                         <div class="login-form-buttons mt-3">
                             <div class="login-form-buttons-left">
                                 <button type="submit" class="btn btn-primary">Sign in</button>
-
-
                                 <NavLink class="btn btn-secondary ml-3" href="/registration" Match="NavLinkMatch.All">
                                     Sign Up
                                 </NavLink>
@@ -47,12 +42,8 @@
                             <NavLink class="btn btn-link" href="/registration" Match="NavLinkMatch.All">
                                 Забыли пароль?
                             </NavLink>
-
                         </div>
                     </EditForm>
-                
-                
-                
                 </div>
             </div>
             <div class="login-panel login-panel-right">
@@ -70,12 +61,13 @@
 
 
 @code {
-    private LoginViewModel loginModel = new();
+
+    [Inject]
+    protected ILoginViewModel LoginViewModel { get; set; }
 
     private async Task HandleValidSubmit()
     {
-
-        var jwtToken = await loginModel.ValidateLoginAsync();
+        var jwtToken = await LoginViewModel.ValidateLoginAsync();
 
         //Not successful, don't need to do anything
         if (string.IsNullOrEmpty(jwtToken))

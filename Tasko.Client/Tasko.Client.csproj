@@ -50,8 +50,17 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.0" />
+      <AndroidResource Remove="Data\**" />
+      <Compile Remove="Data\**" />
+      <Content Remove="Data\**" />
+      <EmbeddedResource Remove="Data\**" />
+      <MauiXaml Remove="Data\**" />
+      <None Remove="Data\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     </ItemGroup>
 
@@ -67,10 +76,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Data\" />
     </ItemGroup>
 
 </Project>
