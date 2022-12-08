@@ -11,8 +11,9 @@
             services.AddAuthorizationCore();
             services.AddScoped<AuthStateProvider>();
             services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<AuthStateProvider>());
-            services.AddHttpClient("base", client => client.BaseAddress = new Uri("http://87.249.49.56:7177/api"));
+            services.AddHttpClient("base", client => client.BaseAddress = new Uri("http://87.249.49.56:7177"));
             services.AddTransient<ILoginViewModel, LoginViewModel>();
+            services.AddTransient<IRegisterViewModel, RegisterViewModel>();
         }
     }
 }

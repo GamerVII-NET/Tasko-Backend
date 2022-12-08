@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
-using Tasko.Domains.Models.DTO.Providers;
+using Tasko.Domains.Models.DTO.User;
 
 namespace Tasko.Client.ViewModels
 {
@@ -63,10 +63,7 @@ namespace Tasko.Client.ViewModels
             GC.SuppressFinalize(this);
         }
 
-        public abstract Task<string> RegistrationAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract Task<string> RegistrationAsync();
         #endregion
     }
     #endregion
@@ -120,7 +117,7 @@ namespace Tasko.Client.ViewModels
             };
 
             JsonContent content = JsonContent.Create(user);
-            var response = await HttpClient.PostAsync("/users", content);
+            var response = await HttpClient.PostAsync("/api//users", content);
             if (response.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 Dispose(true);

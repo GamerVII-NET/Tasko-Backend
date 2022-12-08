@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
-using Tasko.Domains.Models.DTO.Providers;
+using Tasko.Domains.Models.DTO.User;
 
 namespace Tasko.Client.ViewModels
 {
@@ -23,7 +23,7 @@ namespace Tasko.Client.ViewModels
     public abstract class LoginViewModelBase : ILoginViewModel, IDisposable
     {
         #region Consturctors
-        public LoginViewModelBase(IHttpClientFactory clientFactory) => HttpClient = clientFactory.CreateClient();
+        public LoginViewModelBase(IHttpClientFactory clientFactory) => HttpClient = clientFactory.CreateClient("base");
 
         #endregion
 
@@ -83,7 +83,7 @@ namespace Tasko.Client.ViewModels
                 Password = Password
             };
             var content = JsonContent.Create(user);
-            var response = await HttpClient.PostAsync("/authorization", content);
+            var response = await HttpClient.PostAsync("/api/authorization", content);
             if (response.EnsureSuccessStatusCode().IsSuccessStatusCode)
             {
                 Dispose(true);
