@@ -57,6 +57,8 @@ namespace Tasko.Client.ViewModels
             GC.SuppressFinalize(this);
         }
         #endregion
+
+        
     }
     #endregion
 
@@ -88,10 +90,12 @@ namespace Tasko.Client.ViewModels
             {
                 Dispose(true);
                 return await response.Content.ReadAsStringAsync();
-            }
+            }   
             LoginFailureHidden = false;
             return string.Empty;
         }
     }
     #endregion
+
+
 }

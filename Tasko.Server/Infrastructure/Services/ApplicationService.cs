@@ -28,6 +28,7 @@ internal static class ApplicationService
 
         builder.Services.AddSingleton(dataContext);
         builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IRoleRepository, RoleRepository>();
         builder.Services.AddTransient<IApi, UserApi>();
         builder.Services.AddTransient<IApi, AuthApi>();
 
@@ -61,14 +62,17 @@ internal static class ApplicationService
     }
     internal static void RegisterApplication(this WebApplication application, WebApplicationBuilder builder)
     {
-        //if (application.Environment.IsDevelopment())
+        if (application.Environment.IsDevelopment())
         {
             application.UseSwagger();
             application.UseSwaggerUI();
         }
 
-        //application.Urls.Add("http://87.249.49.56:7177");
-        //application.Urls.Add("http://127.0.0.1:7177");
+        if (application.Environment.IsProduction())
+        {
+            application.Urls.Add("http://87.249.49.56:7177");
+        }
+
         //application.UseHttpsRedirection();
         application.UseAuthentication();
         application.UseAuthorization();
