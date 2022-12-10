@@ -23,7 +23,7 @@ namespace Tasko.Client.ViewModels
     }
     #endregion
 
-    #region Abstracts
+    #region Abstracts   
     public abstract class IRegsiterViewModelBase : IRegisterViewModel, IDisposable
     {
         #region Consturctors

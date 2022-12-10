@@ -50,12 +50,37 @@
     </ItemGroup>
 
     <ItemGroup>
+      <AndroidAsset Remove="Platforms\Android\**" />
       <AndroidResource Remove="Data\**" />
+      <AndroidResource Remove="Platforms\Android\**" />
+      <AndroidResource Remove="Platforms\iOS\**" />
+      <AndroidResource Remove="Platforms\MacCatalyst\**" />
+      <AndroidResource Remove="Platforms\Tizen\**" />
       <Compile Remove="Data\**" />
+      <Compile Remove="Platforms\Android\**" />
+      <Compile Remove="Platforms\iOS\**" />
+      <Compile Remove="Platforms\MacCatalyst\**" />
+      <Compile Remove="Platforms\Tizen\**" />
       <Content Remove="Data\**" />
+      <Content Remove="Platforms\Android\**" />
+      <Content Remove="Platforms\iOS\**" />
+      <Content Remove="Platforms\MacCatalyst\**" />
+      <Content Remove="Platforms\Tizen\**" />
       <EmbeddedResource Remove="Data\**" />
+      <EmbeddedResource Remove="Platforms\Android\**" />
+      <EmbeddedResource Remove="Platforms\iOS\**" />
+      <EmbeddedResource Remove="Platforms\MacCatalyst\**" />
+      <EmbeddedResource Remove="Platforms\Tizen\**" />
       <MauiXaml Remove="Data\**" />
+      <MauiXaml Remove="Platforms\Android\**" />
+      <MauiXaml Remove="Platforms\iOS\**" />
+      <MauiXaml Remove="Platforms\MacCatalyst\**" />
+      <MauiXaml Remove="Platforms\Tizen\**" />
       <None Remove="Data\**" />
+      <None Remove="Platforms\Android\**" />
+      <None Remove="Platforms\iOS\**" />
+      <None Remove="Platforms\MacCatalyst\**" />
+      <None Remove="Platforms\Tizen\**" />
     </ItemGroup>
 
     <ItemGroup>
