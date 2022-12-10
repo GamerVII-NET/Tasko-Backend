@@ -1,8 +1,14 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using Tasko.Domains.Models.Structural.Interfaces;
 
 namespace Tasko.Domains.Models.Structural.Providers
 {
+    public interface IUserPhone
+    {
+        Guid Id { get; set; }
+        Guid? CountryId { get; set; }
+        string Number { get; set; }
+        string FullNumber { get; set; }
+    }
     public class UserPhone : IUserPhone
     {
         [BsonId]

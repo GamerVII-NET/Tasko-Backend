@@ -11,4 +11,9 @@
     <PackageReference Include="MongoDB.Bson" Version="2.18.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\DTO\Permission\" />
+    <Folder Include="Models\DTO\Role\" />
+  </ItemGroup>
+
 </Project>

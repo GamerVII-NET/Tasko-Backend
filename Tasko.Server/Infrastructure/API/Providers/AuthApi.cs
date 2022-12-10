@@ -1,4 +1,4 @@
-﻿using Tasko.Domains.Models.Structural.Interfaces;
+﻿using Tasko.Domains.Models.Structural.Providers;
 using Tasko.Server.Infrastructure.API.Interfaces;
 using Tasko.Server.Infrastructure.Extensions.AES;
 using Tasko.Server.Infrastructure.Services;

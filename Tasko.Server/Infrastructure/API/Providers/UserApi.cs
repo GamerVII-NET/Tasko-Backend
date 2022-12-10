@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Tasko.Domains.Models.Structural.Interfaces;
+using Tasko.Domains.Models.Structural.Providers;
 using Tasko.Server.Infrastructure.API.Interfaces;
 using Tasko.Server.Infrastructure.Extensions.AES;
 using Tasko.Server.Infrastructure.Services;
@@ -51,9 +52,15 @@ namespace Tasko.Server.Infrastructure.API.Providers
             string key = webApplication.Configuration["Jwt:Key"].Decrypt(AesService.AesKey, AesService.IV);
             string issuer = webApplication.Configuration["Jwt:Issuer"].Decrypt(AesService.AesKey, AesService.IV);
             string audience = webApplication.Configuration["Jwt:Audience"].Decrypt(AesService.AesKey, AesService.IV);
+
             webApplication.MapPost("api/users", UserService.CreateUser(key, issuer, audience))
                           .Produces(StatusCodes.Status200OK)
                           .WithName("Create user")
+                          .WithTags("Creators");
+
+            webApplication.MapPost("api/roles", RoleService.CreateRole(key, issuer, audience))
+                          .Produces(StatusCodes.Status200OK)
+                          .WithName("Create role")
                           .WithTags("Creators");
         }
 
