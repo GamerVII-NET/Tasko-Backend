@@ -1,17 +1,8 @@
 ﻿@page "/profile"
 @inject Tasko.Client.Helpers.AuthStateProvider AuthStateProvider
-@attribute [Authorize(Roles = "edit.shortdesc.recloud")]
 
 <h1>Profile</h1>
-
-<AuthorizeView Roles="edit.shortdesc.recloud">
-    <div class="ShortDescription">
-
-    </div>
-</AuthorizeView>
-
 <AuthorizeView>
-
     <Authorized>
         <div class="navbar">
             <div class="navbar-content">
