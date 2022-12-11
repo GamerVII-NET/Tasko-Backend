@@ -17,8 +17,12 @@ namespace Tasko.Client
                        fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                    });
             builder.Logging.AddDebug();
+
             ConfigureService.SettingServices(builder.Services);
-            return builder.Build();
+
+            var host = builder.Build();
+
+            return host;
         }
     }
 }

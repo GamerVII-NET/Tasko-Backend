@@ -17,13 +17,13 @@
                 <DataAnnotationsValidator />
                 <ValidationSummary />
                 <div class="alert alert-danger" hidden="@RegisterViewModel.LoginFailureHidden">
-                    Invalid login attempt, please correct and try again.
+                    @RegisterViewModel.ErrorMessage
                 </div>
 
                 <div class="form-control">
                     <label>Фамилия</label>
                     <InputText id="email" @bind-Value="RegisterViewModel.LastName" class="form-input" />
-                </div>                
+                </div>
 
                 <div class="form-control">
                     <label>Имя</label>
@@ -79,14 +79,21 @@
     private async Task HandleValidSubmit()
     {
 
-        var jwtToken = await RegisterViewModel.RegistrationAsync();
+        var checkUser = await RegisterViewModel.RegistrationAsync();
 
-        //Not successful, don't need to do anything
-        if (string.IsNullOrEmpty(jwtToken))
+        if (checkUser == null)
             return;
 
-        //Call login and recirect
-        await AuthStateProvider.Login(jwtToken);
-        Navigation.NavigateTo("/counter"); //Root URL
+        await SecureStorage.SetAsync("Initials", $"{checkUser.User.LastName} {checkUser.User.FirstName[0]}. {checkUser.User.Patronymic[0]}.");
+
+        if (string.IsNullOrEmpty(checkUser.User.Photo) == false)
+            await SecureStorage.SetAsync("Photo", checkUser.User.Photo);
+
+        if (string.IsNullOrEmpty(checkUser.User.About) == false)
+            await SecureStorage.SetAsync("UserAbout", checkUser.User.About);
+
+        await SecureStorage.SetAsync("UserId", checkUser.User.Id.ToString());
+        await AuthStateProvider.Login(checkUser.Token);
+        Navigation.NavigateTo("/counter");
     }
 }
