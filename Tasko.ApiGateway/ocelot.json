@@ -2,10 +2,32 @@
   "Routes": [
     {
       "UpstreamPathTemplate": "/api/users",
-      "UpstreamHttpMethod": ["Get", "Post", "Put", "Delete"]
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/users"
+    },
+    {
+      "UpstreamPathTemplate": "/api/auth",
+      "UpstreamHttpMethod": [ "Post" ],
+
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authorizationservice",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "api/auth"
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:800"
+    "BaseUrl": "http://localhost:80"
   }
 }
