@@ -12,10 +12,10 @@ COPY ["Tasko.General/Tasko.General.csproj", "/Tasko-Backend/Tasko.General/"]
 RUN dotnet restore "Tasko.UserService/Tasko.UserService.csproj"
 COPY . .
 WORKDIR "/src/Tasko.UserService"
-RUN dotnet build "Tasko.UserService.csproj" -c Release -o /app/build
+RUN dotnet build "Tasko.UserService.csproj" -c Debug -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Tasko.UserService.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Tasko.UserService.csproj" -c Debug -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

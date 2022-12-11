@@ -11,7 +11,7 @@ namespace Tasko.AuthService.Infrastructure.Functions
     {
         public static Func<IAuthRepository, UserAuth, Task<IResult>> BearerAuthorization(JwtValidationParameter jwtValidationParmeter)
         {
-            return [AllowAnonymous] async (IAuthRepository authRepository, UserAuth userAuth) =>
+            return async (IAuthRepository authRepository, UserAuth userAuth) =>
                                            Results.Ok(await authRepository.AuthorizationAsync(userAuth, jwtValidationParmeter));
         }
     }
