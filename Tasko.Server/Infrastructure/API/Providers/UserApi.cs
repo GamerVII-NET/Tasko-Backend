@@ -58,10 +58,10 @@ namespace Tasko.Server.Infrastructure.API.Providers
                           .WithName("Create user")
                           .WithTags("Creators");
 
-            webApplication.MapPost("api/roles", RoleService.CreateRole(key, issuer, audience))
-                          .Produces(StatusCodes.Status200OK)
-                          .WithName("Create role")
-                          .WithTags("Creators");
+            //webApplication.MapPost("api/roles", RoleService.CreateRole(key, issuer, audience))
+            //              .Produces(StatusCodes.Status200OK)
+            //              .WithName("Create role")
+            //              .WithTags("Creators");
         }
 
 

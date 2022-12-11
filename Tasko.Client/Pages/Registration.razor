@@ -23,7 +23,7 @@
                 <div class="form-control">
                     <label>Фамилия</label>
                     <InputText id="email" @bind-Value="RegisterViewModel.LastName" class="form-input" />
-                </div>                
+                </div>
 
                 <div class="form-control">
                     <label>Имя</label>
@@ -79,14 +79,21 @@
     private async Task HandleValidSubmit()
     {
 
-        var jwtToken = await RegisterViewModel.RegistrationAsync();
+        var registeredUser = await RegisterViewModel.RegistrationAsync();
 
-        //Not successful, don't need to do anything
-        if (string.IsNullOrEmpty(jwtToken))
+        if (registeredUser == null)
             return;
 
-        //Call login and recirect
-        await AuthStateProvider.Login(jwtToken);
-        Navigation.NavigateTo("/counter"); //Root URL
+        await SecureStorage.SetAsync("Initials", $"{registeredUser.User.LastName} {registeredUser.User.FirstName[0]}. {registeredUser.User.Patronymic[0]}.");
+
+        if (string.IsNullOrEmpty(registeredUser.User.Photo) == false)
+            await SecureStorage.SetAsync("Photo", registeredUser.User.Photo);
+
+        if (string.IsNullOrEmpty(registeredUser.User.About) == false)
+            await SecureStorage.SetAsync("UserAbout", registeredUser.User.About);
+
+        await SecureStorage.SetAsync("UserId", registeredUser.User.Id.ToString());
+        await AuthStateProvider.Login(registeredUser.Token);
+        Navigation.NavigateTo("/counter");
     }
 }

@@ -7,7 +7,9 @@
 
 <AuthorizeView>
     <Authorized Context="Auth">
-        <span>Авторизован</span>
+        <NavBar FullName="@LoginViewModel.Username"
+                PagePartition="Панель управления"
+                PageName="Информация" />
     </Authorized>
     <NotAuthorized Context="Login">
         <div class="login-content">
@@ -50,8 +52,7 @@
                 <div class="login-panel-right-content">
                     <h2 class="login-form-header-description">What is Task`o?</h2>
                     <p class="login-form-description">
-                        @*Task`o - this is a local program for managment projects different*@
-                        sizes.
+                        Task`o - this is a local program for managment projects different sizes.
                     </p>
                 </div>
             </div>
@@ -73,8 +74,18 @@
         if (string.IsNullOrEmpty(jwtToken))
             return;
 
+        await LoginViewModel.GetProfile();
+
         //Call login and recirect
         await AuthStateProvider.Login(jwtToken);
         Navigation.NavigateTo("/profile"); //Root URL
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        LoginViewModel.GetProfile();
+
+        return base.OnInitializedAsync();
+
     }
 }

@@ -1,6 +1,8 @@
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
 using Tasko.Domains.Models.DTO.User;
+using Tasko.Domains.Models.Structural.Providers;
 
 namespace Tasko.Client.ViewModels
 {
@@ -18,7 +20,7 @@ namespace Tasko.Client.ViewModels
         #endregion
 
         #region Methods
-        Task<string> RegistrationAsync();
+        Task<IUserRegister> RegistrationAsync();
         #endregion
     }
     #endregion
@@ -63,7 +65,7 @@ namespace Tasko.Client.ViewModels
             GC.SuppressFinalize(this);
         }
 
-        public abstract Task<string> RegistrationAsync();
+        public abstract Task<IUserRegister> RegistrationAsync();
         #endregion
     }
     #endregion
@@ -104,7 +106,7 @@ namespace Tasko.Client.ViewModels
         #endregion
 
         #region Methods
-        public async override Task<string> RegistrationAsync()
+        public async override Task<IUserRegister> RegistrationAsync()
         {
             var user = new UserCreate
             {
@@ -120,11 +122,13 @@ namespace Tasko.Client.ViewModels
             var response = await HttpClient.PostAsync("/api/users", content);
             if (response.StatusCode == System.Net.HttpStatusCode.Created)
             {
-                Dispose(true);
-                return await response.Content.ReadAsStringAsync();
+
+                var result = await response.Content.ReadAsStringAsync();
+
+                return JsonConvert.DeserializeObject<UserRegister>(result);
             }
             LoginFailureHidden = false;
-            return string.Empty;
+            return null;
         }
 
         #endregion

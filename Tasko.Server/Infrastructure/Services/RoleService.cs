@@ -10,16 +10,16 @@ namespace Tasko.Server.Services;
 public class RoleService
 {
 
-    internal static Func<HttpContent, IUserRepository, IRoleRepository, IMapper, UserRoleCreate, Task<IResult>> CreateRole (string key, string issuer, string audience)
-    {
-        return [Authorize] async (HttpContent httpContext, IUserRepository userRepository, IRoleRepository roleRepository, IMapper mapper, UserRoleCreate userRoleCreate) =>
-        {
-            var foundedUser = await userRepository.FindUserAsync(userRoleCreate.UserId);
+    //internal static Func<HttpContent, IUserRepository, IRoleRepository, IMapper, UserRoleCreate, Task<IResult>> CreateRole (string key, string issuer, string audience)
+    //{
+    //    return [Authorize] async (HttpContent httpContext, IUserRepository userRepository, IRoleRepository roleRepository, IMapper mapper, UserRoleCreate userRoleCreate) =>
+    //    {
+    //        var foundedUser = await userRepository.FindUserAsync(userRoleCreate.UserId);
 
-            if (foundedUser == null) return Results.Conflict("User not found!");
+    //        if (foundedUser == null) return Results.Conflict("User not found!");
 
-        };
-    }
+    //    };
+    //}
     //internal static Func<HttpContent, IUserRepository, IRoleRepository, IMapper, UserRoleCreate, Task<IResult>> CreateRole(string key, string issuer, string audience)
     //{
     //    return /*[Authorize]*/ async (HttpContent httpContext, IUserRepository userRepository, IRoleRepository roleRepository, IMapper mapper, UserRoleCreate userRoleCreate) =>

@@ -4,7 +4,7 @@
             <img class="sidebar-logo__image" src="/assets/images/logo.svg">
             <span>Task`o</span>
         </div>
-        <div class="sidebar-toggle">
+        <div class="@NavMenuCssClass" @onclick="ToggleSideBar">
             <div class="sidebar-toggle__item"></div>
             <div class="sidebar-toggle__item"></div>
         </div>
@@ -31,5 +31,15 @@
 </div>
 
 @code {
+
+
+    private bool _collapseNavMenu = true;
+
+    private string NavMenuCssClass => _collapseNavMenu ? "sidebar-toggle" : "sidebar-toggle active";
+
+    private void ToggleSideBar()
+    {
+        _collapseNavMenu = !_collapseNavMenu;
+    }
 
 }
