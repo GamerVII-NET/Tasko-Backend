@@ -7,7 +7,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "userservice",
+          "Host": "tasko.userservice",
           "Port": 80
         }
       ],
@@ -20,7 +20,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "authorizationservice",
+          "Host": "tasko.authservice",
           "Port": 80
         }
       ],
