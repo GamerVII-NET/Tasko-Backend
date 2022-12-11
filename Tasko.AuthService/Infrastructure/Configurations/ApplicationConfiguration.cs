@@ -12,7 +12,6 @@ internal static class ApplicationConfiguration
 {
     internal static void RegisterBuilder(this WebApplicationBuilder builder, IMongoDatabase dataContext)
     {
-        //builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddAuthorization();
@@ -23,13 +22,19 @@ internal static class ApplicationConfiguration
         builder.Services.AddScoped<IAuthRepository, AuthRepository>();
         builder.Services.AddTransient<IApi, AuthApi>();
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+        builder.Services.AddSwaggerGen();
     }
-    internal static void RegisterApplication(this WebApplication application, WebApplicationBuilder builder)
+    internal static void RegisterApplication(this WebApplication application)
     {
-        if (application.Environment.IsProduction())
+        if (application.Environment.IsDevelopment())
         {
-            application.Urls.Add("http://87.249.49.56:7177");
+            application.UseSwagger();
+            application.UseSwaggerUI();
         }
+        //if (application.Environment.IsProduction())
+        //{
+        //    application.Urls.Add("http://87.249.49.56:7177");
+        //}
         application.UseAuthentication();
         application.UseAuthorization();
     }
