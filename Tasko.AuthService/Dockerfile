@@ -12,10 +12,10 @@ COPY ["Tasko.Domains/Tasko.Domains.csproj", "/Tasko-Backend/Tasko.Domains/"]
 RUN dotnet restore "Tasko.AuthService/Tasko.AuthService.csproj"
 COPY . .
 WORKDIR "/src/Tasko.AuthService"
-RUN dotnet build "Tasko.AuthService.csproj" -c Release -o /app/build
+RUN dotnet build "Tasko.AuthService.csproj" -c Debug -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Tasko.AuthService.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Tasko.AuthService.csproj" -c Debug -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
