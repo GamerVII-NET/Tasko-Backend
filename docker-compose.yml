@@ -6,7 +6,7 @@ services:
     image: ${DOCKER_REGISTRY-}taskoapigateway
     build:
       context: .
-      dockerfile: Tasko.ApiGateway/Dockerfile
+      dockerfile: ./Tasko-Backend/Tasko.ApiGateway/Dockerfile
     ports:
     - 8001:80
     networks:
@@ -17,7 +17,7 @@ services:
     image: ${DOCKER_REGISTRY-}taskoauthservice
     build:
       context: .
-      dockerfile: Tasko.AuthService/Dockerfile
+      dockerfile: ./Tasko-Backend/Tasko.AuthService/Dockerfile
     networks:
     - backend
 
@@ -26,6 +26,6 @@ services:
     image: ${DOCKER_REGISTRY-}taskouserservice
     build:
       context: .
-      dockerfile: Tasko.UserService/Dockerfile
+      dockerfile: ./Tasko-Backend/Tasko.UserService/Dockerfile
     networks:
     - backend

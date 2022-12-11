@@ -8,8 +8,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Tasko.AuthService/Tasko.AuthService.csproj", "Tasko.AuthService/"]
-COPY ["Tasko.General/Tasko.General.csproj", "Tasko.General/"]
-COPY ["Tasko.Domains/Tasko.Domains.csproj", "Tasko.Domains/"]
+COPY ["Tasko.General/Tasko.General.csproj", "/Tasko-Backend/Tasko.General/"]
+COPY ["Tasko.Domains/Tasko.Domains.csproj", "/Tasko-Backend/Tasko.Domains/"]
 RUN dotnet restore "Tasko.AuthService/Tasko.AuthService.csproj"
 COPY . .
 WORKDIR "/src/Tasko.AuthService"
