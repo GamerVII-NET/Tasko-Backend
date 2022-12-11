@@ -24,7 +24,7 @@
           "Port": 80
         }
       ],
-      "DownstreamPathTemplate": "/api/authorization"
+      "DownstreamPathTemplate": "/api/auth"
     }
   ],
   "GlobalConfiguration": {
