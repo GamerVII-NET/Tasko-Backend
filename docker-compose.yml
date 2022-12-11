@@ -1,5 +1,9 @@
 version: '3.4'
 
+networks:
+    backend:
+    frontend:
+
 services:
   tasko.apigateway:
     container_name: tasko-api-gateway

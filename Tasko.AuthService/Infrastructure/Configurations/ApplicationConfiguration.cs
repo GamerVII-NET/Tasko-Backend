@@ -12,7 +12,7 @@ internal static class ApplicationConfiguration
 {
     internal static void RegisterBuilder(this WebApplicationBuilder builder, IMongoDatabase dataContext)
     {
-        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        //builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddAuthorization();
