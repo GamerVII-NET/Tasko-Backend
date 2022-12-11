@@ -51,7 +51,7 @@ internal static class ApplicationConfiguration
         });
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
     }
-    internal static void RegisterApplication(this WebApplication application, WebApplicationBuilder builder)
+    internal static void RegisterApplication(this WebApplication application)
     {
         if (application.Environment.IsDevelopment())
         {
@@ -59,10 +59,10 @@ internal static class ApplicationConfiguration
             application.UseSwaggerUI();
         }
 
-        if (application.Environment.IsProduction())
-        {
-            application.Urls.Add("http://87.249.49.56:7177");
-        }
+        //if (application.Environment.IsProduction())
+        //{
+        //    application.Urls.Add("http://87.249.49.56:7177");
+        //}
 
         //application.UseHttpsRedirection();
         application.UseAuthentication();

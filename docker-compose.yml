@@ -1,23 +1,16 @@
 version: '3.4'
 
-services:
-  tasko.apigateway:
-    container_name: tasko-api-gateway
-    image: ${DOCKER_REGISTRY-}taskoapigateway
-    build:
-      context: .
-      dockerfile: ./Tasko-Backend/Tasko.ApiGateway/Dockerfile
-    ports:
-    - 8001:80
-    networks:
-    - backend
+networks:
+  backend:
+  frontend:
 
+services:
   tasko.authservice:
     container_name: tasko-auth-service
     image: ${DOCKER_REGISTRY-}taskoauthservice
     build:
       context: .
-      dockerfile: ./Tasko-Backend/Tasko.AuthService/Dockerfile
+      dockerfile: Tasko.AuthService/Dockerfile
     networks:
     - backend
 
@@ -26,6 +19,17 @@ services:
     image: ${DOCKER_REGISTRY-}taskouserservice
     build:
       context: .
-      dockerfile: ./Tasko-Backend/Tasko.UserService/Dockerfile
+      dockerfile: Tasko.UserService/Dockerfile
+    networks:
+    - backend
+
+  tasko.apigateway:
+    container_name: tasko-api-gateway
+    image: ${DOCKER_REGISTRY-}taskoapigateway
+    build:
+      context: .
+      dockerfile: Tasko.ApiGateway/Dockerfile
+    ports:
+    - 8001:80
     networks:
     - backend
