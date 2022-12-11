@@ -17,7 +17,7 @@
                 <DataAnnotationsValidator />
                 <ValidationSummary />
                 <div class="alert alert-danger" hidden="@RegisterViewModel.LoginFailureHidden">
-                    Invalid login attempt, please correct and try again.
+                    @RegisterViewModel.ErrorMessage
                 </div>
 
                 <div class="form-control">
@@ -79,21 +79,21 @@
     private async Task HandleValidSubmit()
     {
 
-        var registeredUser = await RegisterViewModel.RegistrationAsync();
+        var checkUser = await RegisterViewModel.RegistrationAsync();
 
-        if (registeredUser == null)
+        if (checkUser == null)
             return;
 
-        await SecureStorage.SetAsync("Initials", $"{registeredUser.User.LastName} {registeredUser.User.FirstName[0]}. {registeredUser.User.Patronymic[0]}.");
+        await SecureStorage.SetAsync("Initials", $"{checkUser.User.LastName} {checkUser.User.FirstName[0]}. {checkUser.User.Patronymic[0]}.");
 
-        if (string.IsNullOrEmpty(registeredUser.User.Photo) == false)
-            await SecureStorage.SetAsync("Photo", registeredUser.User.Photo);
+        if (string.IsNullOrEmpty(checkUser.User.Photo) == false)
+            await SecureStorage.SetAsync("Photo", checkUser.User.Photo);
 
-        if (string.IsNullOrEmpty(registeredUser.User.About) == false)
-            await SecureStorage.SetAsync("UserAbout", registeredUser.User.About);
+        if (string.IsNullOrEmpty(checkUser.User.About) == false)
+            await SecureStorage.SetAsync("UserAbout", checkUser.User.About);
 
-        await SecureStorage.SetAsync("UserId", registeredUser.User.Id.ToString());
-        await AuthStateProvider.Login(registeredUser.Token);
+        await SecureStorage.SetAsync("UserId", checkUser.User.Id.ToString());
+        await AuthStateProvider.Login(checkUser.Token);
         Navigation.NavigateTo("/counter");
     }
 }

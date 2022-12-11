@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Net.Http.Json;
 using Tasko.Domains.Models.DTO.User;
 using Tasko.Domains.Models.Structural.Providers;
@@ -17,6 +18,7 @@ namespace Tasko.Client.ViewModels
         string LastName { get; set; }
         string Patronymic { get; set; }
         bool LoginFailureHidden { get; set; }
+        string ErrorMessage { get; set; }
         #endregion
 
         #region Methods
@@ -45,6 +47,7 @@ namespace Tasko.Client.ViewModels
         public virtual string LastName { get; set; }
         public virtual string Patronymic { get; set; }
         public virtual bool LoginFailureHidden { get; set; }
+        public virtual string ErrorMessage { get; set; }
         #endregion
 
         #region Methods
@@ -103,6 +106,8 @@ namespace Tasko.Client.ViewModels
         public override string Patronymic { get; set; }
 
         public override bool LoginFailureHidden { get; set; } = true;
+
+        public override string ErrorMessage { get; set; }
         #endregion
 
         #region Methods
@@ -122,10 +127,13 @@ namespace Tasko.Client.ViewModels
             var response = await HttpClient.PostAsync("/api/users", content);
             if (response.StatusCode == System.Net.HttpStatusCode.Created)
             {
-
                 var result = await response.Content.ReadAsStringAsync();
 
                 return JsonConvert.DeserializeObject<UserRegister>(result);
+            }
+            else if (response.StatusCode == HttpStatusCode.Conflict)
+            {
+                ErrorMessage = "ѕользователь с указанным логином уже сущестует!";
             }
             LoginFailureHidden = false;
             return null;

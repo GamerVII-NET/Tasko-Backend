@@ -18,6 +18,7 @@ namespace Tasko.Client.ViewModels
         Guid UserId { get; set; }
         string Password { get; set; }
         bool LoginFailureHidden { get; set; }
+        string ErrorMessage { get; set; }
         #endregion
 
         #region Methods
@@ -49,6 +50,7 @@ namespace Tasko.Client.ViewModels
         public string Photo { get; set; }
         public string UserAbout { get; set; }
         public Guid UserId { get; set; }
+        public string ErrorMessage { get; set; }
         #endregion
 
         #region Methods
@@ -96,6 +98,7 @@ namespace Tasko.Client.ViewModels
         public override string Password { get; set; }
 
         public override bool LoginFailureHidden { get; set; } = true;
+        public string ErrorMessage { get; set; }
         #endregion
 
         #region Methods
