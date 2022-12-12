@@ -15,7 +15,7 @@ namespace Tasko.AuthService.Infrastructure.Api
 
         private void Auth(WebApplication webApplication)
         {
-            webApplication.MapPost("api/authorization", AuthFunctions.BearerAuthorization(JwtValidationParmeter))
+            webApplication.MapPost("api/auth", AuthFunctions.BearerAuthorization(JwtValidationParmeter))
                           .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
                           .WithName("Authorization")
                           .WithTags("Auth");

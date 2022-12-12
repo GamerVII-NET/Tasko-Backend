@@ -39,9 +39,7 @@
     <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj">
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Tasko.General\Tasko.General.csproj">
-      <Private>True</Private>
-    </ProjectReference>
+    <ProjectReference Include="..\Tasko.General\Tasko.General.csproj" />
   </ItemGroup>
 
 </Project>
