@@ -29,7 +29,7 @@ services:
     build:
       context: .
       dockerfile: Tasko.ApiGateway/Dockerfile
-    ports:
+    ports:  
     - 8001:80
     networks:
     - backend
