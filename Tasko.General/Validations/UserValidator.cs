@@ -77,5 +77,8 @@ public class UpdateUserValidator : AbstractValidator<IUserUpdate>
             .NotEmpty()
             .MinimumLength(6);
 
+        RuleFor(c => c.About)
+            .MaximumLength(255);
+
     }
 }

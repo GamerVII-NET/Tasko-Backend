@@ -92,7 +92,14 @@ public class UserFunctions
 
             if (isCurrentUser == false) { return Results.Unauthorized(); }
 
-            await userRepository.UpdateUserAsync(user);
+            foundedUser.Email = user.Email;
+            foundedUser.FirstName = user.FirstName;
+            foundedUser.LastName = user.LastName;
+            foundedUser.Patronymic = user.Patronymic;
+            foundedUser.About = user.About;
+            foundedUser.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
+            await userRepository.UpdateUserAsync(mapper.Map<User>(foundedUser));
 
             var response = mapper.Map<User, UserRead>(user);
 
