@@ -85,7 +85,7 @@ namespace Tasko.Client.ViewModels
     public class LoginViewModel : LoginViewModelBase
     {
         #region Constructors
-        public LoginViewModel(IHttpClientFactory clientFactory) : base(clientFactory) { } 
+        public LoginViewModel(IHttpClientFactory clientFactory) : base(clientFactory) { }
         #endregion
 
         #region Properties
@@ -150,15 +150,24 @@ namespace Tasko.Client.ViewModels
             };
             var content = JsonContent.Create(user);
             var response = await HttpClient.PostAsync("/api/authorization", content);
+
+
             if (response.IsSuccessStatusCode)
             {
+                LoginFailureHidden = true;
+
                 var result = await response.Content.ReadAsStringAsync();
 
                 return result;
             }
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                ErrorMessage = "Неправильный логин или пароль";
+            }
+
             LoginFailureHidden = false;
             return string.Empty;
-        } 
+        }
         #endregion
     }
     #endregion

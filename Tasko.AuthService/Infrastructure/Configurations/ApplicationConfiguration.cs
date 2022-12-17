@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MongoDB.Driver;
 using Tasko.AuthService.Infrastructure.Api;
 using Tasko.AuthService.Infrastructure.Repositories;
@@ -12,6 +13,8 @@ internal static class ApplicationConfiguration
 {
     internal static void RegisterBuilder(this WebApplicationBuilder builder, IMongoDatabase dataContext)
     {
+        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        builder.Services.AddFluentValidation(validation => validation.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddAuthorization();
