@@ -6,12 +6,12 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Tasko.RolesService/Tasko.RoleService.csproj", "Tasko.RoleService/"]
+COPY ["Tasko.RoleService/Tasko.RoleService.csproj", "Tasko.RoleService/"]
 COPY ["Tasko.Domains/Tasko.Domains.csproj", "../Tasko-Backend/Tasko.Domains/"]
 COPY ["Tasko.General/Tasko.General.csproj", "../Tasko-Backend/Tasko.General/"]
 RUN dotnet restore "Tasko.RoleService/Tasko.RoleService.csproj"
 COPY . .
-WORKDIR "/src/Tasko.RolesService"
+WORKDIR "/src/Tasko.RoleService"
 RUN dotnet build "Tasko.RoleService.csproj" -c Debug -o /app/build
 
 FROM build AS publish
