@@ -9,7 +9,7 @@ using Tasko.General.Models;
 using Tasko.General.Models.RequestResponses;
 using Tasko.UserRoles.Infrasructure.Repositories;
 
-namespace Tasko.RolesService.Infrasructure.Functions;
+namespace Tasko.RoleService.Infrasructure.Functions;
 
 public class RolesFunctions
 {

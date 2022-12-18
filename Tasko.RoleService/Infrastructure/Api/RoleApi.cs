@@ -1,8 +1,4 @@
-using Tasko.Domains.Models.Structural.Providers;
-using Tasko.General.Abstracts;
-using Tasko.General.Interfaces;
-using Tasko.General.Models;
-using Tasko.RolesService.Infrasructure.Functions;
+using Tasko.RoleService.Infrasructure.Functions;
 
 public class UserApi : ApiBase, IApi
 {
