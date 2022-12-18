@@ -13,6 +13,11 @@ public class BadRequestResponse<T> : IBadRequestResponse<T>
     public T Error { get; set; }
     public int StatusCode { get; set; }
 
+    public BadRequestResponse()
+    {
+
+    }
+
     public BadRequestResponse(T responseContent, string message)
     {
         Message = message;

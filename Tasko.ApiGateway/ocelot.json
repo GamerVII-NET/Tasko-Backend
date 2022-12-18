@@ -1,7 +1,10 @@
 {
   "Routes": [
+
+
     {
       "UpstreamPathTemplate": "/api/users",
+      "DownstreamPathTemplate": "/api/users",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
 
       "DownstreamScheme": "http",
@@ -10,11 +13,14 @@
           "Host": "tasko.userservice",
           "Port": 80
         }
-      ],
-      "DownstreamPathTemplate": "/api/users"
+      ]
     },
+
+
+
     {
       "UpstreamPathTemplate": "/api/auth",
+      "DownstreamPathTemplate": "/api/auth",
       "UpstreamHttpMethod": [ "Post" ],
 
       "DownstreamScheme": "http",
@@ -23,11 +29,14 @@
           "Host": "tasko.authservice",
           "Port": 80
         }
-      ],
-      "DownstreamPathTemplate": "/api/auth"
+      ]
     },
+
+
+
     {
       "UpstreamPathTemplate": "/api/roles",
+      "DownstreamPathTemplate": "/api/roles",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
 
       "DownstreamScheme": "http",
@@ -36,11 +45,15 @@
           "Host": "tasko.roleservice",
           "Port": 80
         }
-      ],
-      "DownstreamPathTemplate": "/api/roles"
+      ]
     },
+
+
+
     {
       "UpstreamPathTemplate": "/api/boards",
+      "DownstreamPathTemplate": "/api/boards",
+
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
 
       "DownstreamScheme": "http",
@@ -49,8 +62,8 @@
           "Host": "tasko.boardservice",
           "Port": 80
         }
-      ],
-      "DownstreamPathTemplate": "/api/boards"
+      ]
+
     }
   ],
   "GlobalConfiguration": {

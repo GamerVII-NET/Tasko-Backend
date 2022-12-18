@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "tasko.apigateway": "StartDebugging",
+        "tasko.authservice": "StartDebugging",
+        "tasko.boardservice": "StartDebugging",
+        "tasko.roleservice": "StartDebugging",
+        "tasko.userservice": "StartDebugging"
+      }
+    }
+  }
+}

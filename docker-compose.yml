@@ -6,17 +6,17 @@ networks:
   frontend:
 
 services:
-  rabbitmq:
-   image: rabbitmq:3-management-alpine
-   container_name: 'rabbitmq'
-   ports:
-      - 5672:5672
-      - 15672:15672
-   volumes:
-      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-   networks:
-      - rabbitmq  
+  #rabbitmq:
+  # image: rabbitmq:3-management-alpine
+  # container_name: 'rabbitmq'
+  # ports:
+  #    - 5672:5672
+  #    - 15672:15672
+  # volumes:
+  #    - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+  #    - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+  # networks:
+  #    - rabbitmq  
   tasko.authservice:
     container_name: tasko-auth-service
     image: ${DOCKER_REGISTRY-}taskoauthservice
