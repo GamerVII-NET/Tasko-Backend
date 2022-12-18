@@ -1,6 +1,5 @@
 using AutoMapper;
 using Tasko.Domains.Models.DTO.Board;
-using Tasko.Domains.Models.DTO.User;
 using Tasko.Domains.Models.Structural.Providers;
 
 namespace Tasko.UserRoles.Infrasructure.Profiles
