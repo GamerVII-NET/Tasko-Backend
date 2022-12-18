@@ -5,7 +5,7 @@ namespace Tasko.Domains.Models.Structural.Providers
 
     public interface IPermission
     {
-        Guid GlobalId { get; set; }
+        Guid Id { get; set; }
         string Name { get; set; }
         string DisplayName { get; set; }
         string Description { get; set; }
@@ -16,7 +16,7 @@ namespace Tasko.Domains.Models.Structural.Providers
     public class Permission : IPermission
     {
         [BsonId]
-        public Guid GlobalId { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public string Description { get; set; }

@@ -1,12 +1,12 @@
 namespace Tasko.Domains.Models.DTO.User
 {
-    public interface IUserAuth
+    public interface IBaseUserAuth
     {
         string Login { get; set; }
         string Password { get; set; }
     }
 
-    public class UserAuth : IUserAuth
+    public class UserAuth : IBaseUserAuth
     {
         public string Login { get; set; }
         public string Password { get; set; }

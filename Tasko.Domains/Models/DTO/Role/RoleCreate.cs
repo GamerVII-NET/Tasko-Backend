@@ -2,13 +2,11 @@ namespace Tasko.Domains.Models.DTO.Role
 {
     public interface IRoleCreate
     {
-        #region Properties
         Guid Id { get; set; }
         string Name { get; set; }
         string Description { get; set; }
 
         List<Guid> PermissionGuids { get; set; }
-        #endregion
     }
 
     public class RoleCreate : IRoleCreate

@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Tasko.Domains.Models.Structural.Providers;
-using Tasko.General.Models;
 
 namespace Tasko.General.Commands
 {

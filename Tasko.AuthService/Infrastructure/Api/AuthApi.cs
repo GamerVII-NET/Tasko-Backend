@@ -1,7 +1,8 @@
 ﻿using Tasko.AuthService.Infrastructure.Functions;
-using Tasko.Domains.Models.Structural.Providers;
+using Tasko.Domains.Models.DTO.User;
 using Tasko.General.Abstracts;
 using Tasko.General.Interfaces;
+using Tasko.General.Models.RequestResponses;
 
 namespace Tasko.AuthService.Infrastructure.Api
 {
@@ -16,7 +17,7 @@ namespace Tasko.AuthService.Infrastructure.Api
         private void Auth(WebApplication webApplication)
         {
             webApplication.MapPost("api/auth", AuthFunctions.BearerAuthorization(JwtValidationParmeter))
-                          .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
+                          .Produces<IRequestResponse<IUserAuthRead>>(StatusCodes.Status200OK)
                           .WithName("Authorization")
                           .WithTags("Auth");
         }

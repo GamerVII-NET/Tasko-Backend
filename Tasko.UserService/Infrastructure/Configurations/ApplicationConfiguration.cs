@@ -1,8 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using System.ComponentModel.DataAnnotations;
+using Tasko.Domains.Models.DTO.User;
 using Tasko.General.Commands;
 using Tasko.General.Extensions.Jwt;
+using Tasko.General.Validations;
 using Tasko.UserService.Infrasructure.Api;
 using Tasko.UserService.Infrasructure.Repositories;
 
@@ -13,6 +18,12 @@ internal static class ApplicationConfiguration
     internal static void RegisterBuilder(this WebApplicationBuilder builder, IMongoDatabase dataContext)
     {
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+        builder.Services.AddFluentValidationAutoValidation();
+        builder.Services.AddFluentValidationClientsideAdapters();
+        builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<CreateUserValidator>();
+
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddAuthorization();

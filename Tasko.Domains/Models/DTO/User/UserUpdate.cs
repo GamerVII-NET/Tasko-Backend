@@ -9,6 +9,7 @@ namespace Tasko.Domains.Models.DTO.User
         string Patronymic { get; set; }
         string Email { get; set; }
         string Password { get; set; }
+        string About { get; set; }
         #endregion
     }
 
@@ -22,5 +23,6 @@ namespace Tasko.Domains.Models.DTO.User
         public string Patronymic { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string About { get; set; }
     }
 }

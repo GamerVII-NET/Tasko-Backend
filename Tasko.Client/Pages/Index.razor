@@ -304,7 +304,8 @@
                     <EditForm Model="@LoginViewModel" OnValidSubmit="@HandleValidSubmit">
                         <DataAnnotationsValidator />
                         <ValidationSummary />
-                        <div class="alert alert-danger" hidden="@LoginViewModel.LoginFailureHidden">
+                        @LoginViewModel.Username
+                        <div class="alert alert-danger mt-3" hidden="@LoginViewModel.LoginFailureHidden">
                             @LoginViewModel.ErrorMessage
                         </div>
                         <div class="form-control">
