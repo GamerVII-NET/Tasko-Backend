@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tasko-Backend\Tasko.General\Tasko.General.csproj" />
+    <ProjectReference Include="..\Tasko.General\Tasko.General.csproj" />
   </ItemGroup>
 
 </Project>

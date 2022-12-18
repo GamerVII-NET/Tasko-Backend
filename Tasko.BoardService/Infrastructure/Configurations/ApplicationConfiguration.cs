@@ -4,11 +4,11 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using Tasko.BoardSevice.Infrasructure.Repositories;
 using Tasko.General.Commands;
 using Tasko.General.Extensions.Jwt;
 using Tasko.General.Interfaces;
 using Tasko.General.Validations;
-using Tasko.UserRoles.Infrasructure.Repositories;
 
 namespace Tasko.UserService.Infrasructure.Configurations
 {
@@ -20,7 +20,8 @@ namespace Tasko.UserService.Infrasructure.Configurations
 
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddFluentValidationClientsideAdapters();
-            builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateBoardValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UpdateBoardValidator>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddHttpContextAccessor();
@@ -29,7 +30,7 @@ namespace Tasko.UserService.Infrasructure.Configurations
                             .AddJwtBearer(options => Jwt.GenerateConfig(ref options, builder.Configuration.GetJwtValidationParameter()));
 
             builder.Services.AddSingleton(dataContext);
-            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+            builder.Services.AddScoped<IBoardRepository, BoardRepository>();
             builder.Services.AddTransient<IApi, UserApi>();
 
             builder.Services.AddSwaggerGen(s =>

@@ -1,6 +1,6 @@
 namespace Tasko.Domains.Models.DTO.Role;
 
-    public interface IRoleRead
+public interface IRoleRead
 {
     Guid Id { get; set; }
     string Name { get; set; }

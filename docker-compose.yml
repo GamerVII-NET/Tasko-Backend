@@ -23,6 +23,24 @@ services:
     networks:
     - backend
 
+  tasko.roleservice:
+    container_name: tasko-role-service
+    image: ${DOCKER_REGISTRY-}taskoroleservice
+    build:
+      context: .
+      dockerfile: Tasko.RoleService/Dockerfile
+    networks:
+    - backend
+
+  tasko.boardservice:
+    container_name: tasko-board-service
+    image: ${DOCKER_REGISTRY-}taskoboardservice
+    build:
+      context: .
+      dockerfile: Tasko.BoardService/Dockerfile
+    networks:
+    - backend
+
   tasko.apigateway:
     container_name: tasko-api-gateway
     image: ${DOCKER_REGISTRY-}taskoapigateway
