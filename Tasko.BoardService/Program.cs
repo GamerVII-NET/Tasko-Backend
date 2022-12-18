@@ -1,7 +1,7 @@
 using System.Reflection;
+using Tasko.BoardSevice.Infrasructure.Configurations;
 using Tasko.General.Commands;
 using Tasko.General.Extensions;
-using Tasko.UserService.Infrasructure.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 #region If project on local machine

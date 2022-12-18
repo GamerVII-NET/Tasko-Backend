@@ -1,16 +1,14 @@
 
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using Tasko.BoardSevice.Infrasructure.Repositories;
 using Tasko.General.Commands;
 using Tasko.General.Extensions.Jwt;
-using Tasko.General.Interfaces;
 using Tasko.General.Validations;
 
-namespace Tasko.UserService.Infrasructure.Configurations
+namespace Tasko.BoardSevice.Infrasructure.Configurations
 {
     internal static class ApplicationConfiguration
     {
@@ -68,13 +66,6 @@ namespace Tasko.UserService.Infrasructure.Configurations
                 application.UseSwagger();
                 application.UseSwaggerUI();
             }
-
-            //if (application.Environment.IsProduction())
-            //{
-            //    application.Urls.Add("http://87.249.49.56:7177");
-            //}
-
-            //application.UseHttpsRedirection();
             application.UseAuthentication();
             application.UseAuthorization();
         }

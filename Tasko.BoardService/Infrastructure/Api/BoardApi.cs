@@ -1,8 +1,6 @@
 using Tasko.BoardSevice.Infrasructure.Functions;
-using Tasko.Domains.Models.Structural.Providers;
-using Tasko.General.Abstracts;
-using Tasko.General.Interfaces;
-using Tasko.General.Models;
+
+namespace Tasko.BoardSevice.Infrasructure.Api;
 
 public class UserApi : ApiBase, IApi
 {
