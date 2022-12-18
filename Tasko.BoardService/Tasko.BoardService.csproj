@@ -13,11 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Api\" />
     <Folder Include="Infrastructure\Configurations\" />
-    <Folder Include="Infrastructure\Functions\" />
-    <Folder Include="Infrastructure\Profiles\" />
-    <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tasko-Backend\Tasko.General\Tasko.General.csproj" />
+    <ProjectReference Include="..\Tasko.General\Tasko.General.csproj" />
   </ItemGroup>
 
 </Project>

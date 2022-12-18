@@ -25,6 +25,32 @@
         }
       ],
       "DownstreamPathTemplate": "/api/auth"
+    },
+    {
+      "UpstreamPathTemplate": "/api/roles",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tasko.roleservice",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/roles"
+    },
+    {
+      "UpstreamPathTemplate": "/api/boards",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tasko.boardservice",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/boards"
     }
   ],
   "GlobalConfiguration": {

@@ -13,6 +13,7 @@ services:
       dockerfile: Tasko.AuthService/Dockerfile
     networks:
     - backend
+
   tasko.userservice:
     container_name: tasko-user-service
     image: ${DOCKER_REGISTRY-}taskouserservice
@@ -21,13 +22,32 @@ services:
       dockerfile: Tasko.UserService/Dockerfile
     networks:
     - backend
+
+  tasko.roleservice:
+    container_name: tasko-role-service
+    image: ${DOCKER_REGISTRY-}taskoroleservice
+    build:
+      context: .
+      dockerfile: Tasko.RoleService/Dockerfile
+    networks:
+    - backend
+
+  tasko.boardservice:
+    container_name: tasko-board-service
+    image: ${DOCKER_REGISTRY-}taskoboardservice
+    build:
+      context: .
+      dockerfile: Tasko.BoardService/Dockerfile
+    networks:
+    - backend
+
   tasko.apigateway:
     container_name: tasko-api-gateway
     image: ${DOCKER_REGISTRY-}taskoapigateway
     build:
       context: .
       dockerfile: Tasko.ApiGateway/Dockerfile
-    ports:  
+    ports:
     - 8001:80
     networks:
     - backend

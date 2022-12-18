@@ -115,7 +115,7 @@ public class UserFunctions
 
             if (user is null)
             {
-                Results.NotFound(id);
+                return Results.NotFound(new BadRequestResponse<string>($"Пользователь с указанным идентификатором {id} не найден", "Пользователь не найден.", StatusCodes.Status404NotFound));
             }
 
             var isCurrentUser = Jwt.VerifyUser(context, jwtValidationParmeter, user);
