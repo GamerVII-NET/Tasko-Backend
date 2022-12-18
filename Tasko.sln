@@ -26,6 +26,10 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.General", "Tasko.General\Tasko.General.csproj", "{E701ED75-5339-4489-AD4C-633C10452BF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.RolesService", "..\Tasko.RolesService\Tasko.RolesService.csproj", "{D4B2B0BC-D297-4A53-BF63-18FF3B873B09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.BoardsService", "..\Tasko.BoardsService\Tasko.BoardsService.csproj", "{0BE5257C-716D-4570-B5BD-089AD9D8C845}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +66,14 @@ Global
 		{E701ED75-5339-4489-AD4C-633C10452BF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E701ED75-5339-4489-AD4C-633C10452BF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E701ED75-5339-4489-AD4C-633C10452BF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4B2B0BC-D297-4A53-BF63-18FF3B873B09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4B2B0BC-D297-4A53-BF63-18FF3B873B09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4B2B0BC-D297-4A53-BF63-18FF3B873B09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4B2B0BC-D297-4A53-BF63-18FF3B873B09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BE5257C-716D-4570-B5BD-089AD9D8C845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BE5257C-716D-4570-B5BD-089AD9D8C845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BE5257C-716D-4570-B5BD-089AD9D8C845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BE5257C-716D-4570-B5BD-089AD9D8C845}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,9 +86,11 @@ Global
 		{5D191E7E-3EA7-4B66-99B4-F00269DA2BBC} = {6FA3A0AD-A687-45EE-A50D-12D847CC9348}
 		{F818E10F-FE8E-4BEA-A865-DAB0AD3E5A52} = {6FA3A0AD-A687-45EE-A50D-12D847CC9348}
 		{E701ED75-5339-4489-AD4C-633C10452BF0} = {1FA428E9-869D-4E92-8B98-F25012D74A47}
+		{D4B2B0BC-D297-4A53-BF63-18FF3B873B09} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
+		{0BE5257C-716D-4570-B5BD-089AD9D8C845} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E779261A-E569-475A-8B95-1C0C706BE4DE}
 		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+		SolutionGuid = {E779261A-E569-475A-8B95-1C0C706BE4DE}
 	EndGlobalSection
 EndGlobal

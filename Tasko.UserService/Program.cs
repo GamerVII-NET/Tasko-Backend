@@ -4,6 +4,7 @@ using Tasko.General.Extensions;
 using Tasko.UserService.Infrasructure.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
+
 #region If project on local machine
 //builder.SetSettingFile(@"../../Tasko-Backend/Tasko.General/", "appsettings.json");
 #endregion
