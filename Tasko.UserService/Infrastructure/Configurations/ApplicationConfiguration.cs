@@ -69,13 +69,6 @@ internal static class ApplicationConfiguration
             application.UseSwagger();
             application.UseSwaggerUI();
         }
-
-        //if (application.Environment.IsProduction())
-        //{
-        //    application.Urls.Add("http://87.249.49.56:7177");
-        //}
-
-        //application.UseHttpsRedirection();
         application.UseAuthentication();
         application.UseAuthorization();
     }
