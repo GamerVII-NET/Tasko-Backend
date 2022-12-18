@@ -1,5 +1,9 @@
 version: '3.4'
 
+volumes:
+    rabbitmq_data:
+    rabbitmq_log:
+
 networks:
   rabbitmq:
   backend:
@@ -13,8 +17,8 @@ services:
         - 5673:5672
         - 15673:15672
     volumes:
-        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq/
+      - rabbitmq_log:/var/log/rabbitmq/
     networks:
         - rabbitmq 
 
