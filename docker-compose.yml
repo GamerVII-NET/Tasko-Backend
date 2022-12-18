@@ -1,10 +1,22 @@
 version: '3.4'
 
 networks:
+  rabbitmq:
   backend:
   frontend:
 
 services:
+  rabbitmq:
+   image: rabbitmq:3-management-alpine
+   container_name: 'rabbitmq'
+   ports:
+      - 5672:5672
+      - 15672:15672
+   volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+   networks:
+      - rabbitmq  
   tasko.authservice:
     container_name: tasko-auth-service
     image: ${DOCKER_REGISTRY-}taskoauthservice
@@ -13,7 +25,6 @@ services:
       dockerfile: Tasko.AuthService/Dockerfile
     networks:
     - backend
-
   tasko.userservice:
     container_name: tasko-user-service
     image: ${DOCKER_REGISTRY-}taskouserservice
@@ -22,7 +33,6 @@ services:
       dockerfile: Tasko.UserService/Dockerfile
     networks:
     - backend
-
   tasko.roleservice:
     container_name: tasko-role-service
     image: ${DOCKER_REGISTRY-}taskoroleservice
@@ -31,7 +41,6 @@ services:
       dockerfile: Tasko.RoleService/Dockerfile
     networks:
     - backend
-
   tasko.boardservice:
     container_name: tasko-board-service
     image: ${DOCKER_REGISTRY-}taskoboardservice
@@ -40,7 +49,6 @@ services:
       dockerfile: Tasko.BoardService/Dockerfile
     networks:
     - backend
-
   tasko.apigateway:
     container_name: tasko-api-gateway
     image: ${DOCKER_REGISTRY-}taskoapigateway
