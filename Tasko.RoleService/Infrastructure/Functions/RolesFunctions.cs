@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Tasko.Domains.Models.DTO.Role;
 using Tasko.Domains.Models.DTO.User;
 using Tasko.Domains.Models.Structural.Providers;
-using Tasko.General.Models;
 using Tasko.General.Models.RequestResponses;
-using Tasko.UserRoles.Infrasructure.Repositories;
+using Tasko.RoleService.Infrasructure.Repositories;
 
 namespace Tasko.RoleService.Infrasructure.Functions;
 
