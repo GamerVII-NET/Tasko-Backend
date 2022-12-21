@@ -1,6 +1,7 @@
 using Tasko.Domains.Models.Structural.Providers;
 using MongoDB.Driver;
 using Tasko.General.Interfaces;
+using SharpCompress.Common;
 
 namespace Tasko.UserService.Infrasructure.Repositories
 {
@@ -14,6 +15,7 @@ namespace Tasko.UserService.Infrasructure.Repositories
         Task<IUser> FindUserAsync(Guid id);
         Task<IUser> FindUserAsync(string login);
         Task<IUser> FindUserAsync(string login, string password);
+        Task<List<IPermission>> GetUserPermissions(IUser user);
     }
     #endregion
 
@@ -24,9 +26,11 @@ namespace Tasko.UserService.Infrasructure.Repositories
         {
             Filter = Builders<User>.Filter;
             UserCollection = databaseContext.GetCollection<User>("Users");
+            PermissionCollection = databaseContext.GetCollection<IPermission>("Permissions");
         }
 
         internal IMongoCollection<User> UserCollection { get; set; }
+        internal IMongoCollection<IPermission> PermissionCollection { get; set; }
 
         internal FilterDefinitionBuilder<User> Filter { get; }
     }
@@ -66,6 +70,11 @@ namespace Tasko.UserService.Infrasructure.Repositories
             await UserCollection.ReplaceOneAsync(filter, user);
         }
         public async Task DeleteUserAsync(Guid id) => await UserCollection.DeleteOneAsync(c => c.Id == id);
+        public async Task<List<IPermission>> GetUserPermissions(IUser user)
+        {
+            var idsFilter = Builders<IPermission>.Filter.In(d => d.Id, user.PermissionsId);
+            return await PermissionCollection.Find(idsFilter).ToListAsync();
+        }
         #endregion
     } 
     #endregion

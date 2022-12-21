@@ -7,14 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\DTO\Permission\**" />
+    <EmbeddedResource Remove="Models\DTO\Permission\**" />
+    <None Remove="Models\DTO\Permission\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="MongoDB.Bson" Version="2.18.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\DTO\Permission\" />
-    <Folder Include="Models\DTO\Role\" />
+    <Folder Include="Models\DTO\Roles\" />
   </ItemGroup>
 
 </Project>

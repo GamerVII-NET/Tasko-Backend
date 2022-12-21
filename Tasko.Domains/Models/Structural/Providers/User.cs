@@ -5,10 +5,10 @@ namespace Tasko.Domains.Models.Structural.Providers
     public interface IUser
     {
         Guid Id { get; set; }
-        Guid RoleId { get; set; }
         string Email { get; set; }
         string Login { get; set; }
         string Password { get; set; }
+        IEnumerable<Guid> PermissionsId { get; set; }
         IEnumerable<Guid> PhonesId { get; set; }
         string FirstName { get; set; }
         string LastName { get; set; }
@@ -26,7 +26,7 @@ namespace Tasko.Domains.Models.Structural.Providers
         public string Email { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-        public Guid RoleId { get; set; }
+        public IEnumerable<Guid> PermissionsId { get; set; }
         public IEnumerable<Guid> PhonesId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

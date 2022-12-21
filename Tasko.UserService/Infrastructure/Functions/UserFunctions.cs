@@ -54,7 +54,8 @@ public class UserFunctions
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             user.IsDeleted = false;
             await userRepository.CreateUserAsync(user);
-            var token = Jwt.CreateToken(jwtValidationParameter, user);
+            var userPermissions = await userRepository.GetUserPermissions(user);
+            var token = Jwt.CreateToken(jwtValidationParameter, user, userPermissions);
 
             var response = new UserAuthRead
             {

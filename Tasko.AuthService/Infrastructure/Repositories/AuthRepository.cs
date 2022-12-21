@@ -13,8 +13,9 @@ namespace Tasko.AuthService.Infrastructure.Repositories
     #region Interfaces
     public interface IAuthRepository
     {
-        Task<IResult> AuthorizationAsync(IBaseUserAuth userAuth, JwtValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IBaseUserAuth> validator);
+        Task<IResult> AuthorizationAsync(IUserAuth userAuth, JwtValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator);
         Task<IUser> FindUserAsync(string login);
+        Task<List<IPermission>> GetUserPermissions(IUser user);
     }
     #endregion
 
@@ -25,10 +26,11 @@ namespace Tasko.AuthService.Infrastructure.Repositories
         {
             Filter = Builders<User>.Filter;
             UserCollection = databaseContext.GetCollection<User>("Users");
+            PermissionCollection = databaseContext.GetCollection<IPermission>("Permissions");
         }
 
         internal IMongoCollection<User> UserCollection { get; set; }
-
+        internal IMongoCollection<IPermission> PermissionCollection { get; set; }
         internal FilterDefinitionBuilder<User> Filter { get; }
     }
     #endregion
@@ -37,7 +39,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
     {
         public AuthRepository(IMongoDatabase databaseContext) : base(databaseContext) { }
 
-        public async Task<IResult> AuthorizationAsync(IBaseUserAuth userAuth, JwtValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IBaseUserAuth> validator)
+        public async Task<IResult> AuthorizationAsync(IUserAuth userAuth, JwtValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator)
         {
 
             var validationResult = validator.Validate(userAuth);
@@ -57,7 +59,8 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             var validatePassword = BCrypt.Net.BCrypt.Verify(userAuth.Password, user.Password);
             if (!validatePassword) return Results.Unauthorized();
-            string token = Jwt.CreateToken(jwtValidationParameter, user);
+            var userPermissions = await GetUserPermissions(user);
+            string token = Jwt.CreateToken(jwtValidationParameter, user, userPermissions);
 
             var response = new UserAuthRead
             {
@@ -67,7 +70,11 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             return Results.Ok(new RequestResponse<UserAuthRead>(response, StatusCodes.Status200OK));
         }
-
+        public async Task<List<IPermission>> GetUserPermissions(IUser user)
+        {
+            var idsFilter = Builders<IPermission>.Filter.In(d => d.Id, user.PermissionsId);
+            return await PermissionCollection.Find(idsFilter).ToListAsync();
+        }
         public async Task<IUser> FindUserAsync(string login)
         {
             var filter = Filter.Eq("Login", login);
