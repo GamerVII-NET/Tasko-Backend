@@ -12,12 +12,12 @@ public interface IGetRequestResponseContent<T>
 {
     public int Count { get; set; }
 
-    public IEnumerable<T> Items { get; set; }
+    public List<T> Items { get; set; }
 }
 
 public interface IGetRequestResponse<T>
 {
-    public IGetRequestResponseContent<T> Response { get; set; }
+    public GetRequestResponseContent<T> Response { get; set; }
 }
 #endregion
 
@@ -36,19 +36,28 @@ public class RequestResponse<T> : IRequestResponse<T>
 public class GetRequestResponseContent<T> : IGetRequestResponseContent<T>
 {
     public int Count { get; set; }
-    public IEnumerable<T> Items { get; set; }
+    public List<T> Items { get; set; }
+
+    public GetRequestResponseContent()
+    {
+
+    }
 
     public GetRequestResponseContent(IEnumerable<T> items)
     {
         Count = items.Count();
-        Items = items;
+        Items = items.ToList();
     }
 }
 
 public class GetRequestResponse<T> : IGetRequestResponse<T>, IBaseRequestResponse
 {
-    public IGetRequestResponseContent<T> Response { get; set; }
+    public GetRequestResponseContent<T> Response { get; set; }
     public int StatusCode { get; set; }
+    public GetRequestResponse()
+    {
+
+    }
 
     public GetRequestResponse(IEnumerable<T> response)
     {

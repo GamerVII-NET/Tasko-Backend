@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using Tasko.Client.Models;
 using Tasko.Domains.Models.DTO.User;
 using Tasko.Domains.Models.Structural.Providers;
+using Tasko.General.Models.RequestResponses;
 
 namespace Tasko.Client.ViewModels
 {
@@ -19,6 +22,7 @@ namespace Tasko.Client.ViewModels
         string Password { get; set; }
         bool LoginFailureHidden { get; set; }
         string ErrorMessage { get; set; }
+        ObservableCollection<BoardRead> Boards { get; set; }
         #endregion
 
         #region Methods
@@ -46,11 +50,12 @@ namespace Tasko.Client.ViewModels
         public virtual string Username { get; set; }
         public virtual string Password { get; set; }
         public virtual bool LoginFailureHidden { get; set; }
-        public string Initials { get; set; }
-        public string Photo { get; set; }
-        public string UserAbout { get; set; }
-        public Guid UserId { get; set; }
-        public string ErrorMessage { get; set; }
+        public virtual string Initials { get; set; }
+        public virtual string Photo { get; set; }
+        public virtual string UserAbout { get; set; }
+        public virtual Guid UserId { get; set; }
+        public virtual string ErrorMessage { get; set; }
+        public virtual ObservableCollection<BoardRead> Boards { get; set; } = new ObservableCollection<BoardRead>();
         #endregion
 
         #region Methods
@@ -98,30 +103,39 @@ namespace Tasko.Client.ViewModels
         public override string Password { get; set; }
 
         public override bool LoginFailureHidden { get; set; } = true;
-        public string ErrorMessage { get; set; }
+        public override string ErrorMessage { get; set; }
+
+        public override ObservableCollection<BoardRead> Boards { get => base.Boards; set => base.Boards = value; }
+
+
         #endregion
 
         #region Methods
         public override async Task<IUser> GetProfile()
         {
-            var userGuid = await SecureStorage.GetAsync("UserId");
 
-            if (string.IsNullOrEmpty(userGuid) == false)
+            var token = await SecureStorage.GetAsync("Token");
+
+            if (token != string.Empty)
             {
-                var token = await SecureStorage.GetAsync("Token");
-
                 HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var response = await HttpClient.GetAsync($"/api/users/{userGuid}");
+                var response = await HttpClient.GetAsync($"/api/boards");
+
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = await response.Content.ReadAsStringAsync();
+                    var boardsContent = await response.Content.ReadAsStringAsync();
 
-                    var user = JsonConvert.DeserializeObject<IUser>(result);
+                    var boards = JsonConvert.DeserializeObject<GetRequestResponse<BoardRead>>(boardsContent);
 
-                    UpdateUserStorageParams(user);
+                    Boards = new ObservableCollection<BoardRead>(boards.Response.Items);
                 }
+                else
+                {
+                    var test = response.StatusCode;
+                }
+
 
             }
 
@@ -149,23 +163,30 @@ namespace Tasko.Client.ViewModels
                 Password = Password
             };
             var content = JsonContent.Create(user);
-            var response = await HttpClient.PostAsync("/api/authorization", content);
+            var response = await HttpClient.PostAsync("/api/auth", content);
+
+            var result = await response.Content.ReadAsStringAsync();
 
 
             if (response.IsSuccessStatusCode)
             {
                 LoginFailureHidden = true;
 
-                var result = await response.Content.ReadAsStringAsync();
+                var model = JsonConvert.DeserializeObject<RequestResponse<UserAuthRead>>(result);
 
-                return result;
+                return model.Response.Token;
             }
-            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            else
             {
-                ErrorMessage = "Неправильный логин или пароль";
+
+                var model = JsonConvert.DeserializeObject<BadRequestResponse<List<ValidationFailure>>>(result);
+
+
+                ErrorMessage = model.Error.FirstOrDefault().ErrorMessage;
             }
 
             LoginFailureHidden = false;
+
             return string.Empty;
         }
         #endregion
