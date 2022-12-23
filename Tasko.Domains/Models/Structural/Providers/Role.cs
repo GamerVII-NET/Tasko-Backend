@@ -12,7 +12,6 @@ namespace Tasko.Domains.Models.Structural.Providers
         DateTime CreatedAt { get; set; }
         DateTime UpdatedAt { get; set; }
         DateTime DeletedAt { get; set; }
-        List<Guid> PermissionsGuids { get; set; }
     }
 
     public class Role : IRole
@@ -25,6 +24,5 @@ namespace Tasko.Domains.Models.Structural.Providers
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime DeletedAt { get; set; }
-        public List<Guid> PermissionsGuids { get; set; }
     }
 }

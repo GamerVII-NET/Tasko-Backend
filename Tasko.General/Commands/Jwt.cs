@@ -26,9 +26,8 @@ namespace Tasko.General.Commands
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtValidationParmeter.Key))
             };
         }
-        public static bool VerifyUser(HttpContext context, JwtValidationParameter jwtValidationParmeter, IUser user)
+        public static bool VerifyUser(string token, JwtValidationParameter jwtValidationParmeter, IUser user)
         {
-            string token = context.Request.Headers[Microsoft.Net.Http.Headers.HeaderNames.Authorization].ToString().Replace("Bearer ", string.Empty);
             if (string.IsNullOrEmpty(user.Login) && string.IsNullOrEmpty(user.Email)) return false;
             var validationParameters = new TokenValidationParameters()
             {
@@ -65,7 +64,7 @@ namespace Tasko.General.Commands
             }
             return false;
         }
-        public static string CreateToken(JwtValidationParameter jwtValidationParmeter, IUser user, List<IPermission> permissions)
+        public static string CreateToken(JwtValidationParameter jwtValidationParmeter, IUser user, List<Permission> permissions)
         {
             var claims = new List<Claim>
             {

@@ -15,7 +15,9 @@ namespace Tasko.AuthService.Infrastructure.Repositories
     {
         Task<IResult> AuthorizationAsync(IUserAuth userAuth, JwtValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator);
         Task<IUser> FindUserAsync(string login);
-        Task<List<IPermission>> GetUserPermissions(IUser user);
+        Task<List<Role>> GetUserRoles(IUser user);
+        Task<List<Role>> GetUserRolesPermissions(IUser user);
+        Task<List<Permission>> GetUserPermissions(IUser user);
     }
     #endregion
 
@@ -25,12 +27,21 @@ namespace Tasko.AuthService.Infrastructure.Repositories
         public AuthRepositoryBase(IMongoDatabase databaseContext)
         {
             Filter = Builders<User>.Filter;
+            RolesCollection = databaseContext.GetCollection<Role>("Roles");
+            UserRolesCollection = databaseContext.GetCollection<UserRole>("UserRoles");
+            UserRolesCollection = databaseContext.GetCollection<UserRole>("RolePermissions");
+            UserPermissionsCollection = databaseContext.GetCollection<UserPermission>("UserPermissions");
+            PermissionCollection = databaseContext.GetCollection<Permission>("Permissions");
             UserCollection = databaseContext.GetCollection<User>("Users");
-            PermissionCollection = databaseContext.GetCollection<IPermission>("Permissions");
+
         }
 
         internal IMongoCollection<User> UserCollection { get; set; }
-        internal IMongoCollection<IPermission> PermissionCollection { get; set; }
+        internal IMongoCollection<Role> RolesCollection { get; set; }
+        internal IMongoCollection<Permission> PermissionCollection { get; set; }
+        internal IMongoCollection<UserRole> UserRolesCollection { get; set; }
+        internal IMongoCollection<UserPermission> UserPermissionsCollection { get; set; }
+        internal IMongoCollection<RolePermission> RolePermissionsCollection { get; set; }
         internal FilterDefinitionBuilder<User> Filter { get; }
     }
     #endregion
@@ -58,9 +69,10 @@ namespace Tasko.AuthService.Infrastructure.Repositories
                 StatusCodes.Status404NotFound));
 
             var validatePassword = BCrypt.Net.BCrypt.Verify(userAuth.Password, user.Password);
-            if (!validatePassword) return Results.Unauthorized();
+            if (!validatePassword) return Results.BadRequest("Error authorization");
+            var userRoles = await GetUserRoles(user);
             var userPermissions = await GetUserPermissions(user);
-            string token = Jwt.CreateToken(jwtValidationParameter, user, userPermissions);
+            string token = Jwt.CreateToken(jwtValidationParameter, user, userRoles, userPermissions);
 
             var response = new UserAuthRead
             {
@@ -70,16 +82,38 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             return Results.Ok(new RequestResponse<UserAuthRead>(response, StatusCodes.Status200OK));
         }
-        public async Task<List<IPermission>> GetUserPermissions(IUser user)
+        public async Task<List<Role>> GetUserRoles(IUser user)
         {
-            var idsFilter = Builders<IPermission>.Filter.In(d => d.Id, user.PermissionsId);
-            return await PermissionCollection.Find(idsFilter).ToListAsync();
+            var userRolesIdFilter = Builders<UserRole>.Filter.Eq(d => d.UserId, user.Id);
+            var userRoles = await UserRolesCollection.Find(userRolesIdFilter).ToListAsync();
+            var rolesIdFilter = Builders<Role>.Filter.In(d => d.Id, userRoles.Select(c => c.RoleId));
+            return await RolesCollection.Find(rolesIdFilter).ToListAsync();
         }
+        public async Task<List<Permission>> GetUserRolesPermissions(IUser user)
+        {
+            var roles = await GetUserRoles(user);
+            var rolePermissionsIdFilter = Builders<RolePermission>.Filter.In(d => d.RoleId, roles.Select(c => c.Id));
+            var rolePermissions = await RolePermissionsCollection.Find(rolePermissionsIdFilter).ToListAsync();
+            var permissionsIdFilter = Builders<Permission>.Filter.In(d => d.Id, rolePermissions.Select(c => c.PermissionId));
+            return await PermissionCollection.Find(permissionsIdFilter).ToListAsync();
+
+        }
+        public async Task<List<Permission>> GetUserPermissions(IUser user)
+        {
+
+            var userPermissionsIdFilter = Builders<UserPermission>.Filter.Eq(d => d.UserId, user.Id); 
+            var userPermissions = await UserPermissionsCollection.Find(userPermissionsIdFilter).ToListAsync();
+            var permissionsIdFilter = Builders<Permission>.Filter.In(d => d.Id, userPermissions.Select(c => c.PermissionId));
+            return await PermissionCollection.Find(permissionsIdFilter).ToListAsync();
+        }
+
         public async Task<IUser> FindUserAsync(string login)
         {
             var filter = Filter.Eq("Login", login);
             return await UserCollection.Find(filter).FirstOrDefaultAsync();
         }
+
+    
     }
 
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Tasko.Domains.Models.DTO.User;
 using Tasko.Domains.Models.Structural.Providers;
 using Tasko.General.Commands;
+using Tasko.General.Extensions.Crypthography;
 using Tasko.General.Models.RequestResponses;
 using Tasko.UserService.Infrasructure.Repositories;
 
@@ -16,11 +17,10 @@ public class UserFunctions
     {
         return [Authorize] async (IUserRepository userRepository, IMapper mapper, Guid id) =>
         {
-            var user = userRepository.FindUserAsync(id);
-            return user == null ? Results.NotFound(id) : Results.Ok(user);
+            var user = await userRepository.FindUserAsync(id);
+            return user == null ? Results.NotFound(id) : Results.Ok(new RequestResponse<IUser>(user, StatusCodes.Status200OK));
         };
     }
-
     internal static Func<IUserRepository, IMapper, Task<IResult>> GetUsers()
     {
         return [Authorize] async (IUserRepository repository, IMapper mapper) =>
@@ -30,7 +30,6 @@ public class UserFunctions
             return Results.Ok(new GetRequestResponse<UserRead>(mapper.Map<IEnumerable<UserRead>>(users)));
         };
     }
-
     internal static Func<IUserRepository, IMapper, UserCreate, IValidator<IUserCreate>, Task<IResult>> CreateUser(JwtValidationParameter jwtValidationParameter)
     {
         return async (IUserRepository userRepository, IMapper mapper, UserCreate userCreate, IValidator<IUserCreate> validator) =>
@@ -55,6 +54,8 @@ public class UserFunctions
             user.IsDeleted = false;
             await userRepository.CreateUserAsync(user);
             var userPermissions = await userRepository.GetUserPermissions(user);
+            var userRolesPermissions = await userRepository.GetUserRolesPermissions(user);
+            var permissions = userPermissions.Concat(userRolesPermissions).ToList();
             var token = Jwt.CreateToken(jwtValidationParameter, user, userPermissions);
 
             var response = new UserAuthRead
@@ -66,7 +67,6 @@ public class UserFunctions
             return Results.Created($"/api/users/{user.Id}", new RequestResponse<IUserAuthRead>(response, StatusCodes.Status200OK));
         };
     }
-
     internal static Func<HttpContext, IUserRepository, IMapper, UserUpdate, IValidator<IUserUpdate>, Task<IResult>> UpdateUser(JwtValidationParameter jwtValidationParmeter)
     {
         return [Authorize] async (HttpContext context, IUserRepository userRepository, IMapper mapper, UserUpdate userUpdate, IValidator<IUserUpdate> validator) =>
@@ -89,7 +89,8 @@ public class UserFunctions
                 "Пользователь с указанными данными не сущуствует!",
                 StatusCodes.Status404NotFound));
 
-            var isCurrentUser = Jwt.VerifyUser(context, jwtValidationParmeter, foundedUser);
+            var token = context.GetJwtToken();
+            var isCurrentUser = Jwt.VerifyUser(token, jwtValidationParmeter, foundedUser);
 
             if (isCurrentUser == false) { return Results.Unauthorized(); }
 
@@ -107,7 +108,6 @@ public class UserFunctions
             return Results.Ok(new RequestResponse<IUserRead>(response, StatusCodes.Status200OK));
         };
     }
-
     internal static Func<HttpContext, IUserRepository, IMapper, Guid, Task<IResult>> DeleteUser(JwtValidationParameter jwtValidationParmeter)
     {
         return [Authorize] async (HttpContext context, IUserRepository userRepository, IMapper mapper, Guid id) =>
@@ -116,16 +116,14 @@ public class UserFunctions
 
             if (user is null)
             {
-                return Results.NotFound(new BadRequestResponse<string>($"Пользователь с указанным идентификатором {id} не найден", "Пользователь не найден.", StatusCodes.Status404NotFound));
+                return Results.NotFound(new BadRequestResponse<string>($"User with unique identificator {id} not found", "User not found", StatusCodes.Status404NotFound));
             }
+            var token = context.GetJwtToken();
+            var isCurrentUser = Jwt.VerifyUser(token, jwtValidationParmeter, user);
 
-            var isCurrentUser = Jwt.VerifyUser(context, jwtValidationParmeter, user);
-
-            if (isCurrentUser == false) { return Results.Unauthorized(); }
+            if (isCurrentUser == false) return Results.Unauthorized();
 
             await userRepository.DeleteUserAsync(user.Id);
-
-
             return Results.Ok();
         };
     }
