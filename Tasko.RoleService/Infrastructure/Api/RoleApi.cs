@@ -14,25 +14,25 @@ public class UserApi : ApiBase, IApi
     {
 
         WebApplication.MapGet("api/roles", RolesFunctions.GetRoles())
-            .WithName("Get all roles")
-            .WithTags("Getters");
+                      .WithName("Get all roles")
+                      .WithTags("Getters");
 
 
         WebApplication.MapGet("api/users/{id}", RolesFunctions.FindRole())
-        .WithName("Get user by id")
+                      .WithName("Get user by id")
                       .WithTags("Getters");
 
     }
     private void Creators()
     {
         WebApplication.MapPost("api/roles", RolesFunctions.CreateRole(JwtValidationParmeter))
-            .WithName("Create role")
-            .WithTags("Creators");
+                      .WithName("Create role")
+                      .WithTags("Creators");
     }
     private void Updaters()
     {
         WebApplication.MapPut("api/users", RolesFunctions.UpdateRole(JwtValidationParmeter))
-        .WithName("Update user")
+                      .WithName("Update user")
                       .WithTags("Updaters");
     }
     private void Deleters()

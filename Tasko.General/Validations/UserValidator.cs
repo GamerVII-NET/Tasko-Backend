@@ -3,7 +3,7 @@ using Tasko.Domains.Models.DTO.User;
 
 namespace Tasko.General.Validations;
 
-public class AuthUserValidator : AbstractValidator<IBaseUserAuth>
+public class AuthUserValidator : AbstractValidator<IUserAuth>
 {
     public AuthUserValidator()
     {

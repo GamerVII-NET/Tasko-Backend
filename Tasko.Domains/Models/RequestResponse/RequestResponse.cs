@@ -32,7 +32,6 @@ public class RequestResponse<T> : IRequestResponse<T>
         StatusCode = statusCode;
     }
 }
-
 public class GetRequestResponseContent<T> : IGetRequestResponseContent<T>
 {
     public int Count { get; set; }
@@ -49,7 +48,6 @@ public class GetRequestResponseContent<T> : IGetRequestResponseContent<T>
         Items = items.ToList();
     }
 }
-
 public class GetRequestResponse<T> : IGetRequestResponse<T>, IBaseRequestResponse
 {
     public GetRequestResponseContent<T> Response { get; set; }

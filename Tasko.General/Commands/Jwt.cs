@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -25,9 +26,8 @@ namespace Tasko.General.Commands
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtValidationParmeter.Key))
             };
         }
-        public static bool VerifyUser(HttpContext context, JwtValidationParameter jwtValidationParmeter, IUser user)
+        public static bool VerifyUser(string token, JwtValidationParameter jwtValidationParmeter, IUser user)
         {
-            string token = context.Request.Headers[Microsoft.Net.Http.Headers.HeaderNames.Authorization].ToString().Replace("Bearer ", string.Empty);
             if (string.IsNullOrEmpty(user.Login) && string.IsNullOrEmpty(user.Email)) return false;
             var validationParameters = new TokenValidationParameters()
             {
@@ -58,15 +58,13 @@ namespace Tasko.General.Commands
             if (validatedToken != null)
             {
                 var securityToken = (validatedToken as JwtSecurityToken);
-                if (securityToken == null) return false; 
-                var claimUser = securityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
-                var claimEmail = securityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
-                var claimGuid = securityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-                if (claimGuid!.Value == $"{user.Id}") return true;
+                if (securityToken == null) return false;
+                var claimId = securityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+                if (claimId!.Value == $"{user.Id}") return true;
             }
             return false;
         }
-        public static string CreateToken(JwtValidationParameter jwtValidationParmeter, IUser user)
+        public static string CreateToken(JwtValidationParameter jwtValidationParmeter, IUser user, List<Permission> permissions)
         {
             var claims = new List<Claim>
             {
@@ -74,6 +72,9 @@ namespace Tasko.General.Commands
                 new Claim(ClaimTypes.Name, user.FirstName),
                 new Claim(ClaimTypes.Email, user.Email)
             };
+
+            permissions.ForEach(permission => claims.Add(new Claim(ClaimTypes.Role, $"{permission.Name}")));
+
             var expiryDuration = new TimeSpan(0, 30, 0, 0);
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtValidationParmeter.Key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
