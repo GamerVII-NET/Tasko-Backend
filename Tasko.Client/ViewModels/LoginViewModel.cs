@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using Tasko.Client.Models;
+using Tasko.Client.Services;
 using Tasko.Domains.Models.DTO.User;
 using Tasko.Domains.Models.Structural.Providers;
 using Tasko.General.Models.RequestResponses;
@@ -16,11 +17,13 @@ namespace Tasko.Client.ViewModels
         #region Properties
         string Username { get; set; }
         string Initials { get; set; }
+        string BoardsSearchText { get; set; }
         string Photo { get; set; }
         string UserAbout { get; set; }
         Guid UserId { get; set; }
         string Password { get; set; }
         bool LoginFailureHidden { get; set; }
+        bool IsLoadingBoards { get; set; }
         string ErrorMessage { get; set; }
         ObservableCollection<BoardRead> Boards { get; set; }
         #endregion
@@ -28,6 +31,7 @@ namespace Tasko.Client.ViewModels
         #region Methods
         Task<string> ValidateLoginAsync();
         Task<IUser> GetProfile();
+        Task GetBoards();
         Task UpdateUserStorageParams(IUser user);
         #endregion
     }
@@ -49,7 +53,9 @@ namespace Tasko.Client.ViewModels
         #region Properties
         public virtual string Username { get; set; }
         public virtual string Password { get; set; }
+        public virtual string BoardsSearchText { get; set; } = string.Empty;
         public virtual bool LoginFailureHidden { get; set; }
+        public virtual bool IsLoadingBoards { get; set; }
         public virtual string Initials { get; set; }
         public virtual string Photo { get; set; }
         public virtual string UserAbout { get; set; }
@@ -62,6 +68,7 @@ namespace Tasko.Client.ViewModels
         public abstract Task<string> ValidateLoginAsync();
 
         public abstract Task<IUser> GetProfile();
+        public abstract Task GetBoards();
         public abstract Task UpdateUserStorageParams(IUser user);
 
         protected virtual void Dispose(bool dispoing)
@@ -95,49 +102,41 @@ namespace Tasko.Client.ViewModels
 
         #region Properties
         [Display(Name = "Логин")]
+        [MinLength(4, ErrorMessage = "Минимальная длина логина 4 символа")]
         [Required(ErrorMessage = "Логин обязателен для заполнения")]
         public override string Username { get; set; }
 
         [Display(Name = "Пароль")]
+        [MinLength(6, ErrorMessage = "Минимальная длина логина 6 символов")]
         [Required(ErrorMessage = "Пароль обязателен для заполнения")]
         public override string Password { get; set; }
 
         public override bool LoginFailureHidden { get; set; } = true;
         public override string ErrorMessage { get; set; }
-
+        public override string BoardsSearchText { get; set; }
+        public override bool IsLoadingBoards { get; set; } = true;
         public override ObservableCollection<BoardRead> Boards { get => base.Boards; set => base.Boards = value; }
 
 
         #endregion
 
         #region Methods
+        public override async Task GetBoards()
+        {
+            IsLoadingBoards = true;
+
+            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("Token"));
+
+            Boards = new ObservableCollection<BoardRead>(await BoardsService.GetBoardsAsync(HttpClient));
+
+            IsLoadingBoards = false;
+        }
+
+
         public override async Task<IUser> GetProfile()
         {
 
-            var token = await SecureStorage.GetAsync("Token");
 
-            if (token != string.Empty)
-            {
-                HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                var response = await HttpClient.GetAsync($"/api/boards");
-
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var boardsContent = await response.Content.ReadAsStringAsync();
-
-                    var boards = JsonConvert.DeserializeObject<GetRequestResponse<BoardRead>>(boardsContent);
-
-                    Boards = new ObservableCollection<BoardRead>(boards.Response.Items);
-                }
-                else
-                {
-                    var test = response.StatusCode;
-                }
-
-
-            }
 
             return null;
         }
@@ -157,35 +156,25 @@ namespace Tasko.Client.ViewModels
 
         public async override Task<string> ValidateLoginAsync()
         {
-            var user = new UserAuth
+
+            LoginFailureHidden = true;
+            var authResult = await UserService.AuthUser(HttpClient, Username, Password);
+
+            if (authResult.Item2 == System.Net.HttpStatusCode.OK)
             {
-                Login = Username,
-                Password = Password
-            };
-            var content = JsonContent.Create(user);
-            var response = await HttpClient.PostAsync("/api/auth", content);
-
-            var result = await response.Content.ReadAsStringAsync();
-
-
-            if (response.IsSuccessStatusCode)
+                return (authResult.Item1 as RequestResponse<UserAuthRead>).Response.Token;
+            }
+            else if (authResult.Item2 == System.Net.HttpStatusCode.Unauthorized)
             {
-                LoginFailureHidden = true;
-
-                var model = JsonConvert.DeserializeObject<RequestResponse<UserAuthRead>>(result);
-
-                return model.Response.Token;
+                LoginFailureHidden = false;
+                ErrorMessage = "Неверный логин или пароль!";
             }
             else
             {
-
-                var model = JsonConvert.DeserializeObject<BadRequestResponse<List<ValidationFailure>>>(result);
-
-
-                ErrorMessage = model.Error.FirstOrDefault().ErrorMessage;
+                LoginFailureHidden = false;
+                var errors = authResult.Item1 as BadRequestResponse<IEnumerable<ValidationFailure>>;
+                ErrorMessage = errors?.Message;
             }
-
-            LoginFailureHidden = false;
 
             return string.Empty;
         }
