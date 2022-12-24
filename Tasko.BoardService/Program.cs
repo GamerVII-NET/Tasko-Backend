@@ -16,7 +16,6 @@ var dbName = builder.Configuration.GetMongoDatabaseName();
 var databaseContext = Mongo.GetMongoDataConext(dbConnectionString, dbName);
 
 builder.RegisterBuilder(databaseContext);
-builder.RegisterBuilder(databaseContext);
 
 var application = builder.Build();
 application.RegisterApplication();
