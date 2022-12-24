@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Json;
+using Tasko.Client.Models;
 using Tasko.Domains.Models.DTO.User;
 using Tasko.General.Models.RequestResponses;
 
@@ -10,7 +11,7 @@ public static class UserService
 {
 
 
-    public static async Task<(IBaseRequestResponse, HttpStatusCode)> AuthUser(HttpClient client, string login, string password)
+    public static async Task<dynamic> AuthUser(HttpClient client, string login, string password)
     {
         var user = new UserAuth
         {
@@ -23,15 +24,23 @@ public static class UserService
         var content = JsonContent.Create(user);
         var response = await client.PostAsync("/api/auth", content);
         var result = await response.Content.ReadAsStringAsync();
-
+        
         if (response.IsSuccessStatusCode)
             model = JsonConvert.DeserializeObject<RequestResponse<UserAuthRead>>(result);
         else
-            return (JsonConvert.DeserializeObject<BadRequestResponse<IEnumerable<Models.ValidationFailure>>>(result), response.StatusCode);
+            return new 
+            {
+                Response = JsonConvert.DeserializeObject<BadRequestResponse<IEnumerable<ValidationFailure>>>(result), 
+                StatusCode = response.StatusCode 
+            };
 
         await SaveUserInStorageAsync(model.Response);
 
-        return (model, response.StatusCode);
+        return new
+        {
+            Response = model,
+            StatusCode = response.StatusCode
+        };
     }
 
 

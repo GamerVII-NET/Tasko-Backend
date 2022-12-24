@@ -1,6 +1,4 @@
-using FluentValidation;
 using Tasko.Domains.Models.DTO.Role;
-using Tasko.Domains.Models.DTO.User;
 
 namespace Tasko.General.Validations;
 

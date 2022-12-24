@@ -1,0 +1,22 @@
+﻿#region Tasko.General
+global using Tasko.General.Commands;
+global using Tasko.General.Extensions;
+global using Tasko.General.Interfaces;
+global using Tasko.General.Extensions.Jwt;
+global using Tasko.General.Abstracts;
+global using Tasko.General.Models;
+global using Tasko.General.Models.RequestResponses;
+#endregion
+
+#region Tasko.Domains
+global using Tasko.Domains.Models.DTO.User;
+global using Tasko.Domains.Models.Structural.Providers;
+#endregion
+
+global using System.Reflection;
+global using AutoMapper;
+global using FluentValidation;
+global using FluentValidation.Results;
+global using FluentValidation.AspNetCore;
+global using MongoDB.Driver;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;

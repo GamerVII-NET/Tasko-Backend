@@ -1,5 +1,4 @@
-﻿using MongoDB.Driver;
-
+﻿
 namespace Tasko.General.Commands
 {
     public static class Mongo

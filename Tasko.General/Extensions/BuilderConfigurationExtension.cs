@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
-
-namespace Tasko.General.Extensions
+﻿namespace Tasko.General.Extensions
 {
     public static class BuilderConfigurationExtension
     {

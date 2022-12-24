@@ -138,11 +138,11 @@ namespace Tasko.Client.ViewModels
             LoginFailureHidden = true;
             var authResult = await UserService.AuthUser(HttpClient, Username, Password);
 
-            if (authResult.Item2 == System.Net.HttpStatusCode.OK)
+            if (authResult.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                return (authResult.Item1 as RequestResponse<UserAuthRead>).Response.Token;
+                return (authResult.Response as RequestResponse<UserAuthRead>).Response.Token;
             }
-            else if (authResult.Item2 == System.Net.HttpStatusCode.Unauthorized)
+            else if (authResult.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 LoginFailureHidden = false;
                 ErrorMessage = "Неверный логин или пароль!";
@@ -150,7 +150,7 @@ namespace Tasko.Client.ViewModels
             else
             {
                 LoginFailureHidden = false;
-                var errors = authResult.Item1 as BadRequestResponse<IEnumerable<ValidationFailure>>;
+                var errors = authResult.Response as BadRequestResponse<IEnumerable<ValidationFailure>>;
                 ErrorMessage = errors?.Message;
             }
 

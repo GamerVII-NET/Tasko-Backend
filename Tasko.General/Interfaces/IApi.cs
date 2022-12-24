@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-
+﻿
 namespace Tasko.General.Interfaces
 {
     public interface IApi

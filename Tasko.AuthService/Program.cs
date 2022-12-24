@@ -1,9 +1,4 @@
-using System.Reflection;
 using Tasko.AuthService.Infrastructure.Configurations;
-using Tasko.General.Commands;
-using Tasko.General.Extensions;
-using Tasko.General.Interfaces;
-
 
 var builder = WebApplication.CreateBuilder(args);
 #region If project on local machine

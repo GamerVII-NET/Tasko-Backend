@@ -1,7 +1,4 @@
-using System.Reflection;
 using Tasko.BoardSevice.Infrasructure.Configurations;
-using Tasko.General.Commands;
-using Tasko.General.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 #if DOCKER

@@ -1,10 +1,4 @@
-using AutoMapper;
-using Tasko.Domains.Models.DTO.Role;
-using Tasko.Domains.Models.DTO.User;
-using Tasko.Domains.Models.Structural.Providers;
-
 namespace Tasko.RoleService.Infrasructure.Profiles;
-
 
 public class RoleProfile : Profile
 {

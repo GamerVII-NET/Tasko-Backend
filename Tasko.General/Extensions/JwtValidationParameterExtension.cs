@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Tasko.General.Extensions.Crypthography;
-
-namespace Tasko.General.Extensions.Jwt
+﻿namespace Tasko.General.Extensions.Jwt
 {
     public static class JwtValidationParameterExtension
     {

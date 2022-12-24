@@ -1,12 +1,4 @@
-﻿using AutoMapper;
-using FluentValidation;
-using FluentValidation.Results;
-using MongoDB.Driver;
-using Tasko.Domains.Models.DTO.User;
-using Tasko.Domains.Models.Structural.Providers;
-using Tasko.General.Commands;
-using Tasko.General.Models;
-using Tasko.General.Models.RequestResponses;
+﻿
 
 namespace Tasko.AuthService.Infrastructure.Repositories
 {

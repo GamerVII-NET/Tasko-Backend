@@ -1,4 +1,3 @@
-using FluentValidation;
 using Tasko.Domains.Models.DTO.Board;
 
 namespace Tasko.General.Validations;

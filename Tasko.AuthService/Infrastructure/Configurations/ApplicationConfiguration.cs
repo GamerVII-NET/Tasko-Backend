@@ -1,11 +1,5 @@
-﻿using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using MongoDB.Driver;
-using Tasko.AuthService.Infrastructure.Api;
+﻿using Tasko.AuthService.Infrastructure.Api;
 using Tasko.AuthService.Infrastructure.Repositories;
-using Tasko.General.Commands;
-using Tasko.General.Extensions.Jwt;
-using Tasko.General.Interfaces;
 
 namespace Tasko.AuthService.Infrastructure.Configurations;
 

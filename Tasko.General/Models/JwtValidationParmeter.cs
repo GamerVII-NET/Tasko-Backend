@@ -1,6 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.Text;
-
+﻿
 namespace Tasko.General.Models
 {
     public class JwtValidationParameter

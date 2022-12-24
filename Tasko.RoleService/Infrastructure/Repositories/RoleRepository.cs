@@ -1,7 +1,3 @@
-using MongoDB.Driver;
-using System.Runtime.InteropServices;
-using Tasko.Domains.Models.Structural.Providers;
-
 namespace Tasko.RoleService.Infrasructure.Repositories;
 
 #region Interfaces
@@ -181,6 +177,7 @@ public class RoleRepositoryBase
 
 #endregion
 
+#region Providers
 public class RoleRepository : RoleRepositoryBase, IRoleRepository, IRolePermissionRepository, IBoardUserRoleRepository, IUserRoleRepository
 {
     public RoleRepository(IMongoDatabase databaseContext) : base(databaseContext)
@@ -274,3 +271,5 @@ public class RoleRepository : RoleRepositoryBase, IRoleRepository, IRolePermissi
         throw new NotImplementedException();
     }
 }
+
+#endregion

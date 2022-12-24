@@ -1,12 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
-using MongoDB.Driver;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Tasko.Domains.Models.Structural.Providers;
-using Tasko.General.Models;
+﻿
 
 namespace Tasko.General.Commands
 {
@@ -28,6 +20,7 @@ namespace Tasko.General.Commands
         }
         public static bool VerifyUser(string token, JwtValidationParameter jwtValidationParmeter, IUser user)
         {
+            
             if (string.IsNullOrEmpty(user.Login) && string.IsNullOrEmpty(user.Email)) return false;
             var validationParameters = new TokenValidationParameters()
             {

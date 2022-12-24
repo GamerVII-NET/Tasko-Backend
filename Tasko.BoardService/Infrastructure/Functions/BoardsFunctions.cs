@@ -1,10 +1,6 @@
-using AutoMapper;
-using FluentValidation;
-using Microsoft.AspNetCore.Authorization;
+
 using Tasko.BoardSevice.Infrasructure.Repositories;
-using Tasko.Domains.Models.DTO.Board;
-using Tasko.Domains.Models.Structural.Providers;
-using Tasko.General.Models.RequestResponses;
+
 using ValidationFailure = FluentValidation.Results.ValidationFailure;
 
 namespace Tasko.BoardSevice.Infrasructure.Functions
