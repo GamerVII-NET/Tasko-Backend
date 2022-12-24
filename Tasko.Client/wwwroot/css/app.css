@@ -1591,6 +1591,7 @@ div[hidden] {
 }
 
 .projects-item-avatar {
+    background-size: cover;
     width: 40px;
     height: 40px;
     border-radius: 8px

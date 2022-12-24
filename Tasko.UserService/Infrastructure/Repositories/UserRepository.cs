@@ -24,7 +24,7 @@ namespace Tasko.UserService.Infrasructure.Repositories
             Filter = Builders<User>.Filter;
             RolesCollection = databaseContext.GetCollection<Role>("Roles");
             UserRolesCollection = databaseContext.GetCollection<UserRole>("UserRoles");
-            UserRolesCollection = databaseContext.GetCollection<UserRole>("RolePermissions");
+            RolePermissionsCollection = databaseContext.GetCollection<RolePermission>("RolePermissions");
             UserPermissionsCollection = databaseContext.GetCollection<UserPermission>("UserPermissions");
             PermissionCollection = databaseContext.GetCollection<Permission>("Permissions");
             UserCollection = databaseContext.GetCollection<User>("Users");
@@ -92,7 +92,6 @@ namespace Tasko.UserService.Infrasructure.Repositories
         }
         public async Task<List<Permission>> GetUserPermissions(IUser user)
         {
-
             var userPermissionsIdFilter = Builders<UserPermission>.Filter.Eq(d => d.UserId, user.Id);
             var userPermissions = await UserPermissionsCollection.Find(userPermissionsIdFilter).ToListAsync();
             var permissionsIdFilter = Builders<Permission>.Filter.In(d => d.Id, userPermissions.Select(c => c.PermissionId));

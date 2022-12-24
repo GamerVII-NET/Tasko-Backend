@@ -53,7 +53,6 @@ namespace Tasko.Client.Helpers
             //Again, this is what I'm doing, but you could do/store/save anything as part of this process
             await SecureStorage.SetAsync("token", token);
 
-            //Providing the current identity ifnormation
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 

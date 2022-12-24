@@ -1,16 +1,20 @@
 ﻿@page "/"
 
 @using Tasko.Client.Helpers;
+@using Blazorise.Components
+@using Tasko.Domains.Models.Structural.Providers;
 
 @inject NavigationManager Navigation
 @inject AuthStateProvider AuthStateProvider
 
+
 <AuthorizeView>
     <Authorized Context="Auth">
-        <NavBar FullName="@LoginViewModel.Username"
+        <NavBar FullName="@LoginViewModel.UserInfo?.User.FirstName"
+                Email="@LoginViewModel.UserInfo?.User.About"
                 PagePartition="Панель управления"
-                PageName="Информация" />
-       <div class="content">
+                PageName="Информация"/>
+        <div class="content">
             <div class="projects-header">
                 <h3>Добро пожаловать в Tasko!</h3>
                 <p>
@@ -19,8 +23,9 @@
                 </p>
             </div>
             <div class="projects-search-wrapper">
-                <input class="projects-search" type="text"
-                       placeholder="Начните искать...">
+                <InputText class="projects-search" type="text"
+                    placeholder="Начните искать..."
+                    @bind-Value="LoginViewModel.BoardsSearchText"/>
                 <div class="projects-search-icon"></div>
             </div>
             <div class="container-fluid mt-3">
@@ -39,53 +44,66 @@
                                 </svg>
                             </div>
                         </div>
+
                         <div class="projects-list">
-                            
-                            @foreach (var board in LoginViewModel.Boards)
+                            @if (LoginViewModel.IsLoadingBoards)
                             {
-                                <div class="projects-item">
-                                    <div class="projects-item-header">
-                                        <div class="projects-item-info">
-                                            <img class="projects-item-avatar"
-                                                 src="https://picsum.photos/240/180" alt="project-photo">
-                                            <div class="projects-item-name">
-                                                <h4>UnderCode</h4>
-                                                <p><span>12 активных задач</span><span>13 участников</span></p>
-                                            </div>
-                                        </div>
-                                        <div class="project-actions">
-                                            <svg width="5" height="19" viewbox="0 0 5 19"
-                                                 fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                                      d="M2.50084 14.8328C3.57171 14.8328 4.44434 15.7055 4.44434 16.7796C4.44434 17.8537 3.57171 18.7263 2.50084 18.7263C1.42834 18.7263 0.554085 17.8537 0.554085 16.7796C0.554085 15.7054 1.42834 14.8328 2.50084 14.8328ZM4.44434 9.5004C4.44434 8.42628 3.57171 7.55365 2.50084 7.55365C1.42834 7.55365 0.554085 8.42628 0.554085 9.5004C0.554085 10.5745 1.42834 11.4471 2.50084 11.4471C3.57171 11.4471 4.44434 10.5745 4.44434 9.5004ZM4.4443 2.22214C4.4443 1.14802 3.57168 0.275391 2.5008 0.275391C1.4283 0.27539 0.554055 1.14802 0.554054 2.22214C0.554054 3.29627 1.4283 4.16889 2.5008 4.16889C3.57168 4.16889 4.4443 3.29627 4.4443 2.22214Z"
-                                                      fill="#717171"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="projects-item-footer">
-                                        <div class="tasknavbar-members">
-                                            <div class="tasknavbar-member">
-                                                <img src="https://sun9-75.userapi.com/impg/DEOK5L2qIwif95nINZP2lMc0En_UhnPOUWgMNQ/07BCpJFoeHo.jpg?size=2160x2160&amp;quality=96&amp;sign=0706decc844288c1e4026a3ee4e72330&amp;type=album">
-                                            </div>
-                                            <div class="tasknavbar-member">
-                                                <img src="https://sun9-75.userapi.com/impg/DEOK5L2qIwif95nINZP2lMc0En_UhnPOUWgMNQ/07BCpJFoeHo.jpg?size=2160x2160&amp;quality=96&amp;sign=0706decc844288c1e4026a3ee4e72330&amp;type=album">
-                                            </div>
-                                            <div class="tasknavbar-member">
-                                                <img src="https://sun9-75.userapi.com/impg/DEOK5L2qIwif95nINZP2lMc0En_UhnPOUWgMNQ/07BCpJFoeHo.jpg?size=2160x2160&amp;quality=96&amp;sign=0706decc844288c1e4026a3ee4e72330&amp;type=album">
-                                            </div>
-                                            <div class="tasknavbar-member__count">+15</div>
-                                        </div>
-                                        <p>10 часов назад</p>
-                                    </div>
-                                </div>
+                                <div>Загрузка....</div>
                             }
-                            
+                            else if (LoginViewModel.Boards.Count == 0)
+                            {
+                                <div>Проекты отсутствуют</div>
+                            }
+                            else
+                            {
+
+                                @foreach (var board in LoginViewModel.Boards.Where(c => c.Name.ToLower().Contains(LoginViewModel.BoardsSearchText.ToLower())))
+                                {
+                                    <div class="projects-item" @onclick="@(() => Navigation.NavigateTo($"/board/{board.Id}"))">
+                                        <div class="projects-item-header">
+                                            <div class="projects-item-info" >
+                                                <div class="projects-item-avatar" style="background-image: url('data:image/png;base64,@board.Avatar');" alt="project-photo"></div>
+                                                <div class="projects-item-name">
+                                                    <h4>@board.Name</h4>
+                                                    <p><span>12 активных задач</span><span>13 участников</span></p>
+                                                </div>
+                                            </div>
+                                            <div class="project-actions">
+                                                <svg width="5" height="19" viewbox="0 0 5 19"
+                                                     fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                          d="M2.50084 14.8328C3.57171 14.8328 4.44434 15.7055 4.44434 16.7796C4.44434 17.8537 3.57171 18.7263 2.50084 18.7263C1.42834 18.7263 0.554085 17.8537 0.554085 16.7796C0.554085 15.7054 1.42834 14.8328 2.50084 14.8328ZM4.44434 9.5004C4.44434 8.42628 3.57171 7.55365 2.50084 7.55365C1.42834 7.55365 0.554085 8.42628 0.554085 9.5004C0.554085 10.5745 1.42834 11.4471 2.50084 11.4471C3.57171 11.4471 4.44434 10.5745 4.44434 9.5004ZM4.4443 2.22214C4.4443 1.14802 3.57168 0.275391 2.5008 0.275391C1.4283 0.27539 0.554055 1.14802 0.554054 2.22214C0.554054 3.29627 1.4283 4.16889 2.5008 4.16889C3.57168 4.16889 4.4443 3.29627 4.4443 2.22214Z"
+                                                          fill="#717171"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+@*                                        <div class="projects-item-footer">
+                                            <div class="tasknavbar-members">
+                                                <div class="tasknavbar-member">
+                                                    <img src="https://sun9-75.userapi.com/impg/DEOK5L2qIwif95nINZP2lMc0En_UhnPOUWgMNQ/07BCpJFoeHo.jpg?size=2160x2160&amp;quality=96&amp;sign=0706decc844288c1e4026a3ee4e72330&amp;type=album">
+                                                </div>
+                                                <div class="tasknavbar-member">
+                                                    <img src="https://sun9-75.userapi.com/impg/DEOK5L2qIwif95nINZP2lMc0En_UhnPOUWgMNQ/07BCpJFoeHo.jpg?size=2160x2160&amp;quality=96&amp;sign=0706decc844288c1e4026a3ee4e72330&amp;type=album">
+                                                </div>
+                                                <div class="tasknavbar-member">
+                                                    <img src="https://sun9-75.userapi.com/impg/DEOK5L2qIwif95nINZP2lMc0En_UhnPOUWgMNQ/07BCpJFoeHo.jpg?size=2160x2160&amp;quality=96&amp;sign=0706decc844288c1e4026a3ee4e72330&amp;type=album">
+                                                </div>
+                                                <div class="tasknavbar-member__count">+15</div>
+                                            </div>
+                                            <p>@board.CreatedAt</p>
+                                        </div>*@
+                                    </div>
+                                }
+
+                            }
+
+
                         </div>
                     </div>
                     <div class="col-xxl-4 col-xl-5"></div>
                 </div>
             </div>
-       </div>
+        </div>
 
     </Authorized>
     <NotAuthorized Context="Login">
@@ -96,13 +114,12 @@
                     <h1>Welcome to Task`o!</h1>
                     <p>For continue, please, sing in/up in your Task`o account</p>
 
-                    <EditForm Model="@LoginViewModel" OnValidSubmit="@HandleValidSubmit">
+                    <EditForm Model="@LoginViewModel" OnValidSubmit="@OnLogin">
                         <DataAnnotationsValidator />
                         <ValidationSummary />
                         <div class="alert alert-danger mt-3" hidden="@LoginViewModel.LoginFailureHidden">
                             @LoginViewModel.ErrorMessage
                         </div>
-                        @LoginViewModel.ErrorMessage
                         <div class="form-control">
                             <label>Email or phone</label>
                             <InputText id="email" @bind-Value="LoginViewModel.Username" class="form-input" />
@@ -141,29 +158,26 @@
 
 @code {
 
+    public string selectedSearchValue { get; set; }
+    public string selectedAutoCompleteText { get; set; }
+
     [Inject]
     protected ILoginViewModel LoginViewModel { get; set; }
 
-    private async Task HandleValidSubmit()
+    private async Task OnLogin()
     {
         var jwtToken = await LoginViewModel.ValidateLoginAsync();
 
-        //Not successful, don't need to do anything
         if (string.IsNullOrEmpty(jwtToken))
             return;
 
-        await LoginViewModel.GetProfile();
-
-        //Call login and recirect
         await AuthStateProvider.Login(jwtToken);
-        Navigation.NavigateTo("/profile"); //Root URL
     }
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        LoginViewModel.GetProfile();
-
-        return base.OnInitializedAsync();
-
+        await LoginViewModel.GetProfileAsync();
+        await LoginViewModel.GetBoards();
+        await base.OnInitializedAsync();
     }
 }

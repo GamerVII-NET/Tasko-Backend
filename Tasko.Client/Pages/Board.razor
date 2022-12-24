@@ -1,0 +1,27 @@
+﻿@page "/board/{BoardGuid}"
+@using Tasko.Domains.Models.Structural.Providers;
+
+<NavBar FullName="awefawef"
+        Email="awefaweft"
+        PagePartition="Панель управления"
+        PageName="Информация" />
+
+<BoardNavBar />
+
+
+@code {
+
+    [Parameter]
+    public string BoardGuid { get; set; }
+
+    [Inject]
+    protected IBoardViewModel BoardViewModel { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        BoardViewModel.GetBoardAsync(Guid.Parse(BoardGuid));
+
+        return base.OnInitializedAsync();
+    }
+
+}
