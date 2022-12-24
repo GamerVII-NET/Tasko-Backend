@@ -1,9 +1,6 @@
-﻿using FluentValidation;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
-using MongoDB.Driver;
-using Tasko.General.Commands;
+﻿using Tasko.General.Validations;
+using Tasko.PermissionService.Infrastructure.Api;
+using Tasko.PermissionService.Infrastructure.Repositories;
 
 namespace Tasko.PermissionService.Infrastructure.Configurations
 {
@@ -16,7 +13,9 @@ namespace Tasko.PermissionService.Infrastructure.Configurations
 
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddFluentValidationClientsideAdapters();
-            builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<PermissionValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<PermissionUpdateValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<PermissionCreateValidator>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddHttpContextAccessor();
@@ -25,8 +24,8 @@ namespace Tasko.PermissionService.Infrastructure.Configurations
                             .AddJwtBearer(options => Jwt.GenerateConfig(ref options, builder.Configuration.GetJwtValidationParameter()));
 
             builder.Services.AddSingleton(dataContext);
-            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-            builder.Services.AddTransient<IApi, UserApi>();
+            builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+            builder.Services.AddTransient<IApi, PermissionApi>();
 
             builder.Services.AddSwaggerGen(s =>
             {

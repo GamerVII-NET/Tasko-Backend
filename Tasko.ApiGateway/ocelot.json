@@ -16,8 +16,6 @@
       ]
     },
 
-
-
     {
       "UpstreamPathTemplate": "/api/auth",
       "DownstreamPathTemplate": "/api/auth",
@@ -31,8 +29,6 @@
         }
       ]
     },
-
-
 
     {
       "UpstreamPathTemplate": "/api/roles",
@@ -48,8 +44,6 @@
       ]
     },
 
-
-
     {
       "UpstreamPathTemplate": "/api/boards",
       "DownstreamPathTemplate": "/api/boards",
@@ -60,6 +54,22 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "tasko.boardservice",
+          "Port": 80
+        }
+      ]
+
+    }
+
+    {
+      "UpstreamPathTemplate": "/api/permissions",
+      "DownstreamPathTemplate": "/api/permissions",
+
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tasko.permissionservice",
           "Port": 80
         }
       ]

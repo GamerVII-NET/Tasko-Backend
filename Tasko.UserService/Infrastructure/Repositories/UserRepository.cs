@@ -29,7 +29,6 @@ namespace Tasko.UserService.Infrasructure.Repositories
             PermissionCollection = databaseContext.GetCollection<Permission>("Permissions");
             UserCollection = databaseContext.GetCollection<User>("Users");
         }
-
         internal IMongoCollection<User> UserCollection { get; set; }
         internal IMongoCollection<Role> RolesCollection { get; set; }
         internal IMongoCollection<Permission> PermissionCollection { get; set; }
