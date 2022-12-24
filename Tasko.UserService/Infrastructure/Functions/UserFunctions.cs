@@ -1,13 +1,14 @@
 ﻿using FluentValidation.Results;
+using Tasko.Domains.Models.DTO.User;
 using Tasko.UserService.Infrasructure.Repositories;
 
 namespace Tasko.UserService.Infrasructure.Functions;
 
 internal static class UserFunctions
 {
-    internal static Func<IUserRepository, IMapper, Guid, Task<IResult>> FindUser()
+    internal static Func<IUserRepository, Guid, Task<IResult>> FindUser()
     {
-        return [Authorize] async (IUserRepository userRepository, IMapper mapper, Guid id) =>
+        return [Authorize] async (IUserRepository userRepository, Guid id) =>
         {
             var user = await userRepository.FindUserAsync(id);
             return user == null ? Results.NotFound(id) : Results.Ok(new RequestResponse<IUser>(user, StatusCodes.Status200OK));
@@ -30,7 +31,7 @@ internal static class UserFunctions
 
             if (!validationResult.IsValid)
             {
-                var result = new BadRequestResponse<List<ValidationFailure>>(validationResult.Errors, "Ошибка при валидации данных");
+                var result = new BadRequestResponse<List<ValidationFailure>>(validationResult.Errors, "Validation error");
                 return Results.BadRequest(result);
             }
 
@@ -39,10 +40,8 @@ internal static class UserFunctions
             var user = mapper.Map<User>(userCreate);
             var foundedUser = await userRepository.FindUserAsync(user.Login);
 
-            if (foundedUser != null) return Results.Conflict(new BadRequestResponse<string>(
-                "Пользователь с указанными данными уже существует", 
-                "Пользователь с указанными данными уже существует", 
-                StatusCodes.Status409Conflict));
+            if (foundedUser != null) 
+                return Results.Conflict(new BadRequestResponse<UserCreate>(userCreate, "User already exsist", StatusCodes.Status409Conflict));
 
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             user.IsDeleted = false;
@@ -69,7 +68,7 @@ internal static class UserFunctions
 
             if (!validationResult.IsValid)
             {
-                var result = new BadRequestResponse<List<ValidationFailure>>(validationResult.Errors, "Ошибка при валидации данных");
+                var result = new BadRequestResponse<List<ValidationFailure>>(validationResult.Errors, "Validation error");
                 return Results.BadRequest(result);
             }
 
@@ -78,10 +77,8 @@ internal static class UserFunctions
             var foundedUser = await userRepository.FindUserAsync(user.Id);
 
             if (foundedUser == null)
-                return Results.Conflict(new BadRequestResponse<string>(
-                "Пользователь с указанными данными не сущуствует!",
-                "Пользователь с указанными данными не сущуствует!",
-                StatusCodes.Status404NotFound));
+                return Results.Conflict(new BadRequestResponse<UserUpdate>(userUpdate, "User already exsist", StatusCodes.Status409Conflict));
+
 
             var token = context.GetJwtToken();
             var isCurrentUser = Jwt.VerifyUser(token, jwtValidationParmeter, foundedUser);

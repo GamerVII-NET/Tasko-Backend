@@ -58,6 +58,15 @@ services:
     networks:
     - backend
 
+  tasko.permissionservice:
+    container_name: tasko-permission-service
+    image: ${DOCKER_REGISTRY-}taskopermissionservice
+    build:
+      context: .
+      dockerfile: Tasko.PermissionService/Dockerfile
+    networks:
+    - backend
+
   tasko.apigateway:
     container_name: tasko-api-gateway
     image: ${DOCKER_REGISTRY-}taskoapigateway
