@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.BoardService", "Tasko
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.RoleService", "Tasko.RoleService\Tasko.RoleService.csproj", "{D26E8B35-4FFD-49D9-9A97-BCFC87103357}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.PermissionService", "..\Tasko.PermissionService\Tasko.PermissionService.csproj", "{AFB7EA56-7E1D-4902-B632-2BE517A41C10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.PermissionService", "Tasko.PermissionService\Tasko.PermissionService.csproj", "{CF41EE9C-76A9-41C1-84FD-4621022E56D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,10 +76,10 @@ Global
 		{D26E8B35-4FFD-49D9-9A97-BCFC87103357}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D26E8B35-4FFD-49D9-9A97-BCFC87103357}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D26E8B35-4FFD-49D9-9A97-BCFC87103357}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AFB7EA56-7E1D-4902-B632-2BE517A41C10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFB7EA56-7E1D-4902-B632-2BE517A41C10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFB7EA56-7E1D-4902-B632-2BE517A41C10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFB7EA56-7E1D-4902-B632-2BE517A41C10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF41EE9C-76A9-41C1-84FD-4621022E56D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF41EE9C-76A9-41C1-84FD-4621022E56D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF41EE9C-76A9-41C1-84FD-4621022E56D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF41EE9C-76A9-41C1-84FD-4621022E56D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,10 +94,10 @@ Global
 		{E701ED75-5339-4489-AD4C-633C10452BF0} = {1FA428E9-869D-4E92-8B98-F25012D74A47}
 		{CCF55061-75B4-4B8B-AE81-98479FE5988A} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
 		{D26E8B35-4FFD-49D9-9A97-BCFC87103357} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
-		{AFB7EA56-7E1D-4902-B632-2BE517A41C10} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
+		{CF41EE9C-76A9-41C1-84FD-4621022E56D9} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 		SolutionGuid = {E779261A-E569-475A-8B95-1C0C706BE4DE}
+		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 	EndGlobalSection
 EndGlobal
