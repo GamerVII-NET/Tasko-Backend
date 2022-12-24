@@ -1,8 +1,4 @@
 ﻿using Tasko.AuthService.Infrastructure.Functions;
-using Tasko.Domains.Models.DTO.User;
-using Tasko.General.Abstracts;
-using Tasko.General.Interfaces;
-using Tasko.General.Models.RequestResponses;
 
 namespace Tasko.AuthService.Infrastructure.Api
 {

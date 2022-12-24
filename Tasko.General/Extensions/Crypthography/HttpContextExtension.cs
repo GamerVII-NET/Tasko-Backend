@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
+﻿
 namespace Tasko.General.Extensions.Crypthography
 {
     public static class HttpContextExtension

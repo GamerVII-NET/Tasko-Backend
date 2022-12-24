@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Tasko.General.Extensions.Crypthography;
-
+﻿
 namespace Tasko.General.Extensions
 {
     public static class MongoConfigurationExtension

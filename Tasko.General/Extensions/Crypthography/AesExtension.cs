@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Text;
-
-namespace Tasko.General.Extensions.Crypthography
+﻿namespace Tasko.General.Extensions.Crypthography
 {
     internal static class AesConfiguration
     {

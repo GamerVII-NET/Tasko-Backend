@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace Tasko.Client.Models;
 
 public class ValidationFailure
@@ -31,4 +33,5 @@ public class ValidationFailure
     /// Gets or sets the formatted message placeholder values.
     /// </summary>
     public Dictionary<string, object> FormattedMessagePlaceholderValues { get; set; }
+
 }

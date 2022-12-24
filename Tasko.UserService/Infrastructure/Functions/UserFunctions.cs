@@ -34,6 +34,8 @@ internal static class UserFunctions
                 return Results.BadRequest(result);
             }
 
+
+
             var user = mapper.Map<User>(userCreate);
             var foundedUser = await userRepository.FindUserAsync(user.Login);
 

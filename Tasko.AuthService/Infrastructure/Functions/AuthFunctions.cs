@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using FluentValidation;
-using Tasko.AuthService.Infrastructure.Repositories;
-using Tasko.Domains.Models.DTO.User;
-using Tasko.General.Models;
+﻿using Tasko.AuthService.Infrastructure.Repositories;
 
 namespace Tasko.AuthService.Infrastructure.Functions
 {

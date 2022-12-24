@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Tasko.General.Extensions.Jwt;
+﻿using Tasko.General.Extensions.Jwt;
 
 namespace Tasko.General.Abstracts
 {
