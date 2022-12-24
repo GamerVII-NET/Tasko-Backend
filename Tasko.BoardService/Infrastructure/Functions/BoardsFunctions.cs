@@ -2,10 +2,12 @@ using AutoMapper;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 using Tasko.BoardSevice.Infrasructure.Repositories;
 using Tasko.Domains.Models.DTO.Board;
 using Tasko.Domains.Models.Structural.Providers;
 using Tasko.General.Models.RequestResponses;
+using ValidationFailure = FluentValidation.Results.ValidationFailure;
 
 namespace Tasko.BoardSevice.Infrasructure.Functions
 {
@@ -15,8 +17,9 @@ namespace Tasko.BoardSevice.Infrasructure.Functions
         {
             return [Authorize] async (IBoardRepository boardRepository, IMapper mapper, Guid id) =>
             {
-                var board = await boardRepository.FindBoardAsync(id);
-                return Results.Ok();
+                var boards = await boardRepository.FindBoardAsync(id);
+                if (boards.IsNullOrEmpty()) return Results.NotFound(id);
+                return Results.Ok(new RequestResponse<IEnumerable<IBoard>>(boards, StatusCodes.Status200OK));
             };
         }
 
@@ -38,7 +41,7 @@ namespace Tasko.BoardSevice.Infrasructure.Functions
 
                 if (!boardValidate.IsValid)
                 {
-                    return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(boardValidate.Errors, "Ошибка валидации данных"));
+                    return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(boardValidate.Errors, "Board not valid"));
                 }
 
                 var board = mapper.Map<IBoardCreate, Board>(boardCreate);
