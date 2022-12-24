@@ -12,7 +12,17 @@ namespace Tasko.BoardSevice.Infrasructure.Functions
             return [Authorize] async (IBoardRepository boardRepository, IMapper mapper, Guid id) =>
             {
                 var board = await boardRepository.FindBoardAsync(id);
-                if (board == null) return Results.NotFound(id);
+                if (board == null)
+                {
+                    var errors = new List<ValidationFailure>
+                    {
+                        new ValidationFailure("id", "Доска с указанным Guid не найдена", id)
+                    };
+
+                    var response = new BadRequestResponse<List<ValidationFailure>>(errors, "Доска с указанным Guid не найдена", StatusCodes.Status404NotFound);
+
+                    return Results.NotFound(id);
+                }
                 var boardRead = mapper.Map<BoardRead>(board);
                 return Results.Ok(new RequestResponse<IBoardRead>(boardRead, StatusCodes.Status200OK));
             };

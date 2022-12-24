@@ -7,11 +7,23 @@ using Tasko.General.Models.RequestResponses;
 
 namespace Tasko.Client.Services;
 
-public static class UserService
+public interface IUserService
 {
+    HttpClient HttpClient { get; set; }
+    Task<dynamic> AuthUser(string login, string password);
+    Task SaveUserInStorageAsync(UserAuthRead user);
+}
 
+public class UserService : IUserService
+{
+    public HttpClient HttpClient { get; set; }
 
-    public static async Task<dynamic> AuthUser(HttpClient client, string login, string password)
+    public UserService(IHttpClientFactory clientFactory)
+    {
+        HttpClient = clientFactory.CreateClient("base");
+    }
+
+    public async Task<dynamic> AuthUser(string login, string password)
     {
         var user = new UserAuth
         {
@@ -22,7 +34,7 @@ public static class UserService
         RequestResponse<UserAuthRead> model;
 
         var content = JsonContent.Create(user);
-        var response = await client.PostAsync("/api/auth", content);
+        var response = await HttpClient.PostAsync("/api/auth", content);
         var result = await response.Content.ReadAsStringAsync();
         
         if (response.IsSuccessStatusCode)
@@ -44,7 +56,7 @@ public static class UserService
     }
 
 
-    public static async Task SaveUserInStorageAsync(UserAuthRead user)
+    public async Task SaveUserInStorageAsync(UserAuthRead user)
     {
         await SecureStorage.SetAsync("UserInfo", JsonConvert.SerializeObject(user));
     }

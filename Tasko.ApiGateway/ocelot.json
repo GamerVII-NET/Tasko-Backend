@@ -58,6 +58,24 @@
         }
       ]
 
+    },
+
+
+
+    {
+      "UpstreamPathTemplate": "/api/boards/{boardId}",
+      "DownstreamPathTemplate": "/api/boards/{boardId}",
+
+      "UpstreamHttpMethod": [ "Get" ],
+
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tasko.boardservice",
+          "Port": 80
+        }
+      ]
+
     }
 
     {

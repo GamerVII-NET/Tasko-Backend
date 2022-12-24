@@ -1,6 +1,6 @@
 ﻿<div class="tasknavbar">
     <div class="tasknavbar-info">
-        <div class="tasknavbar-info-boardname">Recloud</div>
+        <div class="tasknavbar-info-boardname">@BoardName</div>
         <div class="tasknavbar-info-filter dropdown-block">
             Показать фильтры
             <div class="dropdown">
@@ -47,5 +47,8 @@
 </div>
 
 @code {
+
+    [Parameter]
+    public string BoardName { get; set; }
 
 }

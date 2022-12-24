@@ -1,17 +1,32 @@
 using Newtonsoft.Json;
 using System.Net;
+using System.Net.Http.Headers;
 using Tasko.Domains.Models.Structural.Providers;
 using Tasko.General.Models.RequestResponses;
 
 namespace Tasko.Client.Services;
 
-public static class BoardsService
+public interface IBoardsService
 {
+    HttpClient HttpClient { get; set; }
+    Task<IEnumerable<BoardRead>> GetBoardsAsync(string token);
+    Task<(IBaseRequestResponse, HttpStatusCode)> GetBoardInfoAsync(Guid boardGuid, string token);
+}
 
+public class BoardsService : IBoardsService
+{
+    public HttpClient HttpClient { get; set; }
 
-    public static async Task<IEnumerable<BoardRead>> GetBoardsAsync(HttpClient client)
+    public BoardsService(IHttpClientFactory clientFactory)
     {
-        var response = await client.GetAsync($"/api/boards");
+        HttpClient = clientFactory.CreateClient("base");        
+    }
+
+    public async Task<IEnumerable<BoardRead>> GetBoardsAsync(string token)
+    {
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await HttpClient.GetAsync($"/api/boards");
 
         if (response.IsSuccessStatusCode)
         {
@@ -26,9 +41,11 @@ public static class BoardsService
     }
 
 
-    public static async Task<(IBaseRequestResponse, HttpStatusCode)> GetBoardInfoAsync(HttpClient client, Guid boardGuid)
+    public async Task<(IBaseRequestResponse, HttpStatusCode)> GetBoardInfoAsync(Guid boardGuid, string token)
     {
-        var response = await client.GetAsync($"/api/boards/{boardGuid}");
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await HttpClient.GetAsync($"/api/boards/{boardGuid}");
         var result = await response.Content.ReadAsStringAsync();
 
         RequestResponse<BoardRead> boardModel;

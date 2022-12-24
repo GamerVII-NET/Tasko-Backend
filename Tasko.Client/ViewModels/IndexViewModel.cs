@@ -21,6 +21,8 @@ namespace Tasko.Client.ViewModels
         Guid UserId { get; set; }
         UserAuthRead UserInfo { get; set; }
         bool LoginFailureHidden { get; set; }
+        IBoardsService BoardsService { get; set; }
+        IUserService UserService { get; set; }
         bool IsLoadingBoards { get; set; }
         string ErrorMessage { get; set; }
         ObservableCollection<BoardRead> Boards { get; set; }
@@ -38,7 +40,12 @@ namespace Tasko.Client.ViewModels
     public abstract class LoginViewModelBase : ILoginViewModel, IDisposable
     {
         #region Consturctors
-        public LoginViewModelBase(IHttpClientFactory clientFactory) => HttpClient = clientFactory.CreateClient("base");
+        public LoginViewModelBase(IHttpClientFactory clientFactory, IBoardsService boardsService, IUserService userService)
+        {
+            HttpClient = clientFactory.CreateClient("base");
+            BoardsService = boardsService;
+            UserService = userService;
+        }
 
         #endregion
 
@@ -50,6 +57,8 @@ namespace Tasko.Client.ViewModels
         #region Properties
         public virtual string Username { get; set; }
         public virtual string Password { get; set; }
+        public virtual IBoardsService BoardsService { get; set; }
+        public virtual IUserService UserService { get; set; }
         public virtual string BoardsSearchText { get; set; }
         public virtual bool LoginFailureHidden { get; set; }
         public virtual bool IsLoadingBoards { get; set; }
@@ -88,11 +97,12 @@ namespace Tasko.Client.ViewModels
     #endregion
 
     #region Providers
-    public class LoginViewModel : LoginViewModelBase
+    public class IndexViewModel : LoginViewModelBase
     {
-        #region Constructors
-        public LoginViewModel(IHttpClientFactory clientFactory) : base(clientFactory) { }
-        #endregion
+        public IndexViewModel(IHttpClientFactory clientFactory, IBoardsService boardsService, IUserService userService) : base(clientFactory, boardsService, userService)
+        {
+        }
+
 
         #region Properties
         [Display(Name = "Логин")]
@@ -122,7 +132,7 @@ namespace Tasko.Client.ViewModels
 
             HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("Token"));
 
-            Boards = new ObservableCollection<BoardRead>(await BoardsService.GetBoardsAsync(HttpClient));
+            Boards = new ObservableCollection<BoardRead>(await BoardsService.GetBoardsAsync(UserInfo.Token));
 
             IsLoadingBoards = false;
         }
@@ -140,7 +150,8 @@ namespace Tasko.Client.ViewModels
         {
 
             LoginFailureHidden = true;
-            var authResult = await UserService.AuthUser(HttpClient, Username, Password);
+
+            var authResult = await UserService.AuthUser(Username, Password);
 
             if (authResult.StatusCode == System.Net.HttpStatusCode.OK)
             {
