@@ -1,8 +1,6 @@
 using AutoMapper;
 using FluentValidation;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
 using Tasko.BoardSevice.Infrasructure.Repositories;
 using Tasko.Domains.Models.DTO.Board;
 using Tasko.Domains.Models.Structural.Providers;

@@ -58,8 +58,11 @@ public class BoardRepository : BoardRepositoryBase, IBoardRepository
         throw new NotImplementedException();
     }
 
-    public async Task<IBoard> FindBoardAsync(Guid id) =>
-           await BoardCollection.Find(c => c.Id == id).SingleOrDefaultAsync();
+    public async Task<IBoard> FindBoardAsync(Guid id)
+    {
+        var filter = Builders<Board>.Filter.Eq(c => c.Id, id);
+        return await BoardCollection.Find(filter).FirstOrDefaultAsync();
+    }
 
     public async Task<IEnumerable<IBoard>> GetBoardsAsync() => await BoardCollection.Find(_ => true).ToListAsync();
 
