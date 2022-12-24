@@ -1,17 +1,9 @@
-﻿using AutoMapper;
-using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.AspNetCore.Authorization;
-using Tasko.Domains.Models.DTO.User;
-using Tasko.Domains.Models.Structural.Providers;
-using Tasko.General.Commands;
-using Tasko.General.Extensions.Crypthography;
-using Tasko.General.Models.RequestResponses;
+﻿using FluentValidation.Results;
 using Tasko.UserService.Infrasructure.Repositories;
 
 namespace Tasko.UserService.Infrasructure.Functions;
 
-public class UserFunctions
+internal static class UserFunctions
 {
     internal static Func<IUserRepository, IMapper, Guid, Task<IResult>> FindUser()
     {

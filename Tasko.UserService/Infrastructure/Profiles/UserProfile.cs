@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using Tasko.Domains.Models.DTO.User;
-using Tasko.Domains.Models.Structural.Providers;
-
-namespace Tasko.UserService.Infrasructure.Profiles
+﻿namespace Tasko.UserService.Infrasructure.Profiles
 {
     public class UserProfile : Profile
     {

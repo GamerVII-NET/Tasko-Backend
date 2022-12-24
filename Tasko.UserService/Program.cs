@@ -1,6 +1,3 @@
-using System.Reflection;
-using Tasko.General.Commands;
-using Tasko.General.Extensions;
 using Tasko.UserService.Infrasructure.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);

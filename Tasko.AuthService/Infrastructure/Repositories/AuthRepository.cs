@@ -51,7 +51,6 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
         public async Task<IResult> AuthorizationAsync(IUserAuth userAuth, JwtValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator)
         {
-
             var validationResult = validator.Validate(userAuth);
 
             if (!validationResult.IsValid)
