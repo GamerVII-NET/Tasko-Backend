@@ -1,4 +1,5 @@
 ﻿using Tasko.UserService.Infrasructure.Api;
+using Tasko.UserService.Infrasructure.Repositories;
 
 namespace Tasko.UserService.Infrasructure.Configurations;
 

@@ -1,4 +1,7 @@
-﻿namespace Tasko.UserService.Infrasructure.Functions;
+﻿using FluentValidation.Results;
+using Tasko.UserService.Infrasructure.Repositories;
+
+namespace Tasko.UserService.Infrasructure.Functions;
 
 internal static class UserFunctions
 {
