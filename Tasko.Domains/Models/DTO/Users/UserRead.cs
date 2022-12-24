@@ -13,7 +13,6 @@ namespace Tasko.Domains.Models.DTO.User
     }
     public class UserRead : IUserRead
     {
-        #region Properties
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -21,6 +20,5 @@ namespace Tasko.Domains.Models.DTO.User
         public string Photo { get; set; }
         public string? About { get; set; }
         public DateTime LastOnline { get; set; }
-        #endregion
     }
 }

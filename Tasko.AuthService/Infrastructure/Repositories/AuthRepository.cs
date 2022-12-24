@@ -29,7 +29,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
             Filter = Builders<User>.Filter;
             RolesCollection = databaseContext.GetCollection<Role>("Roles");
             UserRolesCollection = databaseContext.GetCollection<UserRole>("UserRoles");
-            UserRolesCollection = databaseContext.GetCollection<UserRole>("RolePermissions");
+            RolePermissionsCollection = databaseContext.GetCollection<RolePermission>("RolePermissions");
             UserPermissionsCollection = databaseContext.GetCollection<UserPermission>("UserPermissions");
             PermissionCollection = databaseContext.GetCollection<Permission>("Permissions");
             UserCollection = databaseContext.GetCollection<User>("Users");
@@ -67,7 +67,14 @@ namespace Tasko.AuthService.Infrastructure.Repositories
                 StatusCodes.Status404NotFound));
 
             var validatePassword = BCrypt.Net.BCrypt.Verify(userAuth.Password, user.Password);
-            if (!validatePassword) return Results.BadRequest("Error authorization");
+            if (!validatePassword)
+            {
+                var resposne = new List<ValidationFailure> { 
+                    new ValidationFailure("Password", "Неверный логин или пароль") 
+                };
+                return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "Неверный логин или пароль", StatusCodes.Status401Unauthorized));
+
+            }
             var userPermissions = await GetUserPermissions(user);
             var userRolesPermissions = await GetUserRolesPermissions(user);
             var permissions = userPermissions.Concat(userRolesPermissions).ToList();
@@ -100,7 +107,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
         public async Task<List<Permission>> GetUserPermissions(IUser user)
         {
 
-            var userPermissionsIdFilter = Builders<UserPermission>.Filter.Eq(d => d.UserId, user.Id); 
+            var userPermissionsIdFilter = Builders<UserPermission>.Filter.Eq(d => d.UserId, user.Id);
             var userPermissions = await UserPermissionsCollection.Find(userPermissionsIdFilter).ToListAsync();
             var permissionsIdFilter = Builders<Permission>.Filter.In(d => d.Id, userPermissions.Select(c => c.PermissionId));
             return await PermissionCollection.Find(permissionsIdFilter).ToListAsync();
