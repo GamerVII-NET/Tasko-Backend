@@ -1,8 +1,3 @@
-using Tasko.Domains.Models.Structural.Providers;
-using MongoDB.Driver;
-using Tasko.General.Interfaces;
-using SharpCompress.Common;
-
 namespace Tasko.UserService.Infrasructure.Repositories
 {
     #region Interfaces

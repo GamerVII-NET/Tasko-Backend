@@ -1,5 +1,4 @@
-﻿using Tasko.Domains.Models.Structural.Providers;
-using Tasko.UserService.Infrasructure.Functions;
+﻿using Tasko.UserService.Infrasructure.Functions;
 
 namespace Tasko.UserService.Infrasructure.Api
 {

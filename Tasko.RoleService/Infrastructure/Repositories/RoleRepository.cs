@@ -165,7 +165,7 @@ public interface IRoleRepository
 #endregion
 #endregion
 
-#region DataBase context
+#region Abstracts
 public class RoleRepositoryBase
 {
     public RoleRepositoryBase(IMongoDatabase databaseContext)
@@ -180,7 +180,6 @@ public class RoleRepositoryBase
 }
 
 #endregion
-
 
 public class RoleRepository : RoleRepositoryBase, IRoleRepository, IRolePermissionRepository, IBoardUserRoleRepository, IUserRoleRepository
 {
@@ -215,15 +214,7 @@ public class RoleRepository : RoleRepositoryBase, IRoleRepository, IRolePermissi
 
     public async Task<IRole> CreateRole(Role role, [Optional] IEnumerable<Permission> permissions)
     {
-        if (permissions != null && permissions.Count() > 0)
-            role.PermissionsGuids = permissions.Select(c => c.Id).ToList();
-
-        role.CreatedAt = DateTime.Now;
-        role.UpdatedAt = DateTime.Now;
-
-        await RolesCollection.InsertOneAsync(role);
-
-        return role;
+        throw new NotImplementedException();
     }
 
     public Task DeleteRoleAsync(Role role)

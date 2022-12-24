@@ -15,6 +15,7 @@ namespace Tasko.BoardSevice.Infrasructure.Functions
         {
             return [Authorize] async (IBoardRepository boardRepository, IMapper mapper, Guid id) =>
             {
+                var board = await boardRepository.FindBoardAsync(id);
                 return Results.Ok();
             };
         }

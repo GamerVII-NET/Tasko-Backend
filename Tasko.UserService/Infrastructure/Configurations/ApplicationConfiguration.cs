@@ -1,15 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.AspNetCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.OpenApi.Models;
-using MongoDB.Driver;
-using System.ComponentModel.DataAnnotations;
-using Tasko.Domains.Models.DTO.User;
-using Tasko.General.Commands;
-using Tasko.General.Extensions.Jwt;
-using Tasko.General.Validations;
-using Tasko.UserService.Infrasructure.Api;
-using Tasko.UserService.Infrasructure.Repositories;
+﻿using Tasko.UserService.Infrasructure.Api;
 
 namespace Tasko.UserService.Infrasructure.Configurations;
 
