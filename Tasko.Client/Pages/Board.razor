@@ -1,12 +1,12 @@
 ﻿@page "/board/{BoardGuid}"
 @using Tasko.Domains.Models.Structural.Providers;
 
-<NavBar FullName="awefawef"
-        Email="awefaweft"
+<NavBar FullName="@BoardViewModel.UserInfo?.User.FirstName"
+        Email="@BoardViewModel.UserInfo?.User.About"
         PagePartition="Панель управления"
         PageName="Информация" />
 
-<BoardNavBar />
+<BoardNavBar BoardName="@BoardViewModel.Board?.Name" />
 
 
 @code {
@@ -17,11 +17,12 @@
     [Inject]
     protected IBoardViewModel BoardViewModel { get; set; }
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        BoardViewModel.GetBoardAsync(Guid.Parse(BoardGuid));
+        await BoardViewModel.GetProfileAsync();
+        await BoardViewModel.GetBoardAsync(Guid.Parse(BoardGuid));
 
-        return base.OnInitializedAsync();
+        await base.OnInitializedAsync();
     }
 
 }

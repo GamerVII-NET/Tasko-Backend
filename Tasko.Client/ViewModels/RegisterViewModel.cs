@@ -2,8 +2,11 @@ using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Net.Http.Json;
+using Tasko.Client.Models;
+using Tasko.Client.Services;
 using Tasko.Domains.Models.DTO.User;
 using Tasko.Domains.Models.Structural.Providers;
+using Tasko.General.Models.RequestResponses;
 
 namespace Tasko.Client.ViewModels
 {
@@ -19,10 +22,12 @@ namespace Tasko.Client.ViewModels
         string Patronymic { get; set; }
         bool LoginFailureHidden { get; set; }
         string ErrorMessage { get; set; }
+
+        IUserService UserService { get; set; }
         #endregion
 
         #region Methods
-        Task<IUserRegister> RegistrationAsync();
+        Task<IUserAuthRead> RegistrationAsync();
         #endregion
     }
     #endregion
@@ -31,7 +36,11 @@ namespace Tasko.Client.ViewModels
     public abstract class IRegsiterViewModelBase : IRegisterViewModel, IDisposable
     {
         #region Consturctors
-        public IRegsiterViewModelBase(IHttpClientFactory clientFactory) => HttpClient = clientFactory.CreateClient("base");
+        public IRegsiterViewModelBase(IHttpClientFactory clientFactory, IUserService userService)
+        {
+            HttpClient = clientFactory.CreateClient("base");
+            UserService = userService;
+        }
         #endregion
 
         #region Fields
@@ -47,6 +56,7 @@ namespace Tasko.Client.ViewModels
         public virtual string LastName { get; set; }
         public virtual string Patronymic { get; set; }
         public virtual bool LoginFailureHidden { get; set; }
+        public virtual IUserService UserService { get; set; }
         public virtual string ErrorMessage { get; set; }
         #endregion
 
@@ -68,7 +78,7 @@ namespace Tasko.Client.ViewModels
             GC.SuppressFinalize(this);
         }
 
-        public abstract Task<IUserRegister> RegistrationAsync();
+        public abstract Task<IUserAuthRead> RegistrationAsync();
         #endregion
     }
     #endregion
@@ -76,9 +86,9 @@ namespace Tasko.Client.ViewModels
     #region Providers
     public class RegisterViewModel : IRegsiterViewModelBase
     {
-        #region Constructors
-        public RegisterViewModel(IHttpClientFactory clientFactory) : base(clientFactory) { }
-        #endregion
+        public RegisterViewModel(IHttpClientFactory clientFactory, IUserService userService) : base(clientFactory, userService)
+        {
+        }
 
         #region Propeties
         [Display(Name = "Логин")]
@@ -111,7 +121,7 @@ namespace Tasko.Client.ViewModels
         #endregion
 
         #region Methods
-        public async override Task<IUserRegister> RegistrationAsync()
+        public async override Task<IUserAuthRead> RegistrationAsync()
         {
             var user = new UserCreate
             {
@@ -125,15 +135,26 @@ namespace Tasko.Client.ViewModels
 
             JsonContent content = JsonContent.Create(user);
             var response = await HttpClient.PostAsync("/api/users", content);
+            var result = await response.Content.ReadAsStringAsync();
             if (response.StatusCode == System.Net.HttpStatusCode.Created)
             {
-                var result = await response.Content.ReadAsStringAsync();
 
-                return JsonConvert.DeserializeObject<UserRegister>(result);
+                var createdUser = JsonConvert.DeserializeObject<RequestResponse<UserAuthRead>>(result);
+
+                await UserService.SaveUserInStorageAsync(createdUser.Response);
+
+                return createdUser.Response;
             }
-            else if (response.StatusCode == HttpStatusCode.Conflict)
+            else
             {
-                ErrorMessage = "Пользователь с указанным логином уже сущестует!";
+                var request = JsonConvert.DeserializeObject<BadRequestResponse<List<ValidationFailure>>>(result);
+
+                ErrorMessage = $"{request.Message}\n";
+
+                foreach (var item in request.Error.Select(c => $"{c.ErrorMessage}\n"))
+                {
+                    ErrorMessage += item;
+                }
             }
             LoginFailureHidden = false;
             return null;
