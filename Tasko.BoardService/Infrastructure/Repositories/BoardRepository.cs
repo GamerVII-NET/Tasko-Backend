@@ -6,7 +6,7 @@ namespace Tasko.BoardSevice.Infrasructure.Repositories;
 #region Interfaces
 public interface IBoardRepository
 {
-    Task<IEnumerable<IBoard>> FindBoardAsync(Guid id);
+    Task<IBoard> FindBoardAsync(Guid id);
 
     Task<IEnumerable<IBoard>> GetBoardsAsync();
 
@@ -58,8 +58,8 @@ public class BoardRepository : BoardRepositoryBase, IBoardRepository
         throw new NotImplementedException();
     }
 
-    public async Task<IEnumerable<IBoard>> FindBoardAsync(Guid id) =>
-           await BoardCollection.Find(c => c.Id == id).ToListAsync();
+    public async Task<IBoard> FindBoardAsync(Guid id) =>
+           await BoardCollection.Find(c => c.Id == id).SingleOrDefaultAsync();
 
     public async Task<IEnumerable<IBoard>> GetBoardsAsync() => await BoardCollection.Find(_ => true).ToListAsync();
 

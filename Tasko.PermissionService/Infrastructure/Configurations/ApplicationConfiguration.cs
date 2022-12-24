@@ -1,26 +1,22 @@
-
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
-using Tasko.BoardSevice.Infrasructure.Api;
-using Tasko.BoardSevice.Infrasructure.Repositories;
 using Tasko.General.Commands;
-using Tasko.General.Extensions.Jwt;
-using Tasko.General.Validations;
 
-namespace Tasko.BoardSevice.Infrasructure.Configurations
+namespace Tasko.PermissionService.Infrastructure.Configurations
 {
     internal static class ApplicationConfiguration
     {
         internal static void RegisterBuilder(this WebApplicationBuilder builder, IMongoDatabase dataContext)
         {
+
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddFluentValidationClientsideAdapters();
-            builder.Services.AddValidatorsFromAssemblyContaining<CreateBoardValidator>();
-            builder.Services.AddValidatorsFromAssemblyContaining<UpdateBoardValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserValidator>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddHttpContextAccessor();
@@ -29,7 +25,7 @@ namespace Tasko.BoardSevice.Infrasructure.Configurations
                             .AddJwtBearer(options => Jwt.GenerateConfig(ref options, builder.Configuration.GetJwtValidationParameter()));
 
             builder.Services.AddSingleton(dataContext);
-            builder.Services.AddScoped<IBoardRepository, BoardRepository>();
+            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
             builder.Services.AddTransient<IApi, UserApi>();
 
             builder.Services.AddSwaggerGen(s =>
@@ -44,7 +40,7 @@ namespace Tasko.BoardSevice.Infrasructure.Configurations
                     Scheme = "bearer",
                 });
                 s.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
+            {
                 {
                     new OpenApiSecurityScheme
                     {
@@ -56,7 +52,7 @@ namespace Tasko.BoardSevice.Infrasructure.Configurations
                     },
                     new string[]{}
                 }
-                });
+            });
             });
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
         }
