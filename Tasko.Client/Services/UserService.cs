@@ -18,20 +18,26 @@ public static class UserService
             Password = password
         };
 
-
         RequestResponse<UserAuthRead> model;
 
         var content = JsonContent.Create(user);
         var response = await client.PostAsync("/api/auth", content);
         var result = await response.Content.ReadAsStringAsync();
 
-
         if (response.IsSuccessStatusCode)
             model = JsonConvert.DeserializeObject<RequestResponse<UserAuthRead>>(result);
         else
             return (JsonConvert.DeserializeObject<BadRequestResponse<IEnumerable<Models.ValidationFailure>>>(result), response.StatusCode);
 
+        await SaveUserInStorageAsync(model.Response);
+
         return (model, response.StatusCode);
+    }
+
+
+    public static async Task SaveUserInStorageAsync(UserAuthRead user)
+    {
+        await SecureStorage.SetAsync("UserInfo", JsonConvert.SerializeObject(user));
     }
 
 }

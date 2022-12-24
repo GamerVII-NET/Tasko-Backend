@@ -16,12 +16,10 @@ namespace Tasko.Client.ViewModels
     {
         #region Properties
         string Username { get; set; }
-        string Initials { get; set; }
-        string BoardsSearchText { get; set; }
-        string Photo { get; set; }
-        string UserAbout { get; set; }
-        Guid UserId { get; set; }
         string Password { get; set; }
+        string BoardsSearchText { get; set; }
+        Guid UserId { get; set; }
+        UserAuthRead UserInfo { get; set; }
         bool LoginFailureHidden { get; set; }
         bool IsLoadingBoards { get; set; }
         string ErrorMessage { get; set; }
@@ -30,9 +28,8 @@ namespace Tasko.Client.ViewModels
 
         #region Methods
         Task<string> ValidateLoginAsync();
-        Task<IUser> GetProfile();
+        Task GetProfileAsync();
         Task GetBoards();
-        Task UpdateUserStorageParams(IUser user);
         #endregion
     }
     #endregion
@@ -53,13 +50,11 @@ namespace Tasko.Client.ViewModels
         #region Properties
         public virtual string Username { get; set; }
         public virtual string Password { get; set; }
-        public virtual string BoardsSearchText { get; set; } = string.Empty;
+        public virtual string BoardsSearchText { get; set; }
         public virtual bool LoginFailureHidden { get; set; }
         public virtual bool IsLoadingBoards { get; set; }
-        public virtual string Initials { get; set; }
-        public virtual string Photo { get; set; }
-        public virtual string UserAbout { get; set; }
         public virtual Guid UserId { get; set; }
+        public virtual UserAuthRead UserInfo { get; set; }
         public virtual string ErrorMessage { get; set; }
         public virtual ObservableCollection<BoardRead> Boards { get; set; } = new ObservableCollection<BoardRead>();
         #endregion
@@ -67,9 +62,8 @@ namespace Tasko.Client.ViewModels
         #region Methods
         public abstract Task<string> ValidateLoginAsync();
 
-        public abstract Task<IUser> GetProfile();
+        public abstract Task GetProfileAsync();
         public abstract Task GetBoards();
-        public abstract Task UpdateUserStorageParams(IUser user);
 
         protected virtual void Dispose(bool dispoing)
         {
@@ -113,7 +107,8 @@ namespace Tasko.Client.ViewModels
 
         public override bool LoginFailureHidden { get; set; } = true;
         public override string ErrorMessage { get; set; }
-        public override string BoardsSearchText { get; set; }
+        public override string BoardsSearchText { get; set; } = string.Empty;
+        public override UserAuthRead UserInfo { get; set; }
         public override bool IsLoadingBoards { get; set; } = true;
         public override ObservableCollection<BoardRead> Boards { get => base.Boards; set => base.Boards = value; }
 
@@ -132,26 +127,9 @@ namespace Tasko.Client.ViewModels
             IsLoadingBoards = false;
         }
 
-
-        public override async Task<IUser> GetProfile()
+        public override async Task GetProfileAsync()
         {
-
-
-
-            return null;
-        }
-
-        public override async Task UpdateUserStorageParams(IUser user)
-        {
-            Initials = $"{user.LastName} {user.FirstName[0]}. {user.Patronymic[0]}.";
-            Photo = user.Photo;
-            UserId = user.Id;
-            UserAbout = user.About;
-
-            await SecureStorage.SetAsync("Initials", Initials);
-            await SecureStorage.SetAsync("Photo", Photo);
-            await SecureStorage.SetAsync("UserId", UserId.ToString());
-            await SecureStorage.SetAsync("UserAbout", UserAbout);
+            UserInfo = JsonConvert.DeserializeObject<UserAuthRead>(await SecureStorage.GetAsync("UserInfo"));
         }
 
         public async override Task<string> ValidateLoginAsync()

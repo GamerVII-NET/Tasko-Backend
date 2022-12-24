@@ -215,8 +215,8 @@ public class RoleRepository : RoleRepositoryBase, IRoleRepository, IRolePermissi
 
     public async Task<IRole> CreateRole(Role role, [Optional] IEnumerable<Permission> permissions)
     {
-        if (permissions != null && permissions.Count() > 0)
-            role.PermissionsGuids = permissions.Select(c => c.Id).ToList();
+        //if (permissions != null && permissions.Count() > 0)
+        //    role.PermissionsGuids = permissions.Select(c => c.Id).ToList();
 
         role.CreatedAt = DateTime.Now;
         role.UpdatedAt = DateTime.Now;
