@@ -1,15 +1,19 @@
 ﻿
 
+using MongoDB.Driver.Linq;
+using System.Net;
+
 namespace Tasko.AuthService.Infrastructure.Repositories
 {
     #region Interfaces
     public interface IAuthRepository
     {
-        Task<IResult> AuthorizationAsync(IUserAuth userAuth, JwtValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator);
+        Task<IResult> AuthorizationAsync(IUserAuth userAuth, JwtValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator, IPAddress ipAddress);
         Task<IUser> FindUserAsync(string login);
         Task<List<Role>> GetUserRoles(IUser user);
         Task<List<Permission>> GetUserRolesPermissions(IUser user);
         Task<List<Permission>> GetUserPermissions(IUser user);
+        Task SaveRefreshToken(IUser user, string refreshToken, string ipAddress);
     }
     #endregion
 
@@ -24,6 +28,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
             RolePermissionsCollection = databaseContext.GetCollection<RolePermission>("RolePermissions");
             UserPermissionsCollection = databaseContext.GetCollection<UserPermission>("UserPermissions");
             PermissionCollection = databaseContext.GetCollection<Permission>("Permissions");
+            RefreshTokensCollection = databaseContext.GetCollection<RefreshToken>("RefreshTokens");
             UserCollection = databaseContext.GetCollection<User>("Users");
         }
 
@@ -33,6 +38,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
         internal IMongoCollection<UserRole> UserRolesCollection { get; set; }
         internal IMongoCollection<UserPermission> UserPermissionsCollection { get; set; }
         internal IMongoCollection<RolePermission> RolePermissionsCollection { get; set; }
+        internal IMongoCollection<RefreshToken> RefreshTokensCollection { get; set; }
         internal FilterDefinitionBuilder<User> Filter { get; }
     }
     #endregion
@@ -41,8 +47,9 @@ namespace Tasko.AuthService.Infrastructure.Repositories
     {
         public AuthRepository(IMongoDatabase databaseContext) : base(databaseContext) { }
 
-        public async Task<IResult> AuthorizationAsync(IUserAuth userAuth, JwtValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator)
+        public async Task<IResult> AuthorizationAsync(IUserAuth userAuth, JwtValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator, IPAddress ipAddress)
         {
+            #region Validate user
             var validationResult = validator.Validate(userAuth);
 
             if (!validationResult.IsValid)
@@ -50,32 +57,48 @@ namespace Tasko.AuthService.Infrastructure.Repositories
                 var result = new BadRequestResponse<List<ValidationFailure>>(validationResult.Errors, "Ошибка валидации данных");
                 return Results.BadRequest(result);
             }
+            #endregion
 
+            #region Check user
             var user = await FindUserAsync(userAuth.Login);
-            if (user == null)
-                return Results.Conflict(new BadRequestResponse<string>(
-                "Пользователь с указанными данными не сущуствует!",
-                "Пользователь с указанными данными не сущуствует!",
-                StatusCodes.Status404NotFound));
 
+            if (user == null)
+            {
+                var resposne = new List<ValidationFailure> {
+                    new ValidationFailure("Password", "Неверный логин или пароль")
+                };
+                Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "Пользователь с указанными данными не сущуствует!", StatusCodes.Status409Conflict));
+            }
+            #endregion
+
+            #region Validate password
             var validatePassword = BCrypt.Net.BCrypt.Verify(userAuth.Password, user.Password);
             if (!validatePassword)
             {
-                var resposne = new List<ValidationFailure> { 
-                    new ValidationFailure("Password", "Неверный логин или пароль") 
+                var resposne = new List<ValidationFailure> {
+                    new ValidationFailure("Response", "Неверный логин или пароль")
                 };
                 return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "Неверный логин или пароль", StatusCodes.Status401Unauthorized));
 
             }
+            #endregion
+
+            #region Generate data
+
+            string refresToken = Jwt.CreateRefreshToken();
             var userPermissions = await GetUserPermissions(user);
             var userRolesPermissions = await GetUserRolesPermissions(user);
             var permissions = userPermissions.Concat(userRolesPermissions).ToList();
             string token = Jwt.CreateToken(jwtValidationParameter, user, permissions);
+            await SaveRefreshToken(user, refresToken, GetRealIpAddress(ipAddress));
+
+            #endregion
 
             var response = new UserAuthRead
             {
                 User = mapper.Map<IUser, UserRead>(user),
                 Token = token,
+                RefreshToken = refresToken
             };
 
             return Results.Ok(new RequestResponse<UserAuthRead>(response, StatusCodes.Status200OK));
@@ -109,6 +132,32 @@ namespace Tasko.AuthService.Infrastructure.Repositories
         {
             var filter = Filter.Eq("Login", login);
             return await UserCollection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task SaveRefreshToken(IUser user, string refreshToken, string ipAddress)
+        {
+            var expiryDuration = new TimeSpan(1, 0, 0, 0);
+
+            RefreshToken token = new RefreshToken
+            {
+                Token = refreshToken,
+                IssuedAt = DateTime.UtcNow,
+                ExpiresAt = DateTime.UtcNow.Add(expiryDuration),
+                UserId = user.Id,
+                CreatedByIp = ipAddress
+            };
+
+            await RefreshTokensCollection.InsertOneAsync(token);
+        }
+
+        internal static string GetRealIpAddress(IPAddress address)
+        {
+            if (address != null && address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+            {
+                return Dns.GetHostEntry(address).AddressList.First(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToString();
+            }
+
+            return string.Empty;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿
 
+using System.Security.Cryptography;
+
 namespace Tasko.General.Commands
 {
     // All the code in this file is included in all platforms.
@@ -68,11 +70,20 @@ namespace Tasko.General.Commands
 
             permissions.ForEach(permission => claims.Add(new Claim(ClaimTypes.Role, $"{permission.Name}")));
 
-            var expiryDuration = new TimeSpan(0, 30, 0, 0);
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtValidationParmeter.Key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-            var tokenDescriptor = new JwtSecurityToken(jwtValidationParmeter.Issuer, jwtValidationParmeter.Audienece, claims, expires: DateTime.Now.Add(expiryDuration), signingCredentials: credentials);
+            var tokenDescriptor = new JwtSecurityToken(jwtValidationParmeter.Issuer, jwtValidationParmeter.Audienece, claims, expires: DateTime.UtcNow.AddMinutes(15), signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
+        }
+
+        public static string CreateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using (var randomNumberGenerator = RandomNumberGenerator.Create())
+            {
+                randomNumberGenerator.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
         }
     }
 }

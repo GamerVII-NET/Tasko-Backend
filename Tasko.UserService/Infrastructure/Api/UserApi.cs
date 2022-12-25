@@ -24,6 +24,11 @@ namespace Tasko.UserService.Infrasructure.Api
                           .WithName("Get user by id")
                           .WithTags("Getters");
 
+            WebApplication.MapGet("api/users/refresh-tokens/{id}", UserFunctions.GetRefreshTokens(JwtValidationParmeter))
+                          .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
+                          .WithName("Get user refres tokens")
+                          .WithTags("Getters");
+
         }
         private void Creators()
         {

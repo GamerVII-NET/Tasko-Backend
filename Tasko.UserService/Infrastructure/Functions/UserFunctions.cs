@@ -107,7 +107,12 @@ internal static class UserFunctions
 
             if (user is null)
             {
-                return Results.NotFound(new BadRequestResponse<string>($"User with unique identificator {id} not found", "User not found", StatusCodes.Status404NotFound));
+                var result = new List<ValidationFailure>
+                {
+                    new ValidationFailure("User", $"User with unique identificator {id} not found", "User not found")
+                };
+
+                return Results.NotFound(new BadRequestResponse<List<ValidationFailure>>(result, "User not found", StatusCodes.Status404NotFound));
             }
             var token = context.GetJwtToken();
             var isCurrentUser = Jwt.VerifyUser(token, jwtValidationParmeter, user);
@@ -116,6 +121,34 @@ internal static class UserFunctions
 
             await userRepository.DeleteUserAsync(user.Id);
             return Results.Ok();
+        };
+    }
+
+    internal static Func<HttpContext, IUserRepository, IMapper, Guid, Task<IResult>> GetRefreshTokens(JwtValidationParameter jwtValidationParmeter)
+    {
+        return [Authorize] async (HttpContext context, IUserRepository userRepository, IMapper mapper, Guid id) =>
+        {
+            var user = await userRepository.FindUserAsync(id);
+
+            if (user is null)
+            {
+                var result = new List<ValidationFailure>
+                {
+                    new ValidationFailure("User", $"User with unique identificator {id} not found", "User not found")
+                };
+
+                return Results.NotFound(new BadRequestResponse<List<ValidationFailure>>(result, "User not found", StatusCodes.Status404NotFound));
+            }
+            var token = context.GetJwtToken();
+            var isCurrentUser = Jwt.VerifyUser(token, jwtValidationParmeter, user);
+
+            if (isCurrentUser == false) return Results.Unauthorized();
+
+            var refreshTokens = await userRepository.GetRefreshTokensAsync(user.Id);
+
+            var refreshTokenResult = new GetRequestResponse<RefreshToken>(refreshTokens);
+
+            return Results.Ok(refreshTokenResult);
         };
     }
 }

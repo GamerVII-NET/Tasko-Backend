@@ -1,3 +1,5 @@
+using Tasko.Domains.Models.Structural.Providers;
+
 namespace Tasko.UserService.Infrasructure.Repositories
 {
     #region Interfaces
@@ -13,6 +15,7 @@ namespace Tasko.UserService.Infrasructure.Repositories
         Task<List<Role>> GetUserRoles(IUser user);
         Task<List<Permission>> GetUserRolesPermissions(IUser user);
         Task<List<Permission>> GetUserPermissions(IUser user);
+        Task<IEnumerable<RefreshToken>> GetRefreshTokensAsync(Guid id);
     }
     #endregion
 
@@ -28,6 +31,7 @@ namespace Tasko.UserService.Infrasructure.Repositories
             UserPermissionsCollection = databaseContext.GetCollection<UserPermission>("UserPermissions");
             PermissionCollection = databaseContext.GetCollection<Permission>("Permissions");
             UserCollection = databaseContext.GetCollection<User>("Users");
+            RefreshTokensCollection = databaseContext.GetCollection<RefreshToken>("RefreshTokens");
         }
         internal IMongoCollection<User> UserCollection { get; set; }
         internal IMongoCollection<Role> RolesCollection { get; set; }
@@ -35,6 +39,7 @@ namespace Tasko.UserService.Infrasructure.Repositories
         internal IMongoCollection<UserRole> UserRolesCollection { get; set; }
         internal IMongoCollection<UserPermission> UserPermissionsCollection { get; set; }
         internal IMongoCollection<RolePermission> RolePermissionsCollection { get; set; }
+        internal IMongoCollection<RefreshToken> RefreshTokensCollection { get; set; }
         internal FilterDefinitionBuilder<User> Filter { get; }
     }
 
@@ -95,6 +100,12 @@ namespace Tasko.UserService.Infrasructure.Repositories
             var userPermissions = await UserPermissionsCollection.Find(userPermissionsIdFilter).ToListAsync();
             var permissionsIdFilter = Builders<Permission>.Filter.In(d => d.Id, userPermissions.Select(c => c.PermissionId));
             return await PermissionCollection.Find(permissionsIdFilter).ToListAsync();
+        }
+
+        public async Task<IEnumerable<RefreshToken>> GetRefreshTokensAsync(Guid id)
+        {
+            var refreshTokenFilter = Builders<RefreshToken>.Filter.Eq(d => d.UserId, id);
+            return await RefreshTokensCollection.Find(refreshTokenFilter).ToListAsync();
         }
         #endregion
     } 
