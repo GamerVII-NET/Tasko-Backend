@@ -16,6 +16,11 @@ namespace Tasko.AuthService.Infrastructure.Api
                           .Produces<IRequestResponse<IUserAuthRead>>(StatusCodes.Status200OK)
                           .WithName("Authorization")
                           .WithTags("Auth");
+
+            webApplication.MapPost("api/auth/refresh-token", AuthFunctions.RefreshTokenAuthorization(JwtValidationParmeter))
+                          .Produces<IRequestResponse<IUserAuthRead>>(StatusCodes.Status200OK)
+                          .WithName("Refresh token authorization")
+                          .WithTags("Auth");
         }
     }
 }
