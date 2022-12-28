@@ -17,6 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Infrastructure\Api\" />
+    <Folder Include="Infrastructure\Functions\" />
+    <Folder Include="Infrastructure\Profiles\" />
+    <Folder Include="Infrastructure\Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Tasko.General\Tasko.General.csproj" />
   </ItemGroup>
 

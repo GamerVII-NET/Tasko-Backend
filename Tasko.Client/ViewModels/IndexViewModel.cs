@@ -140,8 +140,7 @@ namespace Tasko.Client.ViewModels
         public override async Task GetProfileAsync()
         {
             var value = await SecureStorage.GetAsync("UserInfo");
-
-            if (value != null)
+            if(value != null)
             {
                 UserInfo = JsonConvert.DeserializeObject<UserAuthRead>(value);
             }

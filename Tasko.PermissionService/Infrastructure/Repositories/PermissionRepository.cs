@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Tasko.Domains.Models.Structural.Providers;
+﻿using Tasko.Domains.Models.Structural.Providers;
 using IPermission = Tasko.Domains.Models.Structural.Providers.IPermission;
 
 namespace Tasko.PermissionService.Infrastructure.Repositories
