@@ -1,13 +1,5 @@
-﻿
-
-using AutoMapper;
-using DnsClient;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
-using Newtonsoft.Json.Linq;
+﻿using MongoDB.Driver.Linq;
 using System.Net;
-using System.Runtime.InteropServices;
-using Tasko.General.Models;
 
 namespace Tasko.AuthService.Infrastructure.Repositories
 {
@@ -218,7 +210,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             refreshToken.RevokedAt = DateTime.UtcNow;
             refreshToken.RevokedByIp = GetRealIpAddress(context.Connection.RemoteIpAddress);
-            refreshToken.ReasonRevoked = $"Attempted reuse of revoked ancestor token: {token}";
+            refreshToken.ReasonRevoked = $"Attempted reuse of revoked ancestor token: {newRefreshToken}";
 
             await RefreshTokensCollection.ReplaceOneAsync(filter, refreshToken);
 
