@@ -21,7 +21,7 @@ builder.RegisterBuilder(databaseContext);
 var application = builder.Build();
 application.RegisterApplication();
 
-application.Services.GetServices<IApi>()
+application.Services.GetServices<IRouteHandler>()
                     .ToList()
                     .ForEach(api => api.Register(application));
 application.Run();

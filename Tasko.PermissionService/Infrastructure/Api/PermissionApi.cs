@@ -5,7 +5,7 @@ using Tasko.PermissionService.Infrastructure.Functions;
 
 namespace Tasko.PermissionService.Infrastructure.Api
 {
-    public class PermissionApi : ApiBase, IApi
+    public class PermissionApi : BaseRouteHandler, General.Interfaces.IRouteHandler
     {
         public void Register(WebApplication webApplication)
         {

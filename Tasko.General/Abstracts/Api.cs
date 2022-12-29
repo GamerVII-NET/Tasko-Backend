@@ -2,7 +2,7 @@
 
 namespace Tasko.General.Abstracts
 {
-    public abstract class ApiBase
+    public abstract class BaseRouteHandler
     {
         public WebApplication WebApplication { get; set; }
         public JwtValidationParameter JwtValidationParmeter { get { return WebApplication.Configuration.GetJwtValidationParameter(); } }

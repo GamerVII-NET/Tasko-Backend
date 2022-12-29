@@ -5,8 +5,9 @@
         public static void SetSettingFile(this WebApplicationBuilder builder, string relativePath, string fileName)
         {
             var absolutePath = Path.GetFullPath(relativePath);
-            builder.Configuration.SetBasePath(absolutePath)
-                                 .AddJsonFile(fileName);
+            builder.Configuration
+                .SetBasePath(absolutePath)
+                .AddJsonFile(fileName);
         }
     }
 }

@@ -17,7 +17,7 @@ internal static class ApplicationConfiguration
 
         builder.Services.AddSingleton(dataContext);
         builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-        builder.Services.AddTransient<IApi, AuthApi>();
+        builder.Services.AddTransient<General.Interfaces.IRouteHandler, AuthApi>();
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
         builder.Services.AddSwaggerGen();
     }

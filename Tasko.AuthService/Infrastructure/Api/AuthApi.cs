@@ -2,7 +2,7 @@
 
 namespace Tasko.AuthService.Infrastructure.Api
 {
-    public class AuthApi : ApiBase, IApi
+    public class AuthApi : BaseRouteHandler, General.Interfaces.IRouteHandler
     {
         public void Register(WebApplication webApplication)
         {

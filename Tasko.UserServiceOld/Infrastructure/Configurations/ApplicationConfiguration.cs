@@ -17,8 +17,7 @@ internal static class ApplicationConfiguration
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddAuthorization();
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                        .AddJwtBearer(options => Jwt.GenerateConfig(ref options, builder.Configuration.GetJwtValidationParameter()));
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => Jwt.GenerateConfig(ref options, builder.Configuration.GetJwtValidationParameter()));
 
         builder.Services.AddSingleton(dataContext);
         builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -61,5 +60,6 @@ internal static class ApplicationConfiguration
         }
         application.UseAuthentication();
         application.UseAuthorization();
+        application.UseMiddleware<JwtMiddleware>();
     }
 }
