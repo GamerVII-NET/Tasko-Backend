@@ -4,7 +4,6 @@ global using System.Text;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Configuration;
 global using Tasko.General.Models;
-global using Tasko.General.Extensions.Crypthography;
 global using Microsoft.AspNetCore.Http;
 global using MongoDB.Driver;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;

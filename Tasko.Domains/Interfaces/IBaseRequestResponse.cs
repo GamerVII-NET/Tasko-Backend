@@ -1,4 +1,4 @@
-namespace Tasko.General.Models.RequestResponses;
+namespace Tasko.Domains.Interfaces;
 
 public interface IBaseRequestResponse
 {

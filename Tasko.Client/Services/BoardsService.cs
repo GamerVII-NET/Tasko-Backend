@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
+using Tasko.Domains.Interfaces;
 using Tasko.Domains.Models.Structural.Providers;
 using Tasko.General.Models.RequestResponses;
 

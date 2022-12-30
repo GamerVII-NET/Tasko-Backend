@@ -1,6 +1,6 @@
 
 using Tasko.BoardSevice.Infrasructure.Repositories;
-
+using Tasko.Domains.Models.Structural;
 using ValidationFailure = FluentValidation.Results.ValidationFailure;
 
 namespace Tasko.BoardSevice.Infrasructure.Functions

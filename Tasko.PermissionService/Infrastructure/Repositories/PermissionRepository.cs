@@ -1,5 +1,5 @@
-﻿using Tasko.Domains.Models.Structural.Providers;
-using IPermission = Tasko.Domains.Models.Structural.Providers.IPermission;
+﻿using Tasko.Domains.Models.Structural;
+using IPermission = Tasko.Domains.Models.Structural.IPermission;
 
 namespace Tasko.PermissionService.Infrastructure.Repositories
 {

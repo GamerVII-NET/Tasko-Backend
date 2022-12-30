@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
-    <ProjectReference Include="..\Tasko.General\Tasko.General.csproj" />
   </ItemGroup>
 
   <ItemGroup>

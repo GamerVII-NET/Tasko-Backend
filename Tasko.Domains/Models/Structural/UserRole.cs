@@ -1,4 +1,4 @@
-namespace Tasko.Domains.Models.Structural.Providers
+namespace Tasko.Domains.Models.Structural
 {
 
     public interface IUserRole

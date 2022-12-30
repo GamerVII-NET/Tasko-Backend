@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace Tasko.Domains.Models.Structural.Providers
+namespace Tasko.Domains.Models.Structural
 {
     public interface IUserPhone
     {

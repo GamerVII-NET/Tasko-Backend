@@ -1,5 +1,7 @@
 
 
+using Tasko.Domains.Models.Structural;
+
 namespace Tasko.BoardSevice.Infrasructure.Repositories;
 
 #region Interfaces

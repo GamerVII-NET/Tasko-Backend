@@ -1,3 +1,5 @@
+using Tasko.Domains.Models.Structural;
+
 namespace Tasko.RoleService.Infrasructure.Profiles;
 
 public class RoleProfile : Profile

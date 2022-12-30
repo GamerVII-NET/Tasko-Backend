@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Tasko.Domains.Models.DTO.Permissions;
-using Tasko.Domains.Models.Structural.Providers;
+using Tasko.Domains.Models.Structural;
 
 namespace Tasko.PermissionService.Infrastructure.Profiles
 {

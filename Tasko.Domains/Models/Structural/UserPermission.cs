@@ -1,13 +1,13 @@
-namespace Tasko.Domains.Models.Structural.Providers
+namespace Tasko.Domains.Models.Structural
 {
 
-    public interface IBoardUserPermission
+    public interface IPermissionUsers
     {
         Guid UserId { get; set; }
         Guid PermissionId { get; set; }
     }
 
-    public class BoardUserPermission : IBoardUserPermission
+    public class UserPermission : IPermissionUsers
     {
         public Guid UserId { get; set; }
         public Guid PermissionId { get; set; }

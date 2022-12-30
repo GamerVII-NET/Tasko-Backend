@@ -23,8 +23,4 @@
     <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Tasko.General\Tasko.General.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,5 @@
 ﻿using Tasko.Domains.Models.DTO.Permissions;
-using Tasko.Domains.Models.Structural.Providers;
+using Tasko.Domains.Models.Structural;
 using Tasko.General.Models.RequestResponses;
 using Tasko.PermissionService.Infrastructure.Repositories;
 

@@ -1,19 +1,19 @@
-using System.Diagnostics.CodeAnalysis;
+using Tasko.Domains.Interfaces;
 using Tasko.BoardSevice.Infrasructure.Functions;
+using IRouteHandler = Tasko.Domains.Interfaces.IRouteHandler;
 
 namespace Tasko.BoardSevice.Infrasructure.Api;
 
-public class UserApi : BaseRouteHandler, General.Interfaces.IRouteHandler
+public class UserApi : RouteHandlerBase, IRouteHandler
 {
     public void Register(WebApplication webApplication)
     {
-        WebApplication = webApplication;
-        Getters();
-        Creators();
-        Updaters();
-        Deleters();
+        Getters(webApplication);
+        Creators(webApplication);
+        Updaters(webApplication);
+        Deleters(webApplication);
     }
-    private void Getters()
+    private void Getters(WebApplication webApplication)
     {
 
         WebApplication.MapGet("api/boards/{id}", BoardsFunctions.FindBoard())
@@ -25,19 +25,19 @@ public class UserApi : BaseRouteHandler, General.Interfaces.IRouteHandler
             .WithTags("Getters");
 
     }
-    private void Creators()
+    private void Creators(WebApplication webApplication)
     {
         WebApplication.MapPost("api/boards", BoardsFunctions.CreateBoard(JwtValidationParmeter))
             .WithName("Create board")
             .WithTags("Creators");
     }
-    private void Updaters()
+    private void Updaters(WebApplication webApplication)
     {
         WebApplication.MapPut("api/boards", BoardsFunctions.UpdateBoard(JwtValidationParmeter))
             .WithName("Update board")
             .WithTags("Updaters");
     }
-    private void Deleters()
+    private void Deleters(WebApplication webApplication)
     {
         WebApplication.MapDelete("api/boards", BoardsFunctions.DeleteRole(JwtValidationParmeter))
             .WithName("Delete board")

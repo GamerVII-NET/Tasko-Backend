@@ -1,5 +1,6 @@
 ﻿using MongoDB.Driver.Linq;
 using System.Net;
+using Tasko.Domains.Models.Structural;
 
 namespace Tasko.AuthService.Infrastructure.Repositories
 {

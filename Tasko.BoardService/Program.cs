@@ -1,4 +1,6 @@
 using Tasko.BoardSevice.Infrasructure.Configurations;
+using Tasko.Mongo.Services;
+using Tasko.Mongo.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 #if DOCKER
@@ -14,7 +16,7 @@ builder.SetSettingFile(Path.GetDirectoryName(Assembly.GetEntryAssembly().Locatio
 
 var dbConnectionString = builder.Configuration.GetMongoConnectionString();
 var dbName = builder.Configuration.GetMongoDatabaseName();
-var databaseContext = Mongo.GetMongoDataConext(dbConnectionString, dbName);
+var databaseContext = MongoServices.GetMongoDataConext(dbConnectionString, dbName);
 
 builder.RegisterBuilder(databaseContext);
 

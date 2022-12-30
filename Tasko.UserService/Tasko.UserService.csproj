@@ -9,18 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\Profiles\**" />
+    <Content Remove="Infrastructure\Profiles\**" />
+    <EmbeddedResource Remove="Infrastructure\Profiles\**" />
+    <None Remove="Infrastructure\Profiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Middlewares\" />
-    <Folder Include="Infrastructure\Profiles\" />
-    <Folder Include="Infrastructure\System\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Tasko.General\Tasko.General.csproj" />
+    <ProjectReference Include="..\..\Tasko.Jwt\Tasko.Jwt.csproj" />
+    <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
   </ItemGroup>
 
 </Project>
