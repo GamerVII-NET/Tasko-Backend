@@ -1,5 +1,4 @@
 ﻿using FluentValidation.Results;
-using Tasko.Domains.Models.DTO.User;
 using Tasko.UserService.Infrasructure.Repositories;
 
 namespace Tasko.UserService.Infrasructure.Functions;
@@ -35,8 +34,6 @@ internal static class UserFunctions
                 return Results.BadRequest(result);
             }
 
-
-
             var user = mapper.Map<User>(userCreate);
             var foundedUser = await userRepository.FindUserAsync(user.Login);
 
@@ -60,6 +57,7 @@ internal static class UserFunctions
             return Results.Created($"/api/users/{user.Id}", new RequestResponse<IUserAuthRead>(response, StatusCodes.Status200OK));
         };
     }
+
     internal static Func<HttpContext, IUserRepository, IMapper, UserUpdate, IValidator<IUserUpdate>, Task<IResult>> UpdateUser(JwtValidationParameter jwtValidationParmeter)
     {
         return [Authorize] async (HttpContext context, IUserRepository userRepository, IMapper mapper, UserUpdate userUpdate, IValidator<IUserUpdate> validator) =>
@@ -72,18 +70,28 @@ internal static class UserFunctions
                 return Results.BadRequest(result);
             }
 
+            context.Request.Cookies.TryGetValue("RefreshToken", out string refreshToken);
+
             var user = mapper.Map<User>(userUpdate);
 
             var foundedUser = await userRepository.FindUserAsync(user.Id);
 
-            if (foundedUser == null)
-                return Results.Conflict(new BadRequestResponse<UserUpdate>(userUpdate, "User already exsist", StatusCodes.Status409Conflict));
-
+            if (foundedUser == null || foundedUser.IsDeleted)
+            {
+                var result = new BadRequestResponse<List<ValidationFailure>>(new List<ValidationFailure> { new ValidationFailure("User", "The user with the specified data has not been found, deleted, or blocked!") }, "Validation error", StatusCodes.Status400BadRequest);
+                return Results.BadRequest(result);
+            }
 
             var token = context.GetJwtToken();
             var isCurrentUser = Jwt.VerifyUser(token, jwtValidationParmeter, foundedUser);
 
-            if (isCurrentUser == false) { return Results.Unauthorized(); }
+            var isAuthorized = await userRepository.Authenticate(user, refreshToken);
+
+            if (!isAuthorized || isCurrentUser == false)
+            {
+                var result = new BadRequestResponse<List<ValidationFailure>>(new List<ValidationFailure> { new ValidationFailure("User", "The user is not logged in to the system!") }, "Identification error", StatusCodes.Status401Unauthorized);
+                return Results.BadRequest(result);
+            }
 
             foundedUser.Email = user.Email;
             foundedUser.FirstName = user.FirstName;
@@ -107,7 +115,12 @@ internal static class UserFunctions
 
             if (user is null)
             {
-                return Results.NotFound(new BadRequestResponse<string>($"User with unique identificator {id} not found", "User not found", StatusCodes.Status404NotFound));
+                var result = new List<ValidationFailure>
+                {
+                    new ValidationFailure("User", $"User with unique identificator {id} not found", "User not found")
+                };
+
+                return Results.NotFound(new BadRequestResponse<List<ValidationFailure>>(result, "User not found", StatusCodes.Status404NotFound));
             }
             var token = context.GetJwtToken();
             var isCurrentUser = Jwt.VerifyUser(token, jwtValidationParmeter, user);
@@ -116,6 +129,34 @@ internal static class UserFunctions
 
             await userRepository.DeleteUserAsync(user.Id);
             return Results.Ok();
+        };
+    }
+
+    internal static Func<HttpContext, IUserRepository, IMapper, Guid, Task<IResult>> GetRefreshTokens(JwtValidationParameter jwtValidationParmeter)
+    {
+        return [Authorize] async (HttpContext context, IUserRepository userRepository, IMapper mapper, Guid id) =>
+        {
+            var user = await userRepository.FindUserAsync(id);
+
+            if (user is null)
+            {
+                var result = new List<ValidationFailure>
+                {
+                    new ValidationFailure("User", $"User with unique identificator {id} not found", "User not found")
+                };
+
+                return Results.NotFound(new BadRequestResponse<List<ValidationFailure>>(result, "User not found", StatusCodes.Status404NotFound));
+            }
+            var token = context.GetJwtToken();
+            var isCurrentUser = Jwt.VerifyUser(token, jwtValidationParmeter, user);
+
+            if (isCurrentUser == false) return Results.Unauthorized();
+
+            var refreshTokens = await userRepository.GetRefreshTokensAsync(user.Id);
+
+            var refreshTokenResult = new GetRequestResponse<RefreshToken>(refreshTokens);
+
+            return Results.Ok(refreshTokenResult);
         };
     }
 }

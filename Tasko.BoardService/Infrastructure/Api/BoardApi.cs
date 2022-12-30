@@ -3,7 +3,7 @@ using Tasko.BoardSevice.Infrasructure.Functions;
 
 namespace Tasko.BoardSevice.Infrasructure.Api;
 
-public class UserApi : ApiBase, IApi
+public class UserApi : BaseRouteHandler, General.Interfaces.IRouteHandler
 {
     public void Register(WebApplication webApplication)
     {

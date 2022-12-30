@@ -23,7 +23,7 @@ namespace Tasko.BoardSevice.Infrasructure.Configurations
 
             builder.Services.AddSingleton(dataContext);
             builder.Services.AddScoped<IBoardRepository, BoardRepository>();
-            builder.Services.AddTransient<IApi, UserApi>();
+            builder.Services.AddTransient<General.Interfaces.IRouteHandler, UserApi>();
 
             builder.Services.AddSwaggerGen(s =>
             {

@@ -2,7 +2,7 @@
 
 namespace Tasko.AuthService.Infrastructure.Api
 {
-    public class AuthApi : ApiBase, IApi
+    public class AuthApi : BaseRouteHandler, General.Interfaces.IRouteHandler
     {
         public void Register(WebApplication webApplication)
         {
@@ -15,6 +15,11 @@ namespace Tasko.AuthService.Infrastructure.Api
             webApplication.MapPost("api/auth", AuthFunctions.BearerAuthorization(JwtValidationParmeter))
                           .Produces<IRequestResponse<IUserAuthRead>>(StatusCodes.Status200OK)
                           .WithName("Authorization")
+                          .WithTags("Auth");
+
+            webApplication.MapPost("api/auth/refresh-token", AuthFunctions.RefreshTokenAuthorization(JwtValidationParmeter))
+                          .Produces<IRequestResponse<IUserAuthRead>>(StatusCodes.Status200OK)
+                          .WithName("Refresh token authorization")
                           .WithTags("Auth");
         }
     }

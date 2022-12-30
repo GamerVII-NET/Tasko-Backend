@@ -20,7 +20,7 @@ internal static class ApplicationConfiguration
 
         builder.Services.AddSingleton(dataContext);
         builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-        builder.Services.AddTransient<IApi, UserApi>();
+        builder.Services.AddTransient<General.Interfaces.IRouteHandler, UserApi>();
 
         builder.Services.AddSwaggerGen(s =>
         {

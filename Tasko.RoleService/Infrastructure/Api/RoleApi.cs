@@ -1,6 +1,6 @@
 using Tasko.RoleService.Infrasructure.Functions;
 
-public class UserApi : ApiBase, IApi
+public class UserApi : BaseRouteHandler, Tasko.General.Interfaces.IRouteHandler
 {
     public void Register(WebApplication webApplication)
     {

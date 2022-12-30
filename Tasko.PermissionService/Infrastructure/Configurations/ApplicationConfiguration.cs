@@ -25,7 +25,7 @@ namespace Tasko.PermissionService.Infrastructure.Configurations
 
             builder.Services.AddSingleton(dataContext);
             builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
-            builder.Services.AddTransient<IApi, PermissionApi>();
+            builder.Services.AddTransient<General.Interfaces.IRouteHandler, PermissionApi>();
 
             builder.Services.AddSwaggerGen(s =>
             {
