@@ -8,7 +8,6 @@ public interface IBoardCreate
 
 public class BoardCreate : IBoardCreate
 {
-
     public string Avatar { get; set; }
     public string Name { get; set; }
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Tasko.BoardSevice.Infrasructure.Functions;
 
 namespace Tasko.BoardSevice.Infrasructure.Api;

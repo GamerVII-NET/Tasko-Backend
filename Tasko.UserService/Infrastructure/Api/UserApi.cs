@@ -4,6 +4,7 @@ namespace Tasko.UserService.Infrasructure.Api
 {
     public class UserApi : ApiBase, IApi
     {
+
         public void Register(WebApplication webApplication)
         {
             WebApplication = webApplication;
