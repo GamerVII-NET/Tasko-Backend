@@ -25,7 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Tasko.Mongo\Tasko.Mongo.csproj" />
+    <None Include="Tasko.Jwt.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
   </ItemGroup>
 
