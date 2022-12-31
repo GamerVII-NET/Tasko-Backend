@@ -23,4 +23,8 @@
     <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
+  </ItemGroup>
+
 </Project>

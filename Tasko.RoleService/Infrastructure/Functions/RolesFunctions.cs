@@ -1,3 +1,4 @@
+using Tasko.Domains.Models.DTO.Role;
 using Tasko.Domains.Models.Structural;
 using Tasko.RoleService.Infrasructure.Repositories;
 

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tasko-Backend\Tasko.Domains\Tasko.Domains.csproj" />
+    <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
   </ItemGroup>
 
 </Project>

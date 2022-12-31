@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver.Linq;
 using System.Net;
 using Tasko.Domains.Models.Structural;
+using Tasko.Jwt.Services;
 
 namespace Tasko.AuthService.Infrastructure.Repositories
 {
@@ -87,11 +88,11 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             #region Generate data
 
-            string refresToken = Jwt.CreateRefreshToken();
+            string refresToken = JwtServices.CreateRefreshToken();
             var userPermissions = await GetUserPermissions(user);
             var userRolesPermissions = await GetUserRolesPermissions(user);
             var permissions = userPermissions.Concat(userRolesPermissions).ToList();
-            string token = Jwt.CreateToken(jwtValidationParameter, user, permissions);
+            string token = JwtServices.CreateToken(jwtValidationParameter, user, permissions);
             await SaveRefreshToken(user, refresToken, GetRealIpAddress(ipAddress));
 
             #endregion
@@ -207,7 +208,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             }
 
-            var newRefreshToken = Jwt.CreateRefreshToken();
+            var newRefreshToken = JwtServices.CreateRefreshToken();
 
             refreshToken.RevokedAt = DateTime.UtcNow;
             refreshToken.RevokedByIp = GetRealIpAddress(context.Connection.RemoteIpAddress);
@@ -219,7 +220,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
             var userPermissions = await GetUserPermissions(user);
             var userRolesPermissions = await GetUserRolesPermissions(user);
             var permissions = userPermissions.Concat(userRolesPermissions).ToList();
-            string accessToken = Jwt.CreateToken(jwtValidationParameter, user, permissions);
+            string accessToken = JwtServices.CreateToken(jwtValidationParameter, user, permissions);
 
             context.Response.Cookies.Append("RefreshToken", newRefreshToken, new CookieOptions
             {
