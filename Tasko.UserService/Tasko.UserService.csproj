@@ -16,13 +16,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Tasko.Configuration\Tasko.Configuration.csproj" />
     <ProjectReference Include="..\..\Tasko.Jwt\Tasko.Jwt.csproj" />
+    <ProjectReference Include="..\..\Tasko.Validation\Tasko.Validation.csproj" />
     <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
   </ItemGroup>
 
