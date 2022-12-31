@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Tasko.Jwt.Extensions;
-using Tasko.Domains.Models.Structural.Providers;
+using Tasko.Jwt.Services;
+using Tasko.Jwt.Models;
 
 namespace Tasko.Service.Infrasructure.Middlewares;
 
@@ -13,16 +14,16 @@ internal class JwtMiddleware
         _requestDelegate = requestDelegate;
     }
 
-    public async Task Invoke(HttpContext context, IUserRepository repository)
+    public async Task Invoke(HttpContext context, ValidationParameter validationParameter)
     {
         var token = context.GetJwtToken();
 
-        var userGuid = repository.GetUserIdFromToken(token);
+        var userGuid = JwtServices.GetUserGuidFromToken(token, validationParameter);
 
         if (userGuid != Guid.Empty)
         {
-            var user = await repository.FindUserAsync(userGuid);
-            context.Items["User"] = user;
+            //var user = await repository.FindUserAsync(userGuid);
+            //context.Items["User"] = user;
         }
 
         await _requestDelegate(context);

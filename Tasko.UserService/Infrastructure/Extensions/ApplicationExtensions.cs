@@ -1,6 +1,7 @@
-using Tasko.Configuration.Extensions;
 using Tasko.Service.Infrastructure.RouteHandlers;
 using Tasko.Validation.Validators;
+using Tasko.Mongo.Extensions;
+using Tasko.Configuration.Extensions;
 
 namespace Tasko.Service.Infrastructure.Extensions;
 

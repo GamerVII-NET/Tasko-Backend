@@ -18,7 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tasko.Configuration\Tasko.Configuration.csproj" />
+    <ProjectReference Include="..\Tasko.Cryptography\Tasko.Cryptography.csproj" />
     <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
+    <ProjectReference Include="..\Tasko.Jwt\Tasko.Jwt.csproj" />
+    <ProjectReference Include="..\Tasko.Mongo\Tasko.Mongo.csproj" />
+    <ProjectReference Include="..\Tasko.Validation\Tasko.Validation.csproj" />
   </ItemGroup>
 
   <ItemGroup>

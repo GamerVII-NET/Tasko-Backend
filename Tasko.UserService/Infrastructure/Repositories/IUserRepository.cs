@@ -3,7 +3,6 @@ namespace Tasko.Service.Infrastructure.Repositories;
 internal interface IUserRepository
 {
     Task<IUser> FindUserAsync(Guid userGuid);
-    Task<Guid> GetUserIdFromToken(string token);
     Task<IEnumerable<IUser>> GetUsersAsync();
 }
 

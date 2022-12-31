@@ -1,3 +1,5 @@
+using Tasko.Service.Infrastructure.Requests;
+
 namespace Tasko.Service.Infrastructure.RouteHandlers;
 
 public class UserRouteHandler : IRouteHandler<WebApplication>

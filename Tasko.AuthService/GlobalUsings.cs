@@ -1,9 +1,4 @@
 ﻿#region Tasko.General
-global using Tasko.General.Commands;
-global using Tasko.General.Extensions;
-global using Tasko.General.Interfaces;
-global using Tasko.General.Extensions.Jwt;
-global using Tasko.General.Abstracts;
 global using Tasko.General.Models;
 global using Tasko.General.Models.RequestResponses;
 #endregion

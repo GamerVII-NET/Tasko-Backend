@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Tasko.Jwt.Models;
 using Tasko.Cryptography.Extensions;
+using Tasko.Jwt.Models;
 
 namespace Tasko.Jwt.Extensions
 {

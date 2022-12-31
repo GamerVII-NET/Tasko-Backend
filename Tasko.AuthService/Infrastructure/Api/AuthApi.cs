@@ -1,12 +1,12 @@
 ﻿using Tasko.AuthService.Infrastructure.Functions;
+using Tasko.Domains.Interfaces;
 
 namespace Tasko.AuthService.Infrastructure.Api
 {
-    public class AuthApi : BaseRouteHandler, General.Interfaces.IRouteHandler
+    public class AuthApi : IRouteHandler<WebApplication>
     {
-        public void Register(WebApplication webApplication)
+        public void Initialzie(WebApplication webApplication)
         {
-            WebApplication = webApplication;
             Auth(webApplication);
         }
 
