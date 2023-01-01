@@ -2,6 +2,7 @@ using Tasko.Service.Infrastructure.RouteHandlers;
 using Tasko.Validation.Validators;
 using Tasko.Mongo.Extensions;
 using Tasko.Configuration.Extensions;
+using Tasko.Domains.Models.DTO.User;
 
 namespace Tasko.Service.Infrastructure.Extensions;
 

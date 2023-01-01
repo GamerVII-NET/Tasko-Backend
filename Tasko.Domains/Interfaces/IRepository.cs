@@ -1,14 +1,11 @@
-﻿namespace Tasko.Domains.Interfaces
+﻿namespace Tasko.Domains.Interfaces;
+
+public interface IRepository<Model>
+where Model : class
 {
-    public interface IRepository<Model, DtoCreateModel, DtoUpdateModel> 
-    where Model : class
-    where DtoCreateModel : class
-    where DtoUpdateModel : class
-    {
-        public Task<Model> FindAsync(Guid id);
-        public Task<Model> CreateAsync(DtoCreateModel dtoCreateModel);
-        public Task<Model> UpdateAsync(DtoUpdateModel dtoUpdateModel);
-        public Task DeleteAsync(Guid guid);
-        public Task<IEnumerable<Model>> GetAsync();
-    }
+    Task<Model> FindAsync(Guid id, CancellationToken cancellationToken);
+    Task CreateAsync(Model model, CancellationToken cancellationToken);
+    Task<Model> UpdateAsync(Model model, CancellationToken cancellationToken);
+    Task DeleteAsync(Guid guid, CancellationToken cancellationToken);
+    Task<IEnumerable<Model>> GetAsync(CancellationToken cancellationToken);
 }

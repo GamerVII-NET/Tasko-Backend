@@ -1,9 +1,10 @@
+using Tasko.Domains.Models.DTO.User;
+
 namespace Tasko.Service.Infrastructure.Repositories;
 
-internal interface IUserRepository
+internal interface IUserRepository : IRepository<IUser>
 {
-    Task<IUser> FindUserAsync(Guid userGuid);
-    Task<IEnumerable<IUser>> GetUsersAsync();
+
 }
 
 internal abstract class BaseUserRepository
