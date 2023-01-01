@@ -8,3 +8,5 @@ global using AutoMapper;
 global using Tasko.Domains.Interfaces;
 global using Tasko.Domains.Models.Structural;
 global using Tasko.Jwt.Models;
+global using NLog;
+global using System.Reflection;

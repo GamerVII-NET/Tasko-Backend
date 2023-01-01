@@ -42,6 +42,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Mongo", "Tasko.Mongo\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Validation", "Tasko.Validation\Tasko.Validation.csproj", "{3A07940A-8BF9-41A8-B0DE-00641408E91D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Logger", "Tasko.Logger\Tasko.Logger.csproj", "{C750F9B7-0AA2-4095-8B44-B64F61930251}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -106,6 +108,10 @@ Global
 		{3A07940A-8BF9-41A8-B0DE-00641408E91D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A07940A-8BF9-41A8-B0DE-00641408E91D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A07940A-8BF9-41A8-B0DE-00641408E91D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C750F9B7-0AA2-4095-8B44-B64F61930251}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C750F9B7-0AA2-4095-8B44-B64F61930251}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C750F9B7-0AA2-4095-8B44-B64F61930251}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C750F9B7-0AA2-4095-8B44-B64F61930251}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,9 +131,10 @@ Global
 		{03634836-D356-4181-AE66-131C7BE97442} = {1FA428E9-869D-4E92-8B98-F25012D74A47}
 		{3F28632B-7E66-4A50-A4C2-34B6110BED8B} = {1FA428E9-869D-4E92-8B98-F25012D74A47}
 		{3A07940A-8BF9-41A8-B0DE-00641408E91D} = {1FA428E9-869D-4E92-8B98-F25012D74A47}
+		{C750F9B7-0AA2-4095-8B44-B64F61930251} = {1FA428E9-869D-4E92-8B98-F25012D74A47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 		SolutionGuid = {E779261A-E569-475A-8B95-1C0C706BE4DE}
+		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 	EndGlobalSection
 EndGlobal

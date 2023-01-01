@@ -103,7 +103,7 @@ namespace Tasko.Jwt.Services
             }
             return false;
         }
-        public static string CreateToken(ValidationParameter validationParmeter, IUser user, List<Permission> permissions)
+        public static string CreateToken(ValidationParameter validationParmeter, IUser user, IEnumerable<IPermission> permissions)
         {
             var claims = new List<Claim>
             {
@@ -112,7 +112,7 @@ namespace Tasko.Jwt.Services
                 new Claim(ClaimTypes.Email, user.Email)
             };
 
-            permissions.ForEach(permission => claims.Add(new Claim(ClaimTypes.Role, $"{permission.Name}")));
+            permissions.ToList().ForEach(permission => claims.Add(new Claim(ClaimTypes.Role, $"{permission.Name}")));
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(validationParmeter.Key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
