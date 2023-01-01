@@ -32,13 +32,12 @@ namespace Tasko.Logger.Middlewares
         {
             context.Response.ContentType = "application/json";
             int statusCode = (int)HttpStatusCode.InternalServerError;
-            var result = JsonConvert.SerializeObject(new
+            context.Response.StatusCode = statusCode;
+            var result = new
             {
                 StatusCode = statusCode,
                 ErrorMessage = exception.Message
-            });
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = statusCode;
+            };
             _logger.Error(result);
         }
     }

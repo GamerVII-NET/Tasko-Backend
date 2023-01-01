@@ -6,7 +6,7 @@ namespace Tasko.Service.Infrastructure.RouteHandlers;
 public class UserRouteHandler : IRouteHandler<WebApplication>
 {
     private ValidationParameter _validationParameter;
-    private WebApplication _webApplication { get; set; }
+    private WebApplication _webApplication;
 
     public void Initialzie(WebApplication webApplication)
     {

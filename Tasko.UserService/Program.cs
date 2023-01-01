@@ -1,6 +1,6 @@
+using Tasko.Logger.Services;
 
-var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
-
+var logger = LogService.GetLogger();
 try
 {
     var builder = WebApplication.CreateBuilder(args);

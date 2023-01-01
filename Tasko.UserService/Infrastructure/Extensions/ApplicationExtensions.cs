@@ -3,18 +3,17 @@ using Tasko.Validation.Validators;
 using Tasko.Configuration.Extensions;
 using Tasko.Logger.Extensions;
 using Tasko.UserService.Infrastructure.Repositories;
-using NLog.Web;
+using ILogger = NLog.ILogger;
 
 namespace Tasko.Service.Infrastructure.Extensions;
 
 internal static class ApplicationExtensions
 {
-    //TODO: Add logging
-    internal static void RegisterBuilder(this WebApplicationBuilder builder, ILogger logger)
+    internal static void RegisterBuilder(this WebApplicationBuilder builder)
     {
         builder.Services.AddEndpointsApiExplorer();
-        builder.Logging.ClearProviders();
-        builder.Host.UseNLog();
+        //builder.Logging.ClearProviders();
+        //builder.Host.UseNLog();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddFluentValidationAutoValidation();
         builder.Services.AddFluentValidationClientsideAdapters();
@@ -41,10 +40,8 @@ internal static class ApplicationExtensions
         app.UseAuthorization();
         app.UseAuthentication();
         //app.UseMiddleware<JwtMiddleware>(); ????
-        app.UseExceptionHandlerMiddleware();
+        app.UseExceptionHandlerMiddleware(logger);
         app.UseRouteHandlers();
         app.UseStatusCodePages();
     }
-
-
 }
