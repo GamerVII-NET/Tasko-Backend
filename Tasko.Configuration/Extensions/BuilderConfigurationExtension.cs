@@ -22,7 +22,7 @@ namespace Tasko.Configuration.Extensions
         public static void AddMongoDbContext(this WebApplicationBuilder builder)
         {
 #if DEBUG
-            builder.Configuration.AddJsonFile("appsettings.json");
+            builder.SetSettingFile(@"../../Tasko-Backend/Tasko.Configuration/", "appsettings.json");
 #endif
 #if !DEBUG
         builder.SetSettingFile(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "appsettings.json"); //If project on docker

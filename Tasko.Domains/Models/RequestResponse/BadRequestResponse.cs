@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Tasko.Domains.Interfaces;
 
-namespace Tasko.General.Models.RequestResponses;
+namespace Tasko.Domains.Models.RequestResponses;
 
 public interface IBadRequestResponse<T> : IBaseRequestResponse
 {

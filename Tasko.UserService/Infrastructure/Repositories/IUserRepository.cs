@@ -1,20 +1,10 @@
-namespace Tasko.Service.Infrastructure.Repositories;
-
-internal interface IUserRepository
+﻿namespace Tasko.UserService.Infrastructure.Repositories
 {
-    Task<IUser> FindUserAsync(Guid userGuid);
-    Task<IEnumerable<IUser>> GetUsersAsync();
-}
-
-internal abstract class BaseUserRepository
-{
-    internal ValidationParameter ValidationParameter { get; init; }
-    internal FilterDefinitionBuilder<User> UserFilter { get; init; }
-    internal IMongoCollection<IUser> UserCollection { get; init; }
-    internal BaseUserRepository(IMongoDatabase mongoDatabase, ValidationParameter validationParameter)
+    public interface IUserRepository : IRepository<IUser>
     {
-        ValidationParameter = validationParameter;
-        UserCollection = mongoDatabase.GetCollection<IUser>("Users");
-        UserFilter = Builders<User>.Filter;
+        Task<IEnumerable<IPermission>> GetUserPermissions(IUser user, CancellationToken cancellationToken = default);
+        Task<IEnumerable<IPermission>> GetUserRolesPermissions(IUser user, CancellationToken cancellationToken = default);
+        Task<IEnumerable<IRefreshToken>> GetRefreshTokensAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<IEnumerable<IRole>> GetUserRoles(IUser user, CancellationToken cancellationToken = default);
     }
 }
