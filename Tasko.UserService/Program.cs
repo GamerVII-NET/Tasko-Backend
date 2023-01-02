@@ -1,6 +1,7 @@
 using Tasko.Logger.Services;
 
 var logger = LogService.GetLogger();
+
 try
 {
     var builder = WebApplication.CreateBuilder(args);

@@ -1,10 +1,11 @@
+using AutoMapper;
 using FluentValidation.Results;
 using System.Threading;
 using Tasko.Domains.Models.DTO.User;
 using Tasko.Domains.Models.RequestResponses;
 using Tasko.Jwt.Extensions;
 using Tasko.Jwt.Services;
-using Tasko.UserService.Infrastructure.Repositories;
+using Tasko.Service.Infrastructure.Repositories;
 
 namespace Tasko.Service.Infrastructure.Requests;
 
@@ -19,12 +20,13 @@ internal static class RequestHandler
         };
     }
 
-    internal static Func<IUserRepository, ValidationParameter, CancellationToken, Task<IResult>> GetUsers()
+    internal static Func<IUserRepository, ValidationParameter, IMapper, CancellationToken, Task<IResult>> GetUsers()
     {
-        return async (IUserRepository userRepository, ValidationParameter jwtValidationParameter, CancellationToken cancellationToken) =>
+        return async (IUserRepository userRepository, ValidationParameter jwtValidationParameter, IMapper mapper, CancellationToken cancellationToken) =>
         {
-            var users = await userRepository.GetAsync(cancellationToken);
-            return Results.Ok(users);
+            var users = mapper.Map<IEnumerable<IUserRead>>(await userRepository.GetAsync(cancellationToken));
+            
+            return Results.Ok(new GetRequestResponse<IUserRead>(users));
         };
     }
 
@@ -33,7 +35,7 @@ internal static class RequestHandler
         return async (IUserRepository userRepository, IMapper mapper, UserCreate userCreate, IValidator<IUserCreate> validator, CancellationToken cancellationToken) =>
         {
             var validationResult = validator.Validate(userCreate);
-
+            
             if (!validationResult.IsValid)
             {
                 var result = new BadRequestResponse<List<ValidationFailure>>(validationResult.Errors, "Validation error");
@@ -41,7 +43,7 @@ internal static class RequestHandler
             }
 
             var user = mapper.Map<User>(userCreate);
-            var foundedUser = await userRepository.FindOneAsync(u => u.Login == user.Login);
+            var foundedUser = await userRepository.FindOneAsync(u => u.Login.Equals(user.Login), cancellationToken);
 
             if (foundedUser != null)
                 return Results.Conflict(new BadRequestResponse<UserCreate>(userCreate, "User already exsist", StatusCodes.Status409Conflict));
@@ -147,11 +149,13 @@ internal static class RequestHandler
 
             if (isCurrentUser == false) return Results.Unauthorized();
 
-            var refreshTokens = await userRepository.GetRefreshTokensAsync(user.Id);
+            //var refreshTokens = await userRepository.GetRefreshTokensAsync(user.Id);
 
-            var refreshTokenResult = new GetRequestResponse<IRefreshToken>(refreshTokens);
+            //var refreshTokenResult = new GetRequestResponse<IRefreshToken>(refreshTokens);
 
-            return Results.Ok(refreshTokenResult);
+            //return Results.Ok(refreshTokenResult);
+
+            return Results.Ok();
         };
     }
 }

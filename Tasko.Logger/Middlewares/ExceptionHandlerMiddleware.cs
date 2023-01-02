@@ -33,12 +33,7 @@ namespace Tasko.Logger.Middlewares
             context.Response.ContentType = "application/json";
             int statusCode = (int)HttpStatusCode.InternalServerError;
             context.Response.StatusCode = statusCode;
-            var result = new
-            {
-                StatusCode = statusCode,
-                ErrorMessage = exception.Message
-            };
-            _logger.Error(result);
+            _logger.Error(exception);
         }
     }
 }

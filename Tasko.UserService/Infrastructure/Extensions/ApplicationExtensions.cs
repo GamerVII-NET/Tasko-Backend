@@ -2,7 +2,7 @@ using Tasko.Service.Infrastructure.RouteHandlers;
 using Tasko.Validation.Validators;
 using Tasko.Configuration.Extensions;
 using Tasko.Logger.Extensions;
-using Tasko.UserService.Infrastructure.Repositories;
+using Tasko.Service.Infrastructure.Repositories;
 using ILogger = NLog.ILogger;
 
 namespace Tasko.Service.Infrastructure.Extensions;
