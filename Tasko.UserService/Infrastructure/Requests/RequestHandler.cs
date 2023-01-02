@@ -1,4 +1,5 @@
 using FluentValidation.Results;
+using System.Threading;
 using Tasko.Domains.Models.DTO.User;
 using Tasko.Domains.Models.RequestResponses;
 using Tasko.Jwt.Extensions;
@@ -17,17 +18,19 @@ internal static class RequestHandler
             return user == null ? Results.NotFound(id) : Results.Ok(new RequestResponse<IUser>(user, StatusCodes.Status200OK));
         };
     }
-    internal static Func<IUserRepository, IMapper, Task<IResult>> GetUsers()
+
+    internal static Func<IUserRepository, ValidationParameter, CancellationToken, Task<IResult>> GetUsers()
     {
-        return async (IUserRepository userRepository, ValidationParameter jwtValidationParameter, CancellationToken cancellationToken, IMapper mapper, UserCreate userCreate, IValidator<IUserCreate> validator) =>
+        return async (IUserRepository userRepository, ValidationParameter jwtValidationParameter, CancellationToken cancellationToken) =>
         {
-            var users = await repository.GetAsync();
+            var users = await userRepository.GetAsync(cancellationToken);
             return Results.Ok(users);
         };
     }
-    internal static Func<IUserRepository, IMapper, UserCreate, IValidator<IUserCreate>, Task<IResult>> CreateUser(ValidationParameter validationParameter)
+
+    internal static Func<IUserRepository, IMapper, UserCreate, IValidator<IUserCreate>, CancellationToken, Task<IResult>> CreateUser(ValidationParameter validationParameter)
     {
-        return async (IUserRepository userRepository, IMapper mapper, UserCreate userCreate, IValidator<IUserCreate> validator) =>
+        return async (IUserRepository userRepository, IMapper mapper, UserCreate userCreate, IValidator<IUserCreate> validator, CancellationToken cancellationToken) =>
         {
             var validationResult = validator.Validate(userCreate);
 
@@ -60,6 +63,7 @@ internal static class RequestHandler
             return Results.Created($"/api/users/{user.Id}", new RequestResponse<IUserAuthRead>(response, StatusCodes.Status200OK));
         };
     }
+
     internal static Func<HttpContext, IUserRepository, IMapper, UserUpdate, IValidator<IUserUpdate>, Task<IResult>> UpdateUser(ValidationParameter validationParmeter)
     {
         return [Authorize] async (HttpContext context, IUserRepository userRepository, IMapper mapper, UserUpdate userUpdate, IValidator<IUserUpdate> validator) =>
