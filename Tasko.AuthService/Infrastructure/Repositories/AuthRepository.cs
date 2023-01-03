@@ -1,56 +1,17 @@
 ﻿using MongoDB.Driver.Linq;
 using System.Net;
+using Tasko.Domains.Models.RequestResponses;
 using Tasko.Domains.Models.Structural;
+using Tasko.Jwt.Models;
 using Tasko.Jwt.Services;
 
 namespace Tasko.AuthService.Infrastructure.Repositories
 {
-    #region Interfaces
-    public interface IAuthRepository
-    {
-        Task<IResult> AuthorizationAsync(IUserAuth userAuth, JwtValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator, IPAddress ipAddress, IResponseCookies cookies);
-        Task<IUser> FindUserAsync(string login);
-        Task<List<Role>> GetUserRoles(IUser user);
-        Task<List<Permission>> GetUserRolesPermissions(IUser user);
-        Task<List<Permission>> GetUserPermissions(IUser user);
-        Task SaveRefreshToken(IUser user, string refreshToken, string ipAddress);
-        Task<IResult> RefreshTokenAuthorizationAsync(HttpContext context, IMapper mapper, JwtValidationParameter jwtValidationParameter);
-    }
-    #endregion
-
-    #region Base classes
-    public class AuthRepositoryBase
-    {
-        public AuthRepositoryBase(IMongoDatabase databaseContext)
-        {
-            UserFilter = Builders<User>.Filter;
-            RefreshTokenFilter = Builders<RefreshToken>.Filter;
-            RolesCollection = databaseContext.GetCollection<Role>("Roles");
-            UserRolesCollection = databaseContext.GetCollection<UserRole>("UserRoles");
-            RolePermissionsCollection = databaseContext.GetCollection<RolePermission>("RolePermissions");
-            UserPermissionsCollection = databaseContext.GetCollection<UserPermission>("UserPermissions");
-            PermissionCollection = databaseContext.GetCollection<Permission>("Permissions");
-            RefreshTokensCollection = databaseContext.GetCollection<RefreshToken>("RefreshTokens");
-            UserCollection = databaseContext.GetCollection<User>("Users");
-        }
-
-        internal IMongoCollection<User> UserCollection { get; set; }
-        internal IMongoCollection<Role> RolesCollection { get; set; }
-        internal IMongoCollection<Permission> PermissionCollection { get; set; }
-        internal IMongoCollection<UserRole> UserRolesCollection { get; set; }
-        internal IMongoCollection<UserPermission> UserPermissionsCollection { get; set; }
-        internal IMongoCollection<RolePermission> RolePermissionsCollection { get; set; }
-        internal IMongoCollection<RefreshToken> RefreshTokensCollection { get; set; }
-        internal FilterDefinitionBuilder<User> UserFilter { get; }
-        internal FilterDefinitionBuilder<RefreshToken> RefreshTokenFilter { get; }
-    }
-    #endregion
-
     public class AuthRepository : AuthRepositoryBase, IAuthRepository
     {
         public AuthRepository(IMongoDatabase databaseContext) : base(databaseContext) { }
 
-        public async Task<IResult> AuthorizationAsync(IUserAuth userAuth, JwtValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator, IPAddress ipAddress, IResponseCookies cookies)
+        public async Task<IResult> AuthorizationAsync(IUserAuth userAuth, ValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator, IPAddress ipAddress, IResponseCookies cookies)
         {
             #region Validate user
             var validationResult = validator.Validate(userAuth);
@@ -135,13 +96,11 @@ namespace Tasko.AuthService.Infrastructure.Repositories
             var permissionsIdFilter = Builders<Permission>.Filter.In(d => d.Id, userPermissions.Select(c => c.PermissionId));
             return await PermissionCollection.Find(permissionsIdFilter).ToListAsync();
         }
-
         public async Task<IUser> FindUserAsync(string login)
         {
             var filter = UserFilter.Eq("Login", login);
             return await UserCollection.Find(filter).FirstOrDefaultAsync();
         }
-
         public async Task SaveRefreshToken(IUser user, string refreshToken, string ipAddress)
         {
             var expiryDuration = new TimeSpan(1, 0, 0, 0);
@@ -157,7 +116,6 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             await RefreshTokensCollection.InsertOneAsync(token);
         }
-
         internal static string GetRealIpAddress(IPAddress address)
         {
             if (address != null && address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
@@ -167,8 +125,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             return string.Empty;
         }
-
-        public async Task<IResult> RefreshTokenAuthorizationAsync(HttpContext context, IMapper mapper, JwtValidationParameter jwtValidationParameter)
+        public async Task<IResult> RefreshTokenAuthorizationAsync(HttpContext context, IMapper mapper, ValidationParameter jwtValidationParameter)
         {
             if (!context.Request.Cookies.ContainsKey("RefreshToken"))
             {

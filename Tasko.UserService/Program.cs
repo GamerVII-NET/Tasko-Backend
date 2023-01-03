@@ -18,4 +18,4 @@ catch (Exception exception)
 finally
 {
     LogManager.Shutdown();
-}
+}  

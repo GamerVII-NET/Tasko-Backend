@@ -1,22 +1,19 @@
-using Tasko.AuthService.Infrastructure.Configurations;
+using Tasko.AuthService.Infrastructure.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
-#region If project on local machine
-builder.SetSettingFile(@"../../Tasko-Backend/Tasko.General/", "appsettings.json");
-#endregion
-#region If project on docker container
-builder.SetSettingFile(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "appsettings.json");//If project on docker
-#endregion
-var dbConnectionString = builder.Configuration.GetMongoConnectionString();
-var dbName = builder.Configuration.GetMongoDatabaseName();
-var databaseContext = Mongo.GetMongoDataConext(dbConnectionString, dbName);
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
+    builder.RegisterBuilder();
+    var application = builder.Build();
+    application.RegisterApplication();
+    application.Run();
+}
+catch (Exception)
+{
 
-builder.RegisterBuilder(databaseContext);
+	throw;
+}
+finally
+{
 
-var application = builder.Build();
-application.RegisterApplication();
-
-application.Services.GetServices<Tasko.General.Interfaces.IRouteHandler>()
-                    .ToList()
-                    .ForEach(api => api.Register(application));
-application.Run();
+}

@@ -1,8 +1,4 @@
-﻿#region Tasko.General
-global using Tasko.General.Models;
-global using Tasko.General.Models.RequestResponses;
-#endregion
-
+﻿
 #region Tasko.Domains
 global using Tasko.Domains.Models.DTO.User;
 global using Tasko.Domains.Models.Structural.Providers;

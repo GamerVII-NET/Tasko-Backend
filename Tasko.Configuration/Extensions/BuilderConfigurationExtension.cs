@@ -25,7 +25,7 @@ namespace Tasko.Configuration.Extensions
             builder.SetSettingFile(@"../../Tasko-Backend/Tasko.Configuration/", "appsettings.json");
 #endif
 #if !DEBUG
-        builder.SetSettingFile(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "appsettings.json"); //If project on docker
+        builder.SetSettingFile(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "appsettings.json");
 #endif
             var dbConnectionString = builder.Configuration.GetMongoConnectionString();
             var dbName = builder.Configuration.GetMongoDatabaseName();
