@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option csharp_namespace = "Tasko.CardService.Infrastructure.Protos";
+
+package card;
+
+service Card {
+
+}
