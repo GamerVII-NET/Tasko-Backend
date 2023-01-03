@@ -9,6 +9,7 @@ namespace Tasko.Domains.Models.Structural
         string Login { get; set; }
         string Password { get; set; }
         IEnumerable<Guid> PhonesId { get; set; }
+        IEnumerable<IRefreshToken> RefreshTokens { get; set; }
         string FirstName { get; set; }
         string LastName { get; set; }
         string? Patronymic { get; set; }
@@ -26,6 +27,7 @@ namespace Tasko.Domains.Models.Structural
         public string Login { get; set; }
         public string Password { get; set; }
         public IEnumerable<Guid> PhonesId { get; set; }
+        public IEnumerable<IRefreshToken> RefreshTokens { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string? Patronymic { get; set; }

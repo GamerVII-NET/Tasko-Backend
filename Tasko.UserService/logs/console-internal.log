@@ -1,0 +1,92 @@
+2023-01-02 13:07:06.5741 Info Message Template Auto Format enabled
+2023-01-02 13:07:06.5741 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 13:07:06.5853 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 13:07:06.5853 Info Closing old configuration.
+2023-01-02 13:07:06.5853 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 13:07:10.4646 Info Message Template Auto Format enabled
+2023-01-02 13:07:10.5731 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 13:07:10.5731 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 13:07:10.5935 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 13:10:39.9617 Info Message Template Auto Format enabled
+2023-01-02 13:10:40.0581 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 13:10:40.0581 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 13:10:40.0754 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 13:24:56.8055 Info Message Template Auto Format enabled
+2023-01-02 13:24:56.9270 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 13:24:56.9270 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 13:24:56.9489 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 13:28:54.3201 Info Message Template Auto Format enabled
+2023-01-02 13:28:54.4244 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 13:28:54.4244 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 13:28:54.4422 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 13:30:29.9428 Info Message Template Auto Format enabled
+2023-01-02 13:30:30.0354 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 13:30:30.0354 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 13:30:30.0537 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 13:49:15.9332 Info Message Template Auto Format enabled
+2023-01-02 13:49:16.0413 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 13:49:16.0413 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 13:49:16.0597 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 13:49:55.0136 Info Shutdown() called. Logger closing...
+2023-01-02 13:49:55.0136 Info Closing old configuration.
+2023-01-02 13:49:55.0233 Info Logger has been closed down.
+2023-01-02 13:49:55.0233 Info AppDomain Shutting down. LogFactory closing...
+2023-01-02 13:49:55.0233 Info LogFactory has been closed.
+2023-01-02 13:50:05.9971 Info Message Template Auto Format enabled
+2023-01-02 13:50:06.1054 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 13:50:06.1054 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 13:50:06.1245 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 13:51:21.1634 Info Shutdown() called. Logger closing...
+2023-01-02 13:51:21.1638 Info Closing old configuration.
+2023-01-02 13:51:21.1638 Info Logger has been closed down.
+2023-01-02 13:51:21.1638 Info AppDomain Shutting down. LogFactory closing...
+2023-01-02 13:51:21.1638 Info LogFactory has been closed.
+2023-01-02 13:53:18.0616 Info Message Template Auto Format enabled
+2023-01-02 13:53:18.1803 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 13:53:18.1803 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 13:53:18.2014 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 13:58:02.4158 Info Message Template Auto Format enabled
+2023-01-02 13:58:02.5191 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 13:58:02.5191 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 13:58:02.5368 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 14:00:08.7343 Info Message Template Auto Format enabled
+2023-01-02 14:00:08.8468 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 14:00:08.8468 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 14:00:08.8669 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 14:01:46.5347 Info Message Template Auto Format enabled
+2023-01-02 14:01:46.6405 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 14:01:46.6405 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 14:01:46.6584 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 14:02:18.7605 Info Message Template Auto Format enabled
+2023-01-02 14:02:18.8617 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 14:02:18.8617 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 14:02:18.8798 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 16:15:10.6970 Info Message Template Auto Format enabled
+2023-01-02 16:15:10.8822 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 16:15:10.8822 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 16:15:10.9109 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 16:17:57.7031 Info Message Template Auto Format enabled
+2023-01-02 16:17:57.8223 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 16:17:57.8223 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 16:17:57.8409 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 16:18:20.9048 Info Message Template Auto Format enabled
+2023-01-02 16:18:21.0186 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 16:18:21.0186 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 16:18:21.0410 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 16:22:00.8043 Info Message Template Auto Format enabled
+2023-01-02 16:22:00.8711 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 16:22:00.8711 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 16:22:00.8924 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-02 16:22:07.7342 Info Shutdown() called. Logger closing...
+2023-01-02 16:22:07.7342 Info Closing old configuration.
+2023-01-02 16:22:07.7342 Info Logger has been closed down.
+2023-01-02 16:22:07.7433 Info AppDomain Shutting down. LogFactory closing...
+2023-01-02 16:22:07.7433 Info LogFactory has been closed.
+2023-01-02 16:22:13.9457 Info Message Template Auto Format enabled
+2023-01-02 16:22:14.0846 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-02 16:22:14.0877 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-02 16:22:14.1076 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config
+2023-01-03 04:17:53.5619 Info Message Template Auto Format enabled
+2023-01-03 04:17:53.6790 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-03 04:17:53.6790 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-03 04:17:53.7001 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\GamerVII\source\repos\Tasko-Backend\Tasko.Logger\nlog.config

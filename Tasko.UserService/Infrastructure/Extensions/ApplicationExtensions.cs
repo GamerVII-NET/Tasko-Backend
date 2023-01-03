@@ -2,7 +2,7 @@ using Tasko.Service.Infrastructure.RouteHandlers;
 using Tasko.Validation.Validators;
 using Tasko.Configuration.Extensions;
 using Tasko.Logger.Extensions;
-using Tasko.UserService.Infrastructure.Repositories;
+using Tasko.Service.Infrastructure.Repositories;
 using ILogger = NLog.ILogger;
 
 namespace Tasko.Service.Infrastructure.Extensions;
@@ -15,14 +15,19 @@ internal static class ApplicationExtensions
         //builder.Logging.ClearProviders();
         //builder.Host.UseNLog();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
         builder.Services.AddFluentValidationAutoValidation();
         builder.Services.AddFluentValidationClientsideAdapters();
         builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<CreateUserValidator>();
+
         builder.AddMongoDbContext();
-        builder.Services.AddTransient<ValidationParameter>();
+
+        builder.Services.AddSingleton<ValidationParameter>();
+
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddTransient<IRouteHandler<WebApplication>, UserRouteHandler>();
+
         builder.Services.AddSwaggerGen();
         builder.Services.AddAuthorization();
         builder.Services.AddAuthorization();

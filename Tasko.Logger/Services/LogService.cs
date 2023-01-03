@@ -7,7 +7,7 @@ namespace Tasko.Logger.Services
     {
         public static ILogger GetLogger()
         {
-            var fileName = Path.GetFullPath(@"../../Tasko-Backend/Tasko.Logger/NLog.config");
+            var fileName = Path.GetFullPath(@"../../Tasko-Backend/Tasko.Logger/nlog.config");
             LogManager.Configuration = new XmlLoggingConfiguration(fileName);
             return LogManager.GetCurrentClassLogger();
         }
