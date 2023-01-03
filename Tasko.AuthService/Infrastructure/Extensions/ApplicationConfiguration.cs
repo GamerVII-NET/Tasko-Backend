@@ -1,12 +1,10 @@
 ﻿using Tasko.AuthService.Infrastructure.Repositories;
 using Tasko.AuthService.Infrastructure.RouteHandlers;
-using Tasko.Jwt.Services;
 using Tasko.Configuration.Extensions;
 using Tasko.Domains.Interfaces;
-using Tasko.Mongo.Extensions;
 using Tasko.Jwt.Models;
-using Microsoft.Extensions.Logging;
 using Tasko.Logger.Extensions;
+using Tasko.Validation.Validators;
 using ILogger = NLog.ILogger;
 
 
@@ -22,8 +20,11 @@ internal static class ApplicationConfiguration
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         #region Validator
-        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        builder.Services.AddFluentValidationAutoValidation();
+        builder.Services.AddFluentValidationClientsideAdapters();
         builder.Services.AddFluentValidation(validation => validation.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+        builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<CreateUserValidator>();
         #endregion
 
         #region Database

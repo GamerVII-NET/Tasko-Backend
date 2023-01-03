@@ -5,11 +5,11 @@ using Tasko.Jwt.Models;
 namespace Tasko.AuthService.Infrastructure.Repositories;
 public interface IAuthRepository
 {
-    Task<IResult> AuthorizationAsync(IUserAuth userAuth, ValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator, IPAddress ipAddress, IResponseCookies cookies);
+    Task<IResult> AuthorizationAsync(UserAuth userAuth, ValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator, IPAddress ipAddress, IResponseCookies cookies);
     Task<IUser> FindUserAsync(string login);
-    Task<List<Role>> GetUserRoles(IUser user);
-    Task<List<Permission>> GetUserRolesPermissions(IUser user);
-    Task<List<Permission>> GetUserPermissions(IUser user);
-    Task SaveRefreshToken(IUser user, string refreshToken, string ipAddress);
+    Task<IEnumerable<IRole>> GetUserRoles(User user);
+    Task<IEnumerable<IPermission>> GetUserRolesPermissions(User user);
+    Task<IEnumerable<IPermission>> GetUserPermissions(User user);
+    Task SaveRefreshToken(User user, string refreshToken, string ipAddress);
     Task<IResult> RefreshTokenAuthorizationAsync(HttpContext context, IMapper mapper, ValidationParameter jwtValidationParameter);
 }

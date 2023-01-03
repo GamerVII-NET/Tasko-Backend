@@ -11,7 +11,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
     {
         public AuthRepository(IMongoDatabase databaseContext) : base(databaseContext) { }
 
-        public async Task<IResult> AuthorizationAsync(IUserAuth userAuth, ValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator, IPAddress ipAddress, IResponseCookies cookies)
+        public async Task<IResult> AuthorizationAsync(UserAuth userAuth, ValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator, IPAddress ipAddress, IResponseCookies cookies)
         {
             #region Validate user
             var validationResult = validator.Validate(userAuth);
@@ -24,7 +24,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
             #endregion
 
             #region Check user
-            var user = await FindUserAsync(userAuth.Login);
+            var user = await FindUserAsync(userAuth.Login) as User;
 
             if (user == null)
             {
@@ -72,14 +72,14 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             return Results.Ok(new RequestResponse<UserAuthRead>(response, StatusCodes.Status200OK));
         }
-        public async Task<List<Role>> GetUserRoles(IUser user)
+        public async Task<IEnumerable<IRole>> GetUserRoles(User user)
         {
             var userRolesIdFilter = Builders<UserRole>.Filter.Eq(d => d.UserId, user.Id);
             var userRoles = await UserRolesCollection.Find(userRolesIdFilter).ToListAsync();
             var rolesIdFilter = Builders<Role>.Filter.In(d => d.Id, userRoles.Select(c => c.RoleId));
             return await RolesCollection.Find(rolesIdFilter).ToListAsync();
         }
-        public async Task<List<Permission>> GetUserRolesPermissions(IUser user)
+        public async Task<IEnumerable<IPermission>> GetUserRolesPermissions(User user)
         {
             var roles = await GetUserRoles(user);
             var rolePermissionsIdFilter = Builders<RolePermission>.Filter.In(d => d.RoleId, roles.Select(c => c.Id));
@@ -88,7 +88,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
             return await PermissionCollection.Find(permissionsIdFilter).ToListAsync();
 
         }
-        public async Task<List<Permission>> GetUserPermissions(IUser user)
+        public async Task<IEnumerable<IPermission>> GetUserPermissions(User user)
         {
 
             var userPermissionsIdFilter = Builders<UserPermission>.Filter.Eq(d => d.UserId, user.Id);
@@ -101,7 +101,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
             var filter = UserFilter.Eq("Login", login);
             return await UserCollection.Find(filter).FirstOrDefaultAsync();
         }
-        public async Task SaveRefreshToken(IUser user, string refreshToken, string ipAddress)
+        public async Task SaveRefreshToken(User user, string refreshToken, string ipAddress)
         {
             var expiryDuration = new TimeSpan(1, 0, 0, 0);
 

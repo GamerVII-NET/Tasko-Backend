@@ -11,3 +11,4 @@ global using FluentValidation.Results;
 global using FluentValidation.AspNetCore;
 global using MongoDB.Driver;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using NLog;
