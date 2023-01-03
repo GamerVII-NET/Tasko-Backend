@@ -40,7 +40,7 @@ internal class UserRepository : UserRepositoryBase, IUserRepository
 
     public Task<IUser> FindOneAsync(Expression<Func<IUser, bool>> expression, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+
     }
 
     public Task<IEnumerable<IRefreshToken>> GetRefreshTokensAsync(IUser id, CancellationToken cancellationToken = default)
