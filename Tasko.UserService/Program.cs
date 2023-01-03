@@ -18,5 +18,3 @@ finally
 {
     LogManager.Shutdown();
 }
-
-

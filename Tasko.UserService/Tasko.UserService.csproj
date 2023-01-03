@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <None Remove="C:\Users\Lenovo\.nuget\packages\nlog.config\4.7.15\contentFiles\any\any\NLog.config" />
+    <None Remove="C:\Users\Sergey Bryzgalov\.nuget\packages\nlog.config\4.7.15\contentFiles\any\any\NLog.config" />
   </ItemGroup>
 
   <ItemGroup>
