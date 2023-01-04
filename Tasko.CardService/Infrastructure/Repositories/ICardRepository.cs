@@ -1,7 +1,9 @@
-﻿namespace Tasko.CardService.Infrastructure.Repositories
+﻿using Tasko.CardService.Infrastructure.Protos;
+
+namespace Tasko.CardService.Infrastructure.Repositories
 {
     public interface ICardRepository
     {
-        Task<string> HelloWorld(string line);
+        Task<HelloWorldReply> HelloWorld(HelloWorldRequest line);
     }
 }
