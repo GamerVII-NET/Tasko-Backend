@@ -25,7 +25,7 @@ internal static class UserRequestHandler
     }
     internal static Func<IUserRepository, IMapper, UserCreate, IValidator<IUserCreate>, CancellationToken, Task<IResult>> CreateUser(ValidationParameter validationParameter)
     {
-        return [Authorize] async (IUserRepository userRepository, IMapper mapper, UserCreate userCreate, IValidator<IUserCreate> validator, CancellationToken cancellationToken) =>
+        return [AllowAnonymous] async (IUserRepository userRepository, IMapper mapper, UserCreate userCreate, IValidator<IUserCreate> validator, CancellationToken cancellationToken) =>
         {
             var validationResult = validator.Validate(userCreate);
             

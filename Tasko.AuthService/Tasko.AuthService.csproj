@@ -24,13 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tasko-Backend\Tasko.Configuration\Tasko.Configuration.csproj" />
-    <ProjectReference Include="..\Tasko-Backend\Tasko.Cryptography\Tasko.Cryptography.csproj" />
-    <ProjectReference Include="..\Tasko-Backend\Tasko.Domains\Tasko.Domains.csproj" />
-    <ProjectReference Include="..\Tasko-Backend\Tasko.Jwt\Tasko.Jwt.csproj" />
-    <ProjectReference Include="..\Tasko-Backend\Tasko.Logger\Tasko.Logger.csproj" />
-    <ProjectReference Include="..\Tasko-Backend\Tasko.Mongo\Tasko.Mongo.csproj" />
-    <ProjectReference Include="..\Tasko-Backend\Tasko.Validation\Tasko.Validation.csproj" />
+    <Folder Include="Infrastructure\Profiles\" />
   </ItemGroup>
 
 </Project>
