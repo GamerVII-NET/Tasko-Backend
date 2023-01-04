@@ -1,3 +1,5 @@
+using Tasko.Domains.Models.Structural;
+
 namespace Tasko.Domains.Models.DTO.Role;
 
 public interface IRoleRead
@@ -6,7 +8,7 @@ public interface IRoleRead
     string Name { get; set; }
     string Description { get; set; }
 
-    List<Guid> PermissionGuids { get; set; }
+    List<Permission> PermissionGuids { get; set; }
 }
 
 public class RoleRead : IRoleRead
@@ -14,5 +16,5 @@ public class RoleRead : IRoleRead
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public List<Guid> PermissionGuids { get; set; }
+    public List<Permission> PermissionGuids { get; set; }
 }

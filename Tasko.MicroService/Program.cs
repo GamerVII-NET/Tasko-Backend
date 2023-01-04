@@ -1,15 +1,14 @@
-using System.Reflection;
 using Tasko.Logger.Services;
+using Tasko.MicroService.Infrastructure.Extensions;
 
 var logger = LogService.GetLogger();
-
 try
 {
     var builder = WebApplication.CreateBuilder(args);
     builder.RegisterBuilder();
-    var app = builder.Build();
-    app.RegisterApplication(logger);
-    app.Run();
+    var application = builder.Build();
+    application.RegisterApplication(logger);
+    application.Run();
 }
 catch (Exception ex)
 {

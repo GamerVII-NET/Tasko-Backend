@@ -16,6 +16,7 @@
   <ItemGroup>
     <Folder Include="Infrastructure\Extensions\" />
     <Folder Include="Infrastructure\Profiles\" />
+    <Folder Include="Infrastructure\Repositories\" />
     <Folder Include="Infrastructure\RequestHandlers\" />
   </ItemGroup>
 
