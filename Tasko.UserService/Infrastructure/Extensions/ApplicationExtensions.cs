@@ -45,7 +45,12 @@ internal static class ApplicationExtensions
 
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddTransient<IRouteHandler<WebApplication>, UserRouteHandler>();
-        builder.Services.AddAuthorization();
+        builder.Services.AddAuthorization(opitions =>
+        {
+            opitions.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+            .RequireAuthenticatedUser()
+            .Build();
+        });
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
     }
 

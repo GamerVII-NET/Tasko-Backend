@@ -24,8 +24,6 @@ namespace Tasko.Jwt.Services
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(validationParmeter.Key))
             };
         }
-
-
         public static Guid GetUserGuidFromToken(string token, ValidationParameter validationParameter)
         {
             if (string.IsNullOrEmpty(token)) return Guid.Empty;
@@ -62,8 +60,6 @@ namespace Tasko.Jwt.Services
             }
             return Guid.Empty;
         }
-
-
         public static bool VerifyUser(string token, ValidationParameter validationParmeter, IUser user)
         {
 
@@ -118,6 +114,16 @@ namespace Tasko.Jwt.Services
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(validationParmeter.Key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+#if DEBUG
+            var tokenDescriptor = new JwtSecurityToken(
+                validationParmeter.Issuer,
+                validationParmeter.Audienece,
+                claims,
+                now,
+                now.AddDays(360),
+                credentials);
+#endif
+#if !DEBUG
             var tokenDescriptor = new JwtSecurityToken(
                 validationParmeter.Issuer, 
                 validationParmeter.Audienece, 
@@ -125,6 +131,7 @@ namespace Tasko.Jwt.Services
                 now,
                 now.AddMinutes(15),
                 credentials);
+#endif
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
         }
         public static string CreateRefreshToken()

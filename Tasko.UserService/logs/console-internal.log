@@ -175,3 +175,39 @@
 2023-01-04 11:27:55.4178 Info Registered target NLog.Targets.FileTarget(Name=logfile)
 2023-01-04 11:27:55.4178 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
 2023-01-04 11:27:55.4337 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko-Backend\Tasko.Logger\NLog.config
+2023-01-04 12:42:06.2861 Info Message Template Auto Format enabled
+2023-01-04 12:42:06.3980 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-04 12:42:06.3980 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-04 12:42:06.4159 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko-Backend\Tasko.Logger\NLog.config
+2023-01-04 12:44:05.0598 Info Message Template Auto Format enabled
+2023-01-04 12:44:05.1413 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-04 12:44:05.1413 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-04 12:44:05.1589 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko-Backend\Tasko.Logger\NLog.config
+2023-01-04 12:52:54.8994 Info Message Template Auto Format enabled
+2023-01-04 12:52:54.9812 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-04 12:52:54.9812 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-04 12:52:54.9968 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko-Backend\Tasko.Logger\NLog.config
+2023-01-04 13:01:22.2592 Info Message Template Auto Format enabled
+2023-01-04 13:01:22.3310 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-04 13:01:22.3310 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-04 13:01:22.3459 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko-Backend\Tasko.Logger\NLog.config
+2023-01-04 13:03:55.4492 Info Message Template Auto Format enabled
+2023-01-04 13:03:55.5312 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-04 13:03:55.5312 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-04 13:03:55.5471 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko-Backend\Tasko.Logger\NLog.config
+2023-01-04 13:04:59.3508 Info Message Template Auto Format enabled
+2023-01-04 13:04:59.4293 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-04 13:04:59.4293 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-04 13:04:59.4445 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko-Backend\Tasko.Logger\NLog.config
+2023-01-04 13:16:18.0196 Info Message Template Auto Format enabled
+2023-01-04 13:16:18.1043 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-04 13:16:18.1043 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-04 13:16:18.1188 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko-Backend\Tasko.Logger\NLog.config
+2023-01-04 13:18:35.2787 Info Message Template Auto Format enabled
+2023-01-04 13:18:35.3615 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-04 13:18:35.3615 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-04 13:18:35.3777 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko-Backend\Tasko.Logger\NLog.config
+2023-01-04 13:20:38.1346 Info Message Template Auto Format enabled
+2023-01-04 13:20:38.2262 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-04 13:20:38.2262 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-04 13:20:38.2776 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko-Backend\Tasko.Logger\NLog.config
