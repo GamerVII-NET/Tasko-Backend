@@ -175,13 +175,11 @@ namespace Tasko.AuthService.Infrastructure.Repositories
         }
         public async Task SaveRefreshToken(User user, string refreshToken, string ipAddress)
         {
-            var expiryDuration = new TimeSpan(1, 0, 0, 0);
-
             RefreshToken token = new RefreshToken
             {
                 Token = refreshToken,
                 IssuedAt = DateTime.UtcNow,
-                ExpiresAt = DateTime.UtcNow.Add(expiryDuration),
+                ExpiresAt = DateTime.UtcNow.AddDays(30),
                 UserId = user.Id,
                 CreatedByIp = ipAddress
             };
