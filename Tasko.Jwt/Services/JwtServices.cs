@@ -165,7 +165,6 @@ namespace Tasko.Jwt.Services
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(validationParmeter.Key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-
 #if DEBUG
             var tokenDescriptor = new JwtSecurityToken(
                 validationParmeter.Issuer,
