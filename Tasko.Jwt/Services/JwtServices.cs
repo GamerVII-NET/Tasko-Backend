@@ -96,7 +96,7 @@ namespace Tasko.Jwt.Services
 
             if (validatedToken != null)
             {
-                var securityToken = (validatedToken as JwtSecurityToken);
+                var securityToken = (JwtSecurityToken)validatedToken;
                 if (securityToken == null) return false;
                 var claimId = securityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
                 if (claimId!.Value == $"{user.Id}") return true;
@@ -114,9 +114,17 @@ namespace Tasko.Jwt.Services
 
             permissions.ToList().ForEach(permission => claims.Add(new Claim(ClaimTypes.Role, $"{permission.Name}")));
 
+            var now = DateTime.UtcNow;
+
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(validationParmeter.Key));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-            var tokenDescriptor = new JwtSecurityToken(validationParmeter.Issuer, validationParmeter.Audienece, claims, expires: DateTime.UtcNow.AddMinutes(15), signingCredentials: credentials);
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var tokenDescriptor = new JwtSecurityToken(
+                validationParmeter.Issuer, 
+                validationParmeter.Audienece, 
+                claims,
+                now,
+                now.AddMinutes(15),
+                credentials);
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
         }
         public static string CreateRefreshToken()
