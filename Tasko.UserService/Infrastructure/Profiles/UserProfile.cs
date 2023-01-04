@@ -8,5 +8,6 @@ public class UserProfile : Profile
         CreateMap<User, UserRead>();
         CreateMap<UserCreate, User>();
         CreateMap<UserUpdate, User>();
+        CreateMap<UserRead, User>();
     }
 }

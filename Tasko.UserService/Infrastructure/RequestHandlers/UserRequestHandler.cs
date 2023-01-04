@@ -18,7 +18,7 @@ internal static class UserRequestHandler
     {
         return [Authorize] async (IUserRepository userRepository, ValidationParameter jwtValidationParameter, IMapper mapper, CancellationToken cancellationToken) =>
         {
-            var users = mapper.Map<IEnumerable<IUserRead>>(await userRepository.GetAsync(cancellationToken));
+            var users = mapper.Map<IEnumerable<UserRead>>(await userRepository.GetAsync(cancellationToken));
             
             return Results.Ok(new GetRequestResponse<IUserRead>(users));
         };

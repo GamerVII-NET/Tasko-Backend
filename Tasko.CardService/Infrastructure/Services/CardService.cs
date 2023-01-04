@@ -1,8 +1,10 @@
-﻿using Tasko.CardService.Infrastructure.Repositories;
+﻿using Grpc.Core;
+using Tasko.CardService.Infrastructure.Protos;
+using Tasko.CardService.Infrastructure.Repositories;
 
 namespace Tasko.CardService.Infrastructure.Services
 {
-    public class CardService
+    public class CardService : Card.CardBase
     {
         private readonly ICardRepository _cardRepository;
         public CardService(ICardRepository cardRepository)
@@ -10,9 +12,9 @@ namespace Tasko.CardService.Infrastructure.Services
             _cardRepository = cardRepository;
         }
 
-        public Task<string> HelloWorld(string line)
+        public override Task<HelloWorldReply> HelloWorld(HelloWorldRequest request, ServerCallContext context)
         {
-            return _cardRepository.HelloWorld(line);
+            return _cardRepository.HelloWorld(request);
         }
     }
 }
