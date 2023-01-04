@@ -16,6 +16,7 @@ public class UserRouteHandler : IRouteHandler<WebApplication>
         Updaters();
         Deleters();
     }
+
     public void Getters()
     {
         _webApplication.MapGet("api/users", UserRequestHandler.GetUsers())

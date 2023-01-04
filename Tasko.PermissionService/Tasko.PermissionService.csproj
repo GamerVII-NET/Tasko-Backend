@@ -4,23 +4,29 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>3f2a1654-f3a3-4498-8d8e-c598786274da</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\Tasko-Backend</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0-rc.1.22427.2" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
-    <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Api\" />
-    <Folder Include="Infrastructure\Functions\" />
+    <Folder Include="Infrastructure\Extensions\" />
     <Folder Include="Infrastructure\Profiles\" />
-    <Folder Include="Infrastructure\Repositories\" />
+    <Folder Include="Infrastructure\RequestHandlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tasko.Configuration\Tasko.Configuration.csproj" />
+    <ProjectReference Include="..\Tasko.Cryptography\Tasko.Cryptography.csproj" />
+    <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
+    <ProjectReference Include="..\Tasko.Jwt\Tasko.Jwt.csproj" />
+    <ProjectReference Include="..\Tasko.Logger\Tasko.Logger.csproj" />
+    <ProjectReference Include="..\Tasko.Mongo\Tasko.Mongo.csproj" />
+    <ProjectReference Include="..\Tasko.Validation\Tasko.Validation.csproj" />
   </ItemGroup>
 
 </Project>

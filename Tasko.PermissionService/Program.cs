@@ -1,24 +1,22 @@
-using Tasko.PermissionService.Infrastructure.Configurations;
+using System.Reflection;
+using Tasko.Logger.Services;
 
-var builder = WebApplication.CreateBuilder(args);
+var logger = LogService.GetLogger();
 
-#region If project on local machine
-builder.SetSettingFile(@"../../Tasko-Backend/Tasko.General/", "appsettings.json");
-#endregion
-#region If project on docker container
-//builder.SetSettingFile(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "appsettings.json");//If project on docker
-#endregion
-
-var dbConnectionString = builder.Configuration.GetMongoConnectionString();
-var dbName = builder.Configuration.GetMongoDatabaseName();
-var databaseContext = Mongo.GetMongoDataConext(dbConnectionString, dbName);
-
-builder.RegisterBuilder(databaseContext);
-
-var application = builder.Build();
-application.RegisterApplication();
-
-application.Services.GetServices<IRouteHandler>()
-                    .ToList()
-                    .ForEach(api => api.Register(application));
-application.Run();
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
+    builder.RegisterBuilder();
+    var app = builder.Build();
+    app.RegisterApplication(logger);
+    app.Run();
+}
+catch (Exception ex)
+{
+    logger.Error(ex, $"{Assembly.GetCallingAssembly().GetName().Name} stopped because of exception");
+    throw;
+}
+finally
+{
+    LogManager.Shutdown();
+}

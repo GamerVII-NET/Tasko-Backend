@@ -1,16 +1,13 @@
-﻿using AutoMapper;
 using Tasko.Domains.Models.DTO.Permissions;
-using Tasko.Domains.Models.Structural;
+using Tasko.Domains.Models.DTO.Role;
 
-namespace Tasko.PermissionService.Infrastructure.Profiles
+public class PermissionProfile : Profile
 {
-    public class PermissionProfile : Profile
+    public PermissionProfile()
     {
-        public PermissionProfile()
-        {
-            CreateMap<IPermissionCreate, Permission>();
-            CreateMap<IPermissionUpdate, Permission>();
-            CreateMap<IPermissionRead, Permission>();
-        }
+
+        CreateMap<IPermission, IPermissionRead>();
+        CreateMap<Permission, PermissionRead>();
+
     }
 }
