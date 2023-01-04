@@ -2,24 +2,24 @@ namespace Tasko.Service.Infrastructure.Repositories;
 internal abstract class UserRepositoryBase
 {
     internal readonly ValidationParameter ValidationParameter;
-    internal readonly FilterDefinitionBuilder<IUser> UserFilter;
+    internal readonly FilterDefinitionBuilder<User> UserFilter;
     internal readonly IMongoCollection<User> UserCollection;
-    internal readonly IMongoCollection<IRefreshToken> RefreshTokensCollection;
-    internal readonly IMongoCollection<IPermission> PermissionCollection;
-    internal readonly IMongoCollection<IRolePermission> RolePermissionsCollection;
-    internal readonly IMongoCollection<IUserPermission> UserPermissionsCollection;
-    internal readonly IMongoCollection<IUserRole> UserRolesCollection;
-    internal readonly IMongoCollection<IRole> RolesCollection;
+    internal readonly IMongoCollection<RefreshToken> RefreshTokensCollection;
+    internal readonly IMongoCollection<Permission> PermissionCollection;
+    internal readonly IMongoCollection<RolePermission> RolePermissionsCollection;
+    internal readonly IMongoCollection<UserPermission> UserPermissionsCollection;
+    internal readonly IMongoCollection<UserRole> UserRolesCollection;
+    internal readonly IMongoCollection<Role> RolesCollection;
     internal UserRepositoryBase(IMongoDatabase mongoDatabase, ValidationParameter validationParameter)
     {
         ValidationParameter = validationParameter;
-        UserFilter = Builders<IUser>.Filter;
+        UserFilter = Builders<User>.Filter;
         UserCollection = mongoDatabase.GetCollection<User>("Users");
-        RefreshTokensCollection = mongoDatabase.GetCollection<IRefreshToken>("RefreshTokens");
-        PermissionCollection = mongoDatabase.GetCollection<IPermission>("Permissions");
-        RolePermissionsCollection = mongoDatabase.GetCollection<IRolePermission>("RolePermissions");
-        UserPermissionsCollection = mongoDatabase.GetCollection<IUserPermission>("UserPermissions");
-        UserRolesCollection = mongoDatabase.GetCollection<IUserRole>("UserRoles");
-        RolesCollection = mongoDatabase.GetCollection<IRole>("Roles");
+        RefreshTokensCollection = mongoDatabase.GetCollection<RefreshToken>("RefreshTokens");
+        PermissionCollection = mongoDatabase.GetCollection<Permission>("Permissions");
+        RolePermissionsCollection = mongoDatabase.GetCollection<RolePermission>("RolePermissions");
+        UserPermissionsCollection = mongoDatabase.GetCollection<UserPermission>("UserPermissions");
+        UserRolesCollection = mongoDatabase.GetCollection<UserRole>("UserRoles");
+        RolesCollection = mongoDatabase.GetCollection<Role>("Roles");
     }
 }

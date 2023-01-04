@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "Tasko.CardService.Infrastructure.Protos";
+
+package card;
+
+service Card {
+	rpc HelloWorld (HelloWorldRequest) returns (HelloWorldReply); 
+}
+
+message HelloWorldRequest {
+	string line = 1;
+}
+
+message HelloWorldReply {
+	string message = 1;
+}

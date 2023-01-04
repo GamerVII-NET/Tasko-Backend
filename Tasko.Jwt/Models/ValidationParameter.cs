@@ -24,7 +24,7 @@ namespace Tasko.Jwt.Models
         public required string Issuer { get; init; }
         public required string Audienece { get; init; }
         public required string Key { get; init; }
-        public SecurityKey SymmetricSecurityKey { get { return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Key)); } }
+        public SecurityKey SymmetricSecurityKey => new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Key));
     }
 
 

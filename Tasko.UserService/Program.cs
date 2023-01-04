@@ -10,14 +10,12 @@ try
     app.RegisterApplication(logger);
     app.Run();
 }
-catch (Exception exception)
+catch (Exception ex)
 {
-    logger.Error(exception, $"{Assembly.GetCallingAssembly().GetName().Name} stopped because of exception");
+    logger.Error(ex, $"{Assembly.GetCallingAssembly().GetName().Name} stopped because of exception");
     throw;
 }
 finally
 {
     LogManager.Shutdown();
-}
-
-
+}  
