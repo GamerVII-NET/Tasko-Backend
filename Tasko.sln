@@ -22,7 +22,7 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.BoardService", "Tasko.BoardService\Tasko.BoardService.csproj", "{CCF55061-75B4-4B8B-AE81-98479FE5988A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.RoleService", "Tasko.RoleService\Tasko.RoleService.csproj", "{D26E8B35-4FFD-49D9-9A97-BCFC87103357}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.RoleServiceOld", "Tasko.RoleService\Tasko.RoleServiceOld.csproj", "{D26E8B35-4FFD-49D9-9A97-BCFC87103357}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.PermissionService", "Tasko.PermissionService\Tasko.PermissionService.csproj", "{C5B2C483-567B-4D57-916E-5E19CB1F1AF1}"
 EndProject
