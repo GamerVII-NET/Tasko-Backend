@@ -99,6 +99,52 @@ namespace Tasko.Jwt.Services
             }
             return false;
         }
+
+        public static Guid VerifyUser(string token, ValidationParameter validationParmeter)
+        {
+
+            if (string.IsNullOrEmpty(token)) return Guid.Empty;
+            var validationParameters = new TokenValidationParameters()
+            {
+                IssuerSigningKey = validationParmeter.SymmetricSecurityKey,
+                ValidAudience = validationParmeter.Audienece,
+                ValidIssuer = validationParmeter.Issuer,
+                ValidateLifetime = true,
+                ValidateAudience = true,
+                ValidateIssuer = true,
+                ValidateIssuerSigningKey = true,
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken validatedToken = null;
+            try
+            {
+                tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
+            }
+            catch (SecurityTokenException)
+            {
+                return Guid.Empty;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+
+            if (validatedToken != null)
+            {
+                var securityToken = (JwtSecurityToken)validatedToken;
+
+                if (securityToken == null) return Guid.Empty;
+
+                var claimId = Guid.Parse(securityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+
+                return claimId;
+
+            }
+            return Guid.Empty;
+        }
+
+
         public static string CreateToken(ValidationParameter validationParmeter, IUser user, IEnumerable<IPermission> permissions)
         {
             var claims = new List<Claim>
@@ -114,7 +160,6 @@ namespace Tasko.Jwt.Services
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(validationParmeter.Key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-#if DEBUG
             var tokenDescriptor = new JwtSecurityToken(
                 validationParmeter.Issuer,
                 validationParmeter.Audienece,
