@@ -1,4 +1,4 @@
-п»їusing MongoDB.Driver.Linq;
+using MongoDB.Driver.Linq;
 using System.Net;
 using Tasko.Domains.Models.RequestResponses;
 using Tasko.Domains.Models.Structural;
@@ -11,6 +11,76 @@ namespace Tasko.AuthService.Infrastructure.Repositories
     {
         public AuthRepository(IMongoDatabase databaseContext) : base(databaseContext) { }
 
+        public async Task<IResult> RefreshTokenAuthorizationAsync(HttpContext context, IMapper mapper, ValidationParameter jwtValidationParameter)
+        {
+            if (!context.Request.Cookies.ContainsKey("RefreshToken"))
+            {
+                var resposne = new List<ValidationFailure> {
+                    new ValidationFailure("RefreshToken", "The required refresh token parameter is not set in the Cookie")
+                };
+
+                return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "The required refresh token parameter is not set in the Cookie!", StatusCodes.Status400BadRequest));
+            }
+
+            context.Request.Cookies.TryGetValue("RefreshToken", out string token);
+
+            var filter = RefreshTokenFilter.Eq("Token", token);
+
+            var refreshToken = await RefreshTokensCollection.Find(filter).FirstOrDefaultAsync();
+
+            if (refreshToken is null || !refreshToken.IsActive)
+            {
+                var resposne = new List<ValidationFailure> {
+                    new ValidationFailure("RefreshToken", "The specified Refresh Token was not found or is invalid!")
+                };
+
+                return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "The specified Refresh Token was not found or is invalid!", StatusCodes.Status400BadRequest));
+
+            }
+
+            var userFilter = UserFilter.Eq("Id", refreshToken.UserId);
+            var user = await UserCollection.Find(userFilter).FirstOrDefaultAsync();
+
+            if (user is null || user.IsDeleted)
+            {
+
+                var resposne = new List<ValidationFailure> {
+                    new ValidationFailure("RefreshToken", "The token owner has not been found or blocked!")
+                };
+
+                return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "The token owner has not been found or blocked!", StatusCodes.Status400BadRequest));
+
+            }
+
+            var newRefreshToken = JwtServices.CreateRefreshToken();
+
+            refreshToken.RevokedAt = DateTime.UtcNow;
+            refreshToken.RevokedByIp = GetRealIpAddress(context.Connection.RemoteIpAddress);
+            refreshToken.ReasonRevoked = $"Attempted reuse of revoked ancestor token: {newRefreshToken}";
+
+            await RefreshTokensCollection.ReplaceOneAsync(filter, refreshToken);
+
+            await SaveRefreshToken(user, newRefreshToken, GetRealIpAddress(context.Connection.RemoteIpAddress));
+            var userPermissions = await GetUserPermissions(user);
+            var userRolesPermissions = await GetUserRolesPermissions(user);
+            var permissions = userPermissions.Concat(userRolesPermissions).ToList();
+            string accessToken = JwtServices.CreateToken(jwtValidationParameter, user, permissions);
+
+            context.Response.Cookies.Append("RefreshToken", newRefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                SameSite = SameSiteMode.Unspecified
+            });
+
+            var response = new UserAuthRead
+            {
+                User = mapper.Map<IUser, UserRead>(user),
+                Token = accessToken
+            };
+
+            return Results.Ok(new RequestResponse<UserAuthRead>(response, StatusCodes.Status200OK));
+        }
+
         public async Task<IResult> AuthorizationAsync(UserAuth userAuth, ValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator, IPAddress ipAddress, IResponseCookies cookies)
         {
             #region Validate user
@@ -18,7 +88,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             if (!validationResult.IsValid)
             {
-                var result = new BadRequestResponse<List<ValidationFailure>>(validationResult.Errors, "РћС€РёР±РєР° РІР°Р»РёРґР°С†РёРё РґР°РЅРЅС‹С…");
+                var result = new BadRequestResponse<List<ValidationFailure>>(validationResult.Errors, "Ошибка валидации данных");
                 return Results.BadRequest(result);
             }
             #endregion
@@ -29,9 +99,9 @@ namespace Tasko.AuthService.Infrastructure.Repositories
             if (user == null)
             {
                 var resposne = new List<ValidationFailure> {
-                    new ValidationFailure("Password", "РќРµРІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ РёР»Рё РїР°СЂРѕР»СЊ")
+                    new ValidationFailure("Password", "Неверный логин или пароль")
                 };
-                return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЃ СѓРєР°Р·Р°РЅРЅС‹РјРё РґР°РЅРЅС‹РјРё РЅРµ СЃСѓС‰СѓСЃС‚РІСѓРµС‚!", StatusCodes.Status409Conflict));
+                return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "Пользователь с указанными данными не сущуствует!", StatusCodes.Status409Conflict));
             }
             #endregion
 
@@ -40,9 +110,9 @@ namespace Tasko.AuthService.Infrastructure.Repositories
             if (!validatePassword)
             {
                 var resposne = new List<ValidationFailure> {
-                    new ValidationFailure("Response", "РќРµРІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ РёР»Рё РїР°СЂРѕР»СЊ")
+                    new ValidationFailure("Response", "Неверный логин или пароль")
                 };
-                return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "РќРµРІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ РёР»Рё РїР°СЂРѕР»СЊ", StatusCodes.Status401Unauthorized));
+                return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "Неверный логин или пароль", StatusCodes.Status401Unauthorized));
 
             }
             #endregion
@@ -72,6 +142,8 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             return Results.Ok(new RequestResponse<UserAuthRead>(response, StatusCodes.Status200OK));
         }
+        
+        #region Other methods
         public async Task<IEnumerable<IRole>> GetUserRoles(User user)
         {
             var userRolesIdFilter = Builders<UserRole>.Filter.Eq(d => d.UserId, user.Id);
@@ -124,74 +196,8 @@ namespace Tasko.AuthService.Infrastructure.Repositories
             }
 
             return string.Empty;
-        }
-        public async Task<IResult> RefreshTokenAuthorizationAsync(HttpContext context, IMapper mapper, ValidationParameter jwtValidationParameter)
-        {
-            if (!context.Request.Cookies.ContainsKey("RefreshToken"))
-            {
-                var resposne = new List<ValidationFailure> {
-                    new ValidationFailure("RefreshToken", "The required refresh token parameter is not set in the Cookie")
-                };
+        } 
+        #endregion
 
-                return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "The required refresh token parameter is not set in the Cookie!", StatusCodes.Status400BadRequest));
-            }
-
-            context.Request.Cookies.TryGetValue("RefreshToken", out string token);
-
-            var filter = RefreshTokenFilter.Eq("Token", token);
-
-            var refreshToken = await RefreshTokensCollection.Find(filter).FirstOrDefaultAsync();
-
-            if (refreshToken is null || !refreshToken.IsActive)
-            {
-                var resposne = new List<ValidationFailure> {
-                    new ValidationFailure("RefreshToken", "The specified Refresh Token was not found or is invalid!")
-                };
-
-                return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "The specified Refresh Token was not found or is invalid!", StatusCodes.Status400BadRequest));
-
-            }
-
-            var userFilter = UserFilter.Eq("Id", refreshToken.UserId);
-            var user = await UserCollection.Find(userFilter).FirstOrDefaultAsync();
-
-            if (user is null || user.IsDeleted) {
-
-                var resposne = new List<ValidationFailure> {
-                    new ValidationFailure("RefreshToken", "The token owner has not been found or blocked!")
-                };
-
-                return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "The token owner has not been found or blocked!", StatusCodes.Status400BadRequest));
-
-            }
-
-            var newRefreshToken = JwtServices.CreateRefreshToken();
-
-            refreshToken.RevokedAt = DateTime.UtcNow;
-            refreshToken.RevokedByIp = GetRealIpAddress(context.Connection.RemoteIpAddress);
-            refreshToken.ReasonRevoked = $"Attempted reuse of revoked ancestor token: {newRefreshToken}";
-
-            await RefreshTokensCollection.ReplaceOneAsync(filter, refreshToken);
-
-            await SaveRefreshToken(user, newRefreshToken, GetRealIpAddress(context.Connection.RemoteIpAddress));
-            var userPermissions = await GetUserPermissions(user);
-            var userRolesPermissions = await GetUserRolesPermissions(user);
-            var permissions = userPermissions.Concat(userRolesPermissions).ToList();
-            string accessToken = JwtServices.CreateToken(jwtValidationParameter, user, permissions);
-
-            context.Response.Cookies.Append("RefreshToken", newRefreshToken, new CookieOptions
-            {
-                HttpOnly = true,
-                SameSite = SameSiteMode.Unspecified
-            });
-
-            var response = new UserAuthRead
-            {
-                User = mapper.Map<IUser, UserRead>(user),
-                Token = accessToken
-            };
-
-            return Results.Ok(new RequestResponse<UserAuthRead>(response, StatusCodes.Status200OK));
-        }
     }
 }
