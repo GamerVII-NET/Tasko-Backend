@@ -1,37 +1,67 @@
 using FluentValidation.Results;
-using Microsoft.AspNetCore.Mvc;
 using Tasko.Domains.Models.DTO.Permissions;
-using Tasko.Domains.Models.DTO.Role;
 using Tasko.Domains.Models.RequestResponses;
-using Tasko.Jwt.Services;
 
 namespace Tasko.Service.Infrastructure.RequestHandlers
 {
     internal static class RequestHandler
     {
-        internal static Func<HttpContext, IPermissionService, ValidationParameter, IMapper, CancellationToken, Task<IResult>> GetPermissions()
+
+        internal static Func<HttpContext, IPermissionRepository, ValidationParameter, IMapper, CancellationToken, Guid, Task<IResult>> DeletePermission()
         {
-            return [Authorize] async (HttpContext context, IPermissionService permissionService, ValidationParameter jwtValidationParameter, IMapper mapper, CancellationToken cancellationToken) =>
+            return [Authorize] async (HttpContext context, IPermissionRepository permissionRepository, ValidationParameter jwtValidationParameter, IMapper mapper, CancellationToken cancellationToken, Guid id) =>
             {
                 var UserId = context.Items["UserId"];
 
                 if (UserId == null)
                     return Results.Unauthorized();
 
-                var permissions = await permissionService.GetAsync(cancellationToken);
+                var findPermission = await permissionRepository.FindOneAsync(id);
 
-                var permissionsRead = mapper.Map<IEnumerable<IPermissionRead>>(permissions);
+                if (findPermission == null)
+                {
+                    var result = new List<ValidationFailure>
+                    {
+                        new ValidationFailure("Permission", $"Permission with unique identificator {id} not found", "User not found")
+                    };
+
+                    return Results.NotFound(new BadRequestResponse<List<ValidationFailure>>(result, "Permission not found", StatusCodes.Status404NotFound));
+                }
+
+                var deletedPermission = await permissionRepository.DeleteAsync(id, cancellationToken);
+
+                return Results.Ok();
+            };
+        }
+
+        internal static Func<HttpContext, IPermissionRepository, ValidationParameter, IMapper, CancellationToken, Task<IResult>> GetPermissions()
+        {
+            return [Authorize] async (HttpContext context, IPermissionRepository permissionRepository, ValidationParameter jwtValidationParameter, IMapper mapper, CancellationToken cancellationToken) =>
+            {
+                var UserId = context.Items["UserId"];
+
+                if (UserId == null)
+                    return Results.Unauthorized();
+
+                var permissions = await permissionRepository.GetAsync(cancellationToken);
+
+                var permissionsRead = mapper.Map<IEnumerable<PermissionRead>>(permissions);
 
                 return Results.Ok(new GetRequestResponse<IPermissionRead>(permissionsRead));
             };
         }
 
 
-        internal static Func<IPermissionService, IMapper, RoleCreate, IValidator<IRoleCreate>, CancellationToken, Task<IResult>> CreatePermission(ValidationParameter validationParameter)
+        internal static Func<HttpContext, IPermissionRepository, IMapper, PermissionCreate, IValidator<IPermissionCreate>, CancellationToken, Task<IResult>> CreatePermission(ValidationParameter validationParameter)
         {
-            return [Authorize] async (IPermissionService roleRepository, IMapper mapper, RoleCreate roleCreate, IValidator<IRoleCreate> validator, CancellationToken cancellationToken) =>
+            return [Authorize] async (HttpContext context, IPermissionRepository permissionRepository, IMapper mapper, PermissionCreate permissionCreate, IValidator<IPermissionCreate> validator, CancellationToken cancellationToken) =>
             {
-                var validationResult = validator.Validate(roleCreate);
+                var UserId = context.Items["UserId"];
+
+                if (UserId == null)
+                    return Results.Unauthorized();
+
+                var validationResult = validator.Validate(permissionCreate);
 
                 if (!validationResult.IsValid)
                 {
@@ -39,7 +69,20 @@ namespace Tasko.Service.Infrastructure.RequestHandlers
                     return Results.BadRequest(result);
                 }
 
-                return Results.Ok();
+                var findPermission = await permissionRepository.FindOneAsync(c => c.Name.Equals(permissionCreate.Name));
+
+                if (findPermission != null)
+                {
+                    return Results.Conflict(new BadRequestResponse<IPermissionCreate>(permissionCreate, "Permission already exsist", StatusCodes.Status409Conflict));
+                }
+
+                var permission = mapper.Map<Permission>(permissionCreate);
+
+                var newPermission = await permissionRepository.CreateAsync(permission);
+
+                var permissionRead = mapper.Map<PermissionRead>(permission);
+
+                return Results.Created($"/api/permissions/{permissionRead.Id}", new RequestResponse<IPermissionRead>(permissionRead, StatusCodes.Status201Created));
             };
         }
     }

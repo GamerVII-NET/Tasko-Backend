@@ -55,10 +55,10 @@ namespace Tasko.Service.Infrastructure.RouteHandlers
         }
         private void Deleters()
         {
-            //_webApplication.MapDelete("api/users", RequestHandler.DeleteUser(_validationParameter))
-            //               .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
-            //               .WithName("Delete user")
-            //               .WithTags("Deleters");
+            _webApplication.MapDelete("api/permissions", RequestHandler.DeletePermission())
+                           .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
+                           .WithName("Delete permission")
+                           .WithTags("Deleters");
         }
     }
 }

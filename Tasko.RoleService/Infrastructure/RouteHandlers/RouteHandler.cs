@@ -39,10 +39,10 @@ public class RouteHandler : IRouteHandler<WebApplication>
     }
     public void Creators()
     {
-        //_webApplication.MapPost("api/users", RequestHandler.CreateUser(_validationParameter))
-        //               .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
-        //               .WithName("Create user")
-        //               .WithTags("Creators");
+        _webApplication.MapPost("api/roles", RequestHandler.CreateRole(_validationParameter))
+                       .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
+                       .WithName("Create role")
+                       .WithTags("Creators");
 
 
     }

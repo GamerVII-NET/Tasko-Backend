@@ -1,6 +1,3 @@
-using Microsoft.Extensions.Configuration;
-using Tasko.Cryptography.Extensions;
-
 namespace Tasko.Service.MiddleWares;
 
 internal class JwtMiddleware

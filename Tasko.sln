@@ -42,7 +42,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.CardService", "Tasko.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.RoleService", "Tasko.RoleService\Tasko.RoleService.csproj", "{84F242AB-1CF6-4EBD-8D4A-1A63700EAC2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.PermissionService", "Tasko.PermissionService\Tasko.PermissionService.csproj", "{C4A0C9A8-522D-480E-B3FC-CDDAC041E4F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.PermissionService", "Tasko.PermissionService\Tasko.PermissionService.csproj", "{C4A0C9A8-522D-480E-B3FC-CDDAC041E4F4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.UserService", "Tasko.UserService\Tasko.UserService.csproj", "{94B2A989-B555-49F1-B7F1-C0F84C4A5D5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +114,10 @@ Global
 		{C4A0C9A8-522D-480E-B3FC-CDDAC041E4F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4A0C9A8-522D-480E-B3FC-CDDAC041E4F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4A0C9A8-522D-480E-B3FC-CDDAC041E4F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94B2A989-B555-49F1-B7F1-C0F84C4A5D5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94B2A989-B555-49F1-B7F1-C0F84C4A5D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94B2A989-B555-49F1-B7F1-C0F84C4A5D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94B2A989-B555-49F1-B7F1-C0F84C4A5D5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,9 +138,10 @@ Global
 		{1A0955B5-E427-4A04-9DD4-D885E8E833AB} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
 		{84F242AB-1CF6-4EBD-8D4A-1A63700EAC2D} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
 		{C4A0C9A8-522D-480E-B3FC-CDDAC041E4F4} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
+		{94B2A989-B555-49F1-B7F1-C0F84C4A5D5C} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E779261A-E569-475A-8B95-1C0C706BE4DE}
 		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+		SolutionGuid = {E779261A-E569-475A-8B95-1C0C706BE4DE}
 	EndGlobalSection
 EndGlobal

@@ -7,11 +7,13 @@ namespace Tasko.Validation.Validators
     {
         public PermissionValidator()
         {
-            RuleFor(c => c.Name).NotEmpty()
-                                .MinimumLength(4);
+            RuleFor(c => c.Name)
+                .NotEmpty()
+                .MinimumLength(4);
 
-            RuleFor(c => c.DisplayName).NotEmpty()
-                                       .MinimumLength(4);
+            RuleFor(c => c.DisplayName)
+                .NotEmpty()
+                .MinimumLength(4);
 
         }
     }
@@ -19,11 +21,13 @@ namespace Tasko.Validation.Validators
     {
         public PermissionCreateValidator()
         {
-            RuleFor(c => c.Name).NotEmpty()
-                                .MinimumLength(4);
+            RuleFor(c => c.Name)
+                .NotEmpty()
+                .MinimumLength(4);
 
-            RuleFor(c => c.DisplayName).NotEmpty()
-                                       .MinimumLength(4);
+            RuleFor(c => c.DisplayName)
+                .NotEmpty()
+                .MinimumLength(4);
 
         }
     }
@@ -31,11 +35,13 @@ namespace Tasko.Validation.Validators
     {
         public PermissionUpdateValidator()
         {
-            RuleFor(c => c.Name).NotEmpty()
-                                .MinimumLength(4);
+            RuleFor(c => c.Name)
+                .NotEmpty()
+                .MinimumLength(4);
 
-            RuleFor(c => c.DisplayName).NotEmpty()
-                                       .MinimumLength(4);
+            RuleFor(c => c.DisplayName)
+                .NotEmpty()
+                .MinimumLength(4);
 
         }
     }

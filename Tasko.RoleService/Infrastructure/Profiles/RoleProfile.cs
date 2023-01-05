@@ -6,6 +6,10 @@ public class RoleProfile : Profile
     {
 
         CreateMap<Role, RoleRead>();
+        CreateMap<IRole, IRoleRead>();
+        CreateMap<IRole, RoleRead>();
+        CreateMap<RoleCreate, IRole>();
+        CreateMap<RoleCreate, Role>();
 
     }
 }

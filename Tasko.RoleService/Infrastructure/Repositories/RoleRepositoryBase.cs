@@ -2,6 +2,7 @@ namespace Tasko.Service.Infrastructure.Repositories;
 internal abstract class RoleRepositoryBase
 {
     internal readonly FilterDefinitionBuilder<User> UserFilter;
+    internal readonly FilterDefinitionBuilder<Role> RoleFilter;
     internal readonly ValidationParameter ValidationParameter;
 
     internal readonly IMongoCollection<User> UserCollection;

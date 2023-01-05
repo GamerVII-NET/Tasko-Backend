@@ -43,7 +43,7 @@ namespace Tasko.Service.Infrastructure.Extensions
             builder.Services.AddSwaggerJwtAuthorization();
             #endregion
 
-            builder.Services.AddScoped<IPermissionService, PermissionRepository>();
+            builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
             builder.Services.AddTransient<IRouteHandler<WebApplication>, RouteHandlers.RouteHandler>();
             builder.Services.AddAuthorization(opitions =>
             {

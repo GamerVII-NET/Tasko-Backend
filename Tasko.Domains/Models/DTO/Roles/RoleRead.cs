@@ -8,7 +8,7 @@ public interface IRoleRead
     string Name { get; set; }
     string Description { get; set; }
 
-    List<Permission> PermissionGuids { get; set; }
+    IEnumerable<IPermission> Permissions { get; set; }
 }
 
 public class RoleRead : IRoleRead
@@ -16,5 +16,5 @@ public class RoleRead : IRoleRead
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public List<Permission> PermissionGuids { get; set; }
+    public IEnumerable<IPermission> Permissions { get; set; }
 }
