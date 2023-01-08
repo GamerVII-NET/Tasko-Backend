@@ -42,7 +42,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.CardService", "Tasko.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.RoleService", "Tasko.RoleService\Tasko.RoleService.csproj", "{84F242AB-1CF6-4EBD-8D4A-1A63700EAC2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.PermissionService", "Tasko.PermissionService\Tasko.PermissionService.csproj", "{C4A0C9A8-522D-480E-B3FC-CDDAC041E4F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.PermissionService", "Tasko.PermissionService\Tasko.PermissionService.csproj", "{C4A0C9A8-522D-480E-B3FC-CDDAC041E4F4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.UserService", "Tasko.UserService\Tasko.UserService.csproj", "{41C65AEF-9C11-4455-AD2D-FF9443BFF4FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Redis", "..\Tasko.Redis\Tasko.Redis.csproj", "{6396668D-1E36-4846-843A-75CF1C8060BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +116,14 @@ Global
 		{C4A0C9A8-522D-480E-B3FC-CDDAC041E4F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4A0C9A8-522D-480E-B3FC-CDDAC041E4F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4A0C9A8-522D-480E-B3FC-CDDAC041E4F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41C65AEF-9C11-4455-AD2D-FF9443BFF4FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41C65AEF-9C11-4455-AD2D-FF9443BFF4FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41C65AEF-9C11-4455-AD2D-FF9443BFF4FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41C65AEF-9C11-4455-AD2D-FF9443BFF4FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6396668D-1E36-4846-843A-75CF1C8060BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6396668D-1E36-4846-843A-75CF1C8060BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6396668D-1E36-4846-843A-75CF1C8060BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6396668D-1E36-4846-843A-75CF1C8060BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +144,8 @@ Global
 		{1A0955B5-E427-4A04-9DD4-D885E8E833AB} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
 		{84F242AB-1CF6-4EBD-8D4A-1A63700EAC2D} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
 		{C4A0C9A8-522D-480E-B3FC-CDDAC041E4F4} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
+		{41C65AEF-9C11-4455-AD2D-FF9443BFF4FB} = {5D191E7E-3EA7-4B66-99B4-F00269DA2BBC}
+		{6396668D-1E36-4846-843A-75CF1C8060BA} = {1FA428E9-869D-4E92-8B98-F25012D74A47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E779261A-E569-475A-8B95-1C0C706BE4DE}

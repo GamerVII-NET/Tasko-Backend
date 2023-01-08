@@ -1,8 +1,9 @@
 using Tasko.Service.Infrastructure.RequestHandlers;
+using IRouteHandler = Tasko.Domains.Interfaces.IRouteHandler;
 
 namespace Tasko.Service.Infrastructure.RouteHandlers;
 
-public class UserRouteHandler : IRouteHandler<WebApplication>
+public class UserRouteHandler : IRouteHandler
 {
     private ValidationParameter _validationParameter;
     private WebApplication _webApplication;

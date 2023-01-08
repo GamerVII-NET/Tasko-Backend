@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Tasko.Jwt.Models;
 
 namespace Tasko.Service.Infrastructure.Repositories;
 

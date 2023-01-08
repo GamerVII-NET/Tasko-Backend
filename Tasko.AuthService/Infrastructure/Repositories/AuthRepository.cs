@@ -173,6 +173,8 @@ namespace Tasko.AuthService.Infrastructure.Repositories
             var filter = UserFilter.Eq("Login", login);
             return await UserCollection.Find(filter).FirstOrDefaultAsync();
         }
+
+        [Obsolete("Required use other SaveRefreshToken method")]
         public async Task SaveRefreshToken(User user, string refreshToken, string ipAddress)
         {
             RefreshToken token = new RefreshToken

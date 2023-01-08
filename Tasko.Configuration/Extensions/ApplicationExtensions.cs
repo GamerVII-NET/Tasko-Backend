@@ -9,7 +9,7 @@ public static class ApplicationExtensions
 {
     public static void UseRouteHandlers(this WebApplication webApplication)
     {
-        webApplication.Services.GetServices<IRouteHandler<WebApplication>>()
+        webApplication.Services.GetServices<IRouteHandler>()
                                .ToList()
                                .ForEach(api => api.Initialzie(webApplication));
     }
