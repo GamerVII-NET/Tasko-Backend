@@ -19,6 +19,7 @@ internal static class ApplicationConfiguration
     {
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpContextAccessor();
+        builder.Services.AddHttpClient();
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

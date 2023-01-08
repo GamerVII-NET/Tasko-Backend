@@ -6,6 +6,7 @@ using ILogger = NLog.ILogger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Tasko.Mongo.Extensions;
 using IRouteHandler = Tasko.Domains.Interfaces.IRouteHandler;
+using Tasko.Redis.Extensions;
 
 namespace Tasko.Service.Infrastructure.Extensions;
 
@@ -16,8 +17,8 @@ internal static class ApplicationExtensions
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpContextAccessor();
-         
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        builder.Services.AddHttpClient();
 
         #region Logger 
         //builder.Logging.ClearProviders();
@@ -31,8 +32,9 @@ internal static class ApplicationExtensions
         builder.Services.AddValidatorsFromAssemblyContaining<CreateUserValidator>();
         #endregion
 
-        #region Database
+        #region Databases
         builder.AddMongoDbContext();
+        builder.AddRedisDbContext();
         #endregion
 
         #region JWT
