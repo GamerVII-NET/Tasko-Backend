@@ -14,6 +14,7 @@ namespace Tasko.AuthService.Infrastructure.RouteHandlers
         {
             _webApplication = webApplication;
             _validationParameter = webApplication.Configuration.GetValidationParameter();
+
             Auth();
         }
 

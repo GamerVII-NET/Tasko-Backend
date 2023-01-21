@@ -70,8 +70,9 @@ internal class UserRepository : UserRepositoryBase, IUserRepository
     {
         var refreshTokenFilter = Builders<RefreshToken>.Filter.Eq(d => d.UserId, userId);
 
-        return await (await RefreshTokensCollection.FindAsync(refreshTokenFilter, null, cancellationToken))
-                                                   .ToListAsync(cancellationToken);
+        var tokens = await RefreshTokensCollection.FindAsync(refreshTokenFilter, null, cancellationToken);
+
+        return await tokens.ToListAsync(cancellationToken);
     }
     public async Task<IEnumerable<IRole>> GetUserRoles(Guid userId, CancellationToken cancellationToken = default)
     {

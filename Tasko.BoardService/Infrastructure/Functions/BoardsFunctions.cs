@@ -1,6 +1,7 @@
-
 using Tasko.BoardSevice.Infrasructure.Repositories;
+using Tasko.Domains.Models.RequestResponses;
 using Tasko.Domains.Models.Structural;
+using Tasko.Jwt.Models;
 using ValidationFailure = FluentValidation.Results.ValidationFailure;
 
 namespace Tasko.BoardSevice.Infrasructure.Functions
@@ -38,7 +39,7 @@ namespace Tasko.BoardSevice.Infrasructure.Functions
             };
         }
 
-        internal static Func<IBoardRepository, IMapper, BoardCreate, IValidator<IBoardCreate>, Task<IResult>> CreateBoard(JwtValidationParameter jwtValidationParameter)
+        internal static Func<IBoardRepository, IMapper, BoardCreate, IValidator<IBoardCreate>, Task<IResult>> CreateBoard(ValidationParameter jwtValidationParameter)
         {
             return [Authorize] async (IBoardRepository boardRepository, IMapper mapper, BoardCreate boardCreate, IValidator<IBoardCreate> validator) =>
             {
@@ -59,7 +60,7 @@ namespace Tasko.BoardSevice.Infrasructure.Functions
             };
         }
 
-        internal static Func<HttpContext, IBoardRepository, IMapper, BoardUpdate, IValidator<IBoardUpdate>, Task<IResult>> UpdateBoard(JwtValidationParameter jwtValidationParmeter)
+        internal static Func<HttpContext, IBoardRepository, IMapper, BoardUpdate, IValidator<IBoardUpdate>, Task<IResult>> UpdateBoard(ValidationParameter jwtValidationParmeter)
         {
             return [Authorize] async (HttpContext context, IBoardRepository boardRepository, IMapper mapper, BoardUpdate BoardUpdate, IValidator<IBoardUpdate> validator) =>
             {
@@ -68,7 +69,7 @@ namespace Tasko.BoardSevice.Infrasructure.Functions
             };
         }
 
-        internal static Func<HttpContext, IBoardRepository, IMapper, Guid, Task<IResult>> DeleteRole(JwtValidationParameter jwtValidationParmeter)
+        internal static Func<HttpContext, IBoardRepository, IMapper, Guid, Task<IResult>> DeleteRole(ValidationParameter jwtValidationParmeter)
         {
             return [Authorize] async (HttpContext context, IBoardRepository boardRepository, IMapper mapper, Guid id) =>
             {

@@ -143,13 +143,11 @@ internal static class UserRequestHandler
 
             if (isCurrentUser == false) return Results.Unauthorized();
 
-            //var refreshTokens = await userRepository.GetRefreshTokensAsync(user.Id);
+            var refreshTokens = await userRepository.GetRefreshTokensAsync(user.Id);
 
-            //var refreshTokenResult = new GetRequestResponse<IRefreshToken>(refreshTokens);
+            var refreshTokenResult = new GetRequestResponse<IRefreshToken>(refreshTokens.Where(c => c.IsActive));
 
-            //return Results.Ok(refreshTokenResult);
-
-            return Results.Ok();
+            return Results.Ok(refreshTokenResult);
         };
     }
 }

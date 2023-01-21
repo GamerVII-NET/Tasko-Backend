@@ -6,7 +6,6 @@ using ILogger = NLog.ILogger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Tasko.Mongo.Extensions;
 using IRouteHandler = Tasko.Domains.Interfaces.IRouteHandler;
-using Tasko.Redis.Extensions;
 
 namespace Tasko.Service.Infrastructure.Extensions;
 
@@ -34,7 +33,6 @@ internal static class ApplicationExtensions
 
         #region Databases
         builder.AddMongoDbContext();
-        builder.AddRedisDbContext();
         #endregion
 
         #region JWT

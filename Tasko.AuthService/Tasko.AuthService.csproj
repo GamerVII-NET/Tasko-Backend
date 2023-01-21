@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Tasko.Redis\Tasko.Redis.csproj" />
     <ProjectReference Include="..\Tasko.Configuration\Tasko.Configuration.csproj" />
     <ProjectReference Include="..\Tasko.Cryptography\Tasko.Cryptography.csproj" />
     <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />

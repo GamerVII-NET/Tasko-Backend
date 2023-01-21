@@ -16,6 +16,4 @@ appsettings.json
 efpt.config.json
 /Tasko.Server/Properties/PublishProfiles/FTPProfile.pubxml
 
-/Tasko.AuthService/Logs/console-internal.log
-/Tasko.RoleService/Logs/console-internal.log
-/Tasko.UserService/logs/console-internal.log
+*/*/console-internal.log

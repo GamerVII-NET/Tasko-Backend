@@ -18,7 +18,7 @@ namespace Tasko.AuthService.Infrastructure.RequestHandlers
         public static Func<HttpContext, IAuthRepository, IMapper, Task<IResult>> RefreshTokenAuthorization(ValidationParameter jwtValidationParameter)
         {
             return async (context, authRepository, mapper) =>
-                   await authRepository.RefreshTokenAuthorizationAsync(context, mapper, jwtValidationParameter);
+            await authRepository.RefreshTokenAuthorizationAsync(context, mapper, jwtValidationParameter);
         }
     }
 }
