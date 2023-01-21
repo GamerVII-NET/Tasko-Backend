@@ -32,12 +32,14 @@
     <PackageReference Include="NLog" Version="5.1.1" />
     <PackageReference Include="NLog.Config" Version="4.7.15" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.2.1" />
+    <PackageReference Include="StackExchange.Redis" Version="2.6.86" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Tasko.Configuration\Tasko.Configuration.csproj" />
     <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />
+    <ProjectReference Include="..\Tasko.Jwt\Tasko.Jwt.csproj" />
     <ProjectReference Include="..\Tasko.Logger\Tasko.Logger.csproj" />
     <ProjectReference Include="..\Tasko.Mongo\Tasko.Mongo.csproj" />
     <ProjectReference Include="..\Tasko.Validation\Tasko.Validation.csproj" />

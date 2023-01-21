@@ -1,7 +1,9 @@
-﻿namespace Tasko.Domains.Interfaces
+﻿using Microsoft.AspNetCore.Builder;
+
+namespace Tasko.Domains.Interfaces
 {
-    public interface IRouteHandler<T>
+    public interface IRouteHandler
     {
-        public void Initialzie(T webApplication);
+        public void Initialzie(WebApplication webApplication);
     }
 }

@@ -2,11 +2,14 @@
 using Tasko.AuthService.Infrastructure.RouteHandlers;
 using Tasko.Configuration.Extensions;
 using Tasko.Domains.Interfaces;
+using Tasko.Jwt.Extensions;
 using Tasko.Jwt.Models;
 using Tasko.Logger.Extensions;
+using Tasko.Mongo.Extensions;
+using Tasko.Redis.Extensions;
 using Tasko.Validation.Validators;
 using ILogger = NLog.ILogger;
-
+using IRouteHandler = Tasko.Domains.Interfaces.IRouteHandler;
 
 namespace Tasko.AuthService.Infrastructure.Extensions;
 
@@ -16,6 +19,7 @@ internal static class ApplicationConfiguration
     {
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpContextAccessor();
+        builder.Services.AddHttpClient();
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -27,8 +31,9 @@ internal static class ApplicationConfiguration
         builder.Services.AddValidatorsFromAssemblyContaining<CreateUserValidator>();
         #endregion
 
-        #region Database
+        #region Databases
         builder.AddMongoDbContext();
+        builder.AddRedisDbContext();
         #endregion
 
         #region JWT
@@ -42,7 +47,7 @@ internal static class ApplicationConfiguration
         #endregion
 
         builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-        builder.Services.AddTransient<IRouteHandler<WebApplication>, AuthRouteHandler>();
+        builder.Services.AddTransient<IRouteHandler, AuthRouteHandler>();
         builder.Services.AddAuthorization();
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 

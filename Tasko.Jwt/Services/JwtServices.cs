@@ -24,8 +24,6 @@ namespace Tasko.Jwt.Services
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(validationParmeter.Key))
             };
         }
-
-
         public static Guid GetUserGuidFromToken(string token, ValidationParameter validationParameter)
         {
             if (string.IsNullOrEmpty(token)) return Guid.Empty;
@@ -62,8 +60,6 @@ namespace Tasko.Jwt.Services
             }
             return Guid.Empty;
         }
-
-
         public static bool VerifyUser(string token, ValidationParameter validationParmeter, IUser user)
         {
 
@@ -103,7 +99,6 @@ namespace Tasko.Jwt.Services
             }
             return false;
         }
-
         public static Guid VerifyUser(string token, ValidationParameter validationParmeter)
         {
 
@@ -147,8 +142,6 @@ namespace Tasko.Jwt.Services
             }
             return Guid.Empty;
         }
-
-
         public static string CreateToken(ValidationParameter validationParmeter, IUser user, IEnumerable<IPermission> permissions)
         {
             var claims = new List<Claim>

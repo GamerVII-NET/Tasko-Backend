@@ -6,7 +6,7 @@ namespace Tasko.BoardSevice.Infrasructure.Api;
 
 public class UserApi : RouteHandlerBase, IRouteHandler
 {
-    public void Register(WebApplication webApplication)
+    public void Initialize(WebApplication webApplication)
     {
         Getters(webApplication);
         Creators(webApplication);
