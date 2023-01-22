@@ -1,8 +1,6 @@
 using FluentValidation.Results;
 using Tasko.Domains.Models.DTO.Role;
 using Tasko.Domains.Models.RequestResponse;
-using Tasko.Domains.Models.RequestResponses;
-using Tasko.Jwt.Services;
 
 namespace Tasko.Service.Infrastructure.RequestHandlers;
 

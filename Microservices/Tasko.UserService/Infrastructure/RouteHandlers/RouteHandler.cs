@@ -3,9 +3,9 @@ using IRouteHandler = Tasko.Domains.Interfaces.IRouteHandler;
 
 namespace Tasko.Service.Infrastructure.RouteHandlers;
 
-public class UserRouteHandler : IRouteHandler
+public class RouteHandler : IRouteHandler
 {
-    private ValidationParameter _validationParameter;
+    private static ValidationParameter _validationParameter;
     private WebApplication _webApplication;
 
     public void Initialzie(WebApplication webApplication)
@@ -20,17 +20,17 @@ public class UserRouteHandler : IRouteHandler
 
     public void Getters()
     {
-        _webApplication.MapGet("api/users", UserRequestHandler.GetUsers())
+        _webApplication.MapGet("api/users", RequestHandler.GetUsers())
                        .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
                        .WithName("Get users")
                        .WithTags("Getters");
 
-        _webApplication.MapGet("api/users/{id}", UserRequestHandler.FindUser())
+        _webApplication.MapGet("api/users/{id}", RequestHandler.FindUser())
                        .Produces<IUser>(StatusCodes.Status200OK)
                        .WithName("Find user")
                        .WithTags("Getters");
 
-        _webApplication.MapGet("api/users/refresh-tokens/{id}", UserRequestHandler.GetRefreshTokens(_validationParameter))
+        _webApplication.MapGet("api/users/refresh-tokens/{id}", RequestHandler.GetRefreshTokens(_validationParameter))
                        .Produces<IEnumerable<IRefreshToken>>(StatusCodes.Status200OK)
                        .WithName("Get user refres tokens")
                        .WithTags("Getters");
@@ -39,7 +39,7 @@ public class UserRouteHandler : IRouteHandler
     }
     public void Creators()
     {
-        _webApplication.MapPost("api/users", UserRequestHandler.CreateUser(_validationParameter))
+        _webApplication.MapPost("api/users", RequestHandler.CreateUser(_validationParameter))
                        .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
                        .WithName("Create user")
                        .WithTags("Creators");
@@ -48,14 +48,14 @@ public class UserRouteHandler : IRouteHandler
     }
     private void Updaters()
     {
-        _webApplication.MapPut("api/users", UserRequestHandler.UpdateUser(_validationParameter))
+        _webApplication.MapPut("api/users", RequestHandler.UpdateUser(_validationParameter))
                        .Produces(StatusCodes.Status200OK)
                        .WithName("Update user")
                        .WithTags("Updaters");
     }
     private void Deleters()
     {
-        _webApplication.MapDelete("api/users", UserRequestHandler.DeleteUser(_validationParameter))
+        _webApplication.MapDelete("api/users", RequestHandler.DeleteUser(_validationParameter))
                        .Produces<IEnumerable<IUser>>(StatusCodes.Status200OK)
                        .WithName("Delete user")
                        .WithTags("Deleters");

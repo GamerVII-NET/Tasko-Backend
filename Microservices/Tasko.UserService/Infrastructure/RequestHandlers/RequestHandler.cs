@@ -1,10 +1,11 @@
 using FluentValidation.Results;
+using Tasko.Domains.Models.RequestResponse;
 using Tasko.Domains.Models.RequestResponses;
 using Tasko.Jwt.Services;
 
 namespace Tasko.Service.Infrastructure.RequestHandlers;
 
-internal static class UserRequestHandler
+internal static class RequestHandler
 {
     internal static Func<IUserRepository, Guid, Task<IResult>> FindUser()
     {
