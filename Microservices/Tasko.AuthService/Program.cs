@@ -9,6 +9,8 @@ try
     var application = builder.Build();
     application.RegisterApplication(logger);
     application.Run();
+   
+
 }
 catch (Exception ex)
 {

@@ -23,6 +23,7 @@ namespace Tasko.Logger.Middlewares
             catch (Exception ex)
             {
                 HandleExceptionMessage(context, ex);
+
             }
         }
 
