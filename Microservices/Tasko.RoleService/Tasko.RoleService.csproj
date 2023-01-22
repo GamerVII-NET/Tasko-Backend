@@ -20,4 +20,13 @@
     <Folder Include="Infrastructure\RequestHandlers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Tasko.Cryptography\Tasko.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Libraries\Tasko.Domains\Tasko.Domains.csproj" />
+    <ProjectReference Include="..\..\Libraries\Tasko.Jwt\Tasko.Jwt.csproj" />
+    <ProjectReference Include="..\..\Libraries\Tasko.Logger\Tasko.Logger.csproj" />
+    <ProjectReference Include="..\..\Libraries\Tasko.Mongo\Tasko.Mongo.csproj" />
+    <ProjectReference Include="..\..\Libraries\Tasko.Validation\Tasko.Validation.csproj" />
+  </ItemGroup>
+
 </Project>

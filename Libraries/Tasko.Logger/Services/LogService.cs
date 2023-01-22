@@ -7,7 +7,7 @@ public static class LogService
     {
         string fileName = string.Empty; 
 #if DEBUG
-        fileName = Path.GetFullPath(@"../../Tasko-Backend/Libaries/Tasko.Logger/NLog.config");
+        fileName = Path.GetFullPath(@"../../Libraries/Tasko.Logger/NLog.config");
 #endif
 #if !DEBUG
             fileName = $"{Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}/NLog.config";

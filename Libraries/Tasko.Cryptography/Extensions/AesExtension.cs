@@ -41,7 +41,7 @@ namespace Tasko.Cryptography.Extensions
             if (cipherText == null || cipherText.Length <= 0) throw new ArgumentNullException(nameof(cipherText));
             if (key == null || key.Length <= 0) throw new ArgumentNullException(nameof(key));
             if (IV == null || IV.Length <= 0) throw new ArgumentNullException(nameof(IV));
-            string plaintext = null;
+            string plaintext = string.Empty;
             using (var aesAlg = System.Security.Cryptography.Aes.Create())
             {
                 aesAlg.Key = key;

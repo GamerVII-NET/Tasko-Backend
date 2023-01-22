@@ -20,6 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Tasko.Cryptography\Tasko.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Libraries\Tasko.Domains\Tasko.Domains.csproj" />
+    <ProjectReference Include="..\..\Libraries\Tasko.Jwt\Tasko.Jwt.csproj" />
+    <ProjectReference Include="..\..\Libraries\Tasko.Mongo\Tasko.Mongo.csproj" />
+    <ProjectReference Include="..\..\Libraries\Tasko.Validation\Tasko.Validation.csproj" />
     <ProjectReference Include="..\Tasko.Configuration\Tasko.Configuration.csproj" />
     <ProjectReference Include="..\Tasko.Cryptography\Tasko.Cryptography.csproj" />
     <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj" />

@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DD1557DD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{3008002F-9452-4965-8BB4-2C84FCB8D6AC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libaries", "Libaries", "{8DC5DF89-2F73-48A5-889C-88ED0BEF8E98}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{8DC5DF89-2F73-48A5-889C-88ED0BEF8E98}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{F1E81084-6D52-497D-905F-AEA3B2600157}"
 EndProject
@@ -32,19 +32,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.RoleService", "Micros
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.UserService", "Microservices\Tasko.UserService\Tasko.UserService.csproj", "{60B8768A-B03C-4DD6-A7CE-C0335A9B2F2B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Configuration", "Libaries\Tasko.Configuration\Tasko.Configuration.csproj", "{E4187150-9D8C-496F-B3D9-5D1D180F0A38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Configuration", "Libraries\Tasko.Configuration\Tasko.Configuration.csproj", "{E4187150-9D8C-496F-B3D9-5D1D180F0A38}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Cryptography", "Libaries\Tasko.Cryptography\Tasko.Cryptography.csproj", "{5616C240-FCAB-4918-B5A4-31E6B7FBC511}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Cryptography", "Libraries\Tasko.Cryptography\Tasko.Cryptography.csproj", "{5616C240-FCAB-4918-B5A4-31E6B7FBC511}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Domains", "Libaries\Tasko.Domains\Tasko.Domains.csproj", "{1D359E8F-FE11-4D2D-8B8A-4F4D730C5F86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Domains", "Libraries\Tasko.Domains\Tasko.Domains.csproj", "{1D359E8F-FE11-4D2D-8B8A-4F4D730C5F86}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Jwt", "Libaries\Tasko.Jwt\Tasko.Jwt.csproj", "{0B9D6527-2B91-4972-86ED-2FF0C7A88936}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Jwt", "Libraries\Tasko.Jwt\Tasko.Jwt.csproj", "{0B9D6527-2B91-4972-86ED-2FF0C7A88936}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Logger", "Libaries\Tasko.Logger\Tasko.Logger.csproj", "{7B6C1BE7-49B8-4790-9C3C-38DD75644A82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Logger", "Libraries\Tasko.Logger\Tasko.Logger.csproj", "{7B6C1BE7-49B8-4790-9C3C-38DD75644A82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Mongo", "Libaries\Tasko.Mongo\Tasko.Mongo.csproj", "{1E1F1677-1F2E-4958-8A75-87B72EF668A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Mongo", "Libraries\Tasko.Mongo\Tasko.Mongo.csproj", "{1E1F1677-1F2E-4958-8A75-87B72EF668A2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Validation", "Libaries\Tasko.Validation\Tasko.Validation.csproj", "{3A854A0A-AB1D-422C-8634-1A2E2BF3F6B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Validation", "Libraries\Tasko.Validation\Tasko.Validation.csproj", "{3A854A0A-AB1D-422C-8634-1A2E2BF3F6B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,7 +143,7 @@ Global
 		{3A854A0A-AB1D-422C-8634-1A2E2BF3F6B7} = {8DC5DF89-2F73-48A5-889C-88ED0BEF8E98}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E779261A-E569-475A-8B95-1C0C706BE4DE}
 		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+		SolutionGuid = {E779261A-E569-475A-8B95-1C0C706BE4DE}
 	EndGlobalSection
 EndGlobal

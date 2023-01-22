@@ -7,15 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj">
-      <Private>False</Private>
-    </ProjectReference>
+    <PackageReference Include="FluentValidation" Version="11.4.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="FluentValidation">
-      <HintPath>..\..\References\Mapping\FluentValidation.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Tasko.Domains\Tasko.Domains.csproj">
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

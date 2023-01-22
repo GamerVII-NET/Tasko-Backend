@@ -22,11 +22,11 @@ namespace Tasko.Logger.Middlewares
             }
             catch (Exception ex)
             {
-                await HandleExceptionMessageAsync(context, ex).ConfigureAwait(false);
+                HandleExceptionMessage(context, ex);
             }
         }
 
-        private async Task HandleExceptionMessageAsync(HttpContext context, Exception exception)
+        private void HandleExceptionMessage(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
             int statusCode = (int)HttpStatusCode.InternalServerError;

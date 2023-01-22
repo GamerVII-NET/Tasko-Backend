@@ -7,20 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tasko.Cryptography\Tasko.Cryptography.csproj">
-      <Private>False</Private>
-    </ProjectReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
-      <HintPath>..\..\References\AspNetCore\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    <ProjectReference Include="..\Tasko.Cryptography\Tasko.Cryptography.csproj">
       <Private>False</Private>
-    </Reference>
-    <Reference Include="MongoDB.Driver">
-      <HintPath>..\..\References\Databases\MongoDB.Driver.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

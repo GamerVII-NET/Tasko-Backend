@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Tasko.AuthService.Infrastructure.RequestHandlers;
+﻿using Tasko.AuthService.Infrastructure.RequestHandlers;
 using Tasko.Domains.Interfaces;
-using Tasko.Domains.Models.RequestResponses;
 using Tasko.Jwt.Extensions;
 using Tasko.Jwt.Models;
+using IRouteHandler = Tasko.Domains.Interfaces.IRouteHandler;
 
 namespace Tasko.AuthService.Infrastructure.RouteHandlers;
 
-public class AuthRouteHandler : IRouteHandler<WebApplication>
+public class RouteHandler : IRouteHandler
 {
     private WebApplication _webApplication;
     private ValidationParameter _validationParameter;

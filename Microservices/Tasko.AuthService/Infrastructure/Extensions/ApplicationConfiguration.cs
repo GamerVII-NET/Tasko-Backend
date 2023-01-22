@@ -1,12 +1,11 @@
-﻿using Tasko.AuthService.Infrastructure.Repositories;
-using Tasko.AuthService.Infrastructure.RouteHandlers;
+﻿using FluentValidation.AspNetCore;
+using Tasko.AuthService.Infrastructure.Repositories;
 using Tasko.Configuration.Extensions;
-using Tasko.Domains.Interfaces;
 using Tasko.Jwt.Models;
 using Tasko.Logger.Extensions;
 using Tasko.Validation.Validators;
 using ILogger = NLog.ILogger;
-
+using IRouteHandler = Tasko.Domains.Interfaces.IRouteHandler;
 
 namespace Tasko.AuthService.Infrastructure.Extensions;
 
@@ -22,7 +21,6 @@ internal static class ApplicationConfiguration
         #region Validator
         builder.Services.AddFluentValidationAutoValidation();
         builder.Services.AddFluentValidationClientsideAdapters();
-        builder.Services.AddFluentValidation(validation => validation.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
         builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<CreateUserValidator>();
         #endregion
@@ -42,7 +40,7 @@ internal static class ApplicationConfiguration
         #endregion
 
         builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-        builder.Services.AddTransient<IRouteHandler<WebApplication>, AuthRouteHandler>();
+        builder.Services.AddTransient<IRouteHandler, RouteHandlers.RouteHandler>();
         builder.Services.AddAuthorization();
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
