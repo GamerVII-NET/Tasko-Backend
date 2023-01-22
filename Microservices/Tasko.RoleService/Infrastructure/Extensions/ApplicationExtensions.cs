@@ -3,6 +3,7 @@ using Tasko.Configuration.Extensions;
 using Tasko.Logger.Extensions;
 using ILogger = NLog.ILogger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using IRouteHandler = Tasko.Domains.Interfaces.IRouteHandler;
 
 namespace Tasko.Service.Infrastructure.Extensions;
 
@@ -43,13 +44,8 @@ internal static class ApplicationExtensions
         #endregion
 
         builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-        builder.Services.AddTransient<IRouteHandler<WebApplication>, RouteHandlers.RouteHandler>();
-        builder.Services.AddAuthorization(opitions =>
-        {
-            opitions.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
-            .RequireAuthenticatedUser()
-            .Build();
-        });
+        builder.Services.AddTransient<IRouteHandler, RouteHandlers.RouteHandler>();
+        builder.Services.AddAuthorization();
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
     }
 

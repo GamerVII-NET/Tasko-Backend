@@ -45,7 +45,7 @@ internal static class ApplicationExtensions
         #endregion
 
         builder.Services.AddScoped<IUserRepository, UserRepository>();
-        builder.Services.AddTransient<IRouteHandler, UserRouteHandler>();
+        builder.Services.AddTransient<IRouteHandler, RouteHandlers.RouteHandler>();
         builder.Services.AddAuthorization();
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
     }

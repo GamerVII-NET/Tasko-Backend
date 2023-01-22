@@ -1,4 +1,3 @@
-using System.Reflection;
 using Tasko.Logger.Services;
 
 var logger = LogService.GetLogger();

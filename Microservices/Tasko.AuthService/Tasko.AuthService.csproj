@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Tasko.Configuration\Tasko.Configuration.csproj" />
     <ProjectReference Include="..\..\Libraries\Tasko.Cryptography\Tasko.Cryptography.csproj" />
     <ProjectReference Include="..\..\Libraries\Tasko.Domains\Tasko.Domains.csproj" />
