@@ -9,7 +9,7 @@ internal static class RequestHandler
 {
     internal static Func<IRoleRepository, IMapper, CancellationToken, Task<IResult>> GetRoles()
     {
-        return [AllowAnonymous] async (IRoleRepository roleRepository, IMapper mapper, CancellationToken cancellationToken) =>
+        return [Authorize] async (IRoleRepository roleRepository, IMapper mapper, CancellationToken cancellationToken) =>
         {
             var roles = await roleRepository.GetAsync(cancellationToken);
             var rolesRead = mapper.Map<IEnumerable<RoleRead>>(roles);
@@ -21,8 +21,8 @@ internal static class RequestHandler
         return [Authorize] async (IRoleRepository roleRepository, Guid id, IMapper mapper, CancellationToken cancellationToken) =>
         {
             var roles = await roleRepository.FindOneAsync(id, cancellationToken);
-            var roleRead = mapper.Map<IRoleRead>(roles);
-            return Results.Ok(new RequestResponse<IRoleRead>(roleRead, 200));
+            var roleRead = mapper.Map<RoleRead>(roles);
+            return Results.Ok(new RequestResponse<RoleRead>(roleRead, 200));
         };
     }
     internal static Func<IRoleRepository, IMapper, RoleCreate, IValidator<IRoleCreate>, CancellationToken, Task<IResult>> CreateRole()
