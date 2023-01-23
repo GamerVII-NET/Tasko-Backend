@@ -11,7 +11,6 @@ namespace Tasko.AuthService.Infrastructure.Repositories
     public class AuthRepository : AuthRepositoryBase, IAuthRepository
     {
         public AuthRepository(IMongoDatabase databaseContext) : base(databaseContext) { }
-
         public async Task<IResult> RefreshTokenAuthorizationAsync(HttpContext context, IMapper mapper, ValidationParameter jwtValidationParameter)
         {
             if (!context.Request.Cookies.ContainsKey("RefreshToken"))
@@ -81,7 +80,6 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             return Results.Ok(new RequestResponse<UserAuthRead>(response, StatusCodes.Status200OK));
         }
-
         public async Task<IResult> AuthorizationAsync(UserAuth userAuth, ValidationParameter jwtValidationParameter, IMapper mapper, IValidator<IUserAuth> validator, IPAddress ipAddress, IResponseCookies cookies)
         {
             #region Validate user
@@ -99,7 +97,8 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             if (user == null)
             {
-                var resposne = new List<ValidationFailure> {
+                var resposne = new List<ValidationFailure>
+                {
                     new ValidationFailure("Password", "Неверный логин или пароль")
                 };
                 return Results.BadRequest(new BadRequestResponse<List<ValidationFailure>>(resposne, "Пользователь с указанными данными не сущуствует!", StatusCodes.Status409Conflict));
@@ -143,7 +142,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
 
             return Results.Ok(new RequestResponse<UserAuthRead>(response, StatusCodes.Status200OK));
         }
-        
+
         #region Other methods
         public async Task<IEnumerable<IRole>> GetUserRoles(User user)
         {
@@ -195,8 +194,7 @@ namespace Tasko.AuthService.Infrastructure.Repositories
             }
 
             return string.Empty;
-        } 
+        }
         #endregion
-
     }
 }

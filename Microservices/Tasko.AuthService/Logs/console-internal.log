@@ -18,3 +18,19 @@
 2023-01-22 14:51:54.5696 Info Registered target NLog.Targets.FileTarget(Name=logfile)
 2023-01-22 14:51:54.5696 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
 2023-01-22 14:51:54.5985 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko\Libraries\Tasko.Logger\NLog.config
+2023-01-23 02:15:26.4686 Info Message Template Auto Format enabled
+2023-01-23 02:15:26.6479 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-23 02:15:26.6479 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-23 02:15:26.6762 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko\Libraries\Tasko.Logger\NLog.config
+2023-01-23 02:18:48.7920 Info Message Template Auto Format enabled
+2023-01-23 02:18:48.9232 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-23 02:18:48.9232 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-23 02:18:48.9466 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko\Libraries\Tasko.Logger\NLog.config
+2023-01-23 02:20:39.1201 Info Message Template Auto Format enabled
+2023-01-23 02:20:39.2574 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-23 02:20:39.2574 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-23 02:20:39.2842 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko\Libraries\Tasko.Logger\NLog.config
+2023-01-23 02:38:33.6422 Info Message Template Auto Format enabled
+2023-01-23 02:38:33.7103 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-01-23 02:38:33.7103 Info Registered target NLog.Targets.ConsoleTarget(Name=logconsole)
+2023-01-23 02:38:33.7306 Info Validating config: TargetNames=logfile, logconsole, ConfigItems=25, FilePath=C:\Users\Sergey Bryzgalov\source\repos\Tasko\Libraries\Tasko.Logger\NLog.config

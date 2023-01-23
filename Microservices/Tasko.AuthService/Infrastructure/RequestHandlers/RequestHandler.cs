@@ -3,7 +3,7 @@ using Tasko.Jwt.Models;
 
 namespace Tasko.AuthService.Infrastructure.RequestHandlers
 {
-    public class AuthRequestHandler
+    public class RequestHandler
     {
         public static Func<HttpContext, IAuthRepository, UserAuth, IMapper, IValidator<IUserAuth>, Task<IResult>> BearerAuthorization(ValidationParameter jwtValidationParmeter)
         {

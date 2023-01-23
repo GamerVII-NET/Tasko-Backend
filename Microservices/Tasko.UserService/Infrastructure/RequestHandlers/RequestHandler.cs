@@ -21,7 +21,7 @@ internal static class RequestHandler
         {
             var users = mapper.Map<IEnumerable<IUserRead>>(await userRepository.GetAsync(cancellationToken));
             
-            return Results.Ok(new GetRequestResponse<IUserRead>(users));
+            return Results.Ok(new RequestResponseCollection<IUserRead>(users));
         };
     }
     internal static Func<IUserRepository, IMapper, UserCreate, IValidator<IUserCreate>, CancellationToken, Task<IResult>> CreateUser(ValidationParameter validationParameter)

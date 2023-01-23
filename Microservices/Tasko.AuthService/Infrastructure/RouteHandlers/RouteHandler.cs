@@ -19,12 +19,12 @@ public class RouteHandler : IRouteHandler
 
     private void Auth()
     {
-        _webApplication.MapPost("api/auth", AuthRequestHandler.BearerAuthorization(_validationParameter))
+        _webApplication.MapPost("api/auth", RequestHandler.BearerAuthorization(_validationParameter))
                       .Produces<IRequestResponse<IUserAuthRead>>(StatusCodes.Status200OK)
                       .WithName("Authorization")
                       .WithTags("Auth");
 
-        _webApplication.MapPost("api/auth/refresh-token", AuthRequestHandler.RefreshTokenAuthorization(_validationParameter))
+        _webApplication.MapPost("api/auth/refresh-token", RequestHandler.RefreshTokenAuthorization(_validationParameter))
                       .Produces<IRequestResponse<IUserAuthRead>>(StatusCodes.Status200OK)
                       .WithName("Refresh token authorization")
                       .WithTags("Auth");

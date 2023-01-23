@@ -22,7 +22,7 @@ namespace Tasko.Service.Infrastructure.RequestHandlers
 
                 var permissionsRead = mapper.Map<IEnumerable<IPermissionRead>>(permissions);
 
-                return Results.Ok(new GetRequestResponse<IPermissionRead>(permissionsRead));
+                return Results.Ok(new RequestResponseCollection<IPermissionRead>(permissionsRead));
             };
         }
 

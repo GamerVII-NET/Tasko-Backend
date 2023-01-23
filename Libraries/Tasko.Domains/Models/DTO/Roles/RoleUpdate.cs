@@ -1,15 +1,13 @@
-using Tasko.Domains.Models.Structural;
+﻿namespace Tasko.Domains.Models.DTO.Role;
 
-namespace Tasko.Domains.Models.DTO.Role;
-
-public interface IRoleRead
+public interface IRoleUpdate
 {
     Guid Id { get; set; }
     string Name { get; set; }
     string Description { get; set; }
 }
 
-public class RoleRead : IRoleRead
+public class RoleUpdate : IRoleUpdate
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

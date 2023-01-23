@@ -1,16 +1,16 @@
 ﻿namespace Tasko.Domains.Models.RequestResponses;
 
-public class GetRequestResponseContent<T> : IGetRequestResponseContent<T>
+public class RequestResponseContentCollection<T> : IRequestResponseContentCollection<T>
 {
     public int Count { get; set; }
     public List<T> Items { get; set; }
 
-    public GetRequestResponseContent()
+    public RequestResponseContentCollection()
     {
 
     }
 
-    public GetRequestResponseContent(IEnumerable<T> items)
+    public RequestResponseContentCollection(IEnumerable<T> items)
     {
         Count = items.Count();
         Items = items.ToList();

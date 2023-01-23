@@ -1,6 +1,6 @@
 ﻿namespace Tasko.Domains.Interfaces;
 
-public interface IGetRequestResponseContent<T>
+public interface IRequestResponseContentCollection<T>
 {
     public int Count { get; set; }
 
